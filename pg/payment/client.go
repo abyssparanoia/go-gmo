@@ -13,11 +13,12 @@ import (
 
 // Client ... gmo pg payment API client
 type Client struct {
-	SiteID   string
-	SitePass string
-	ShopID   string
-	ShopPass string
-	APIHost  string
+	HTTPClient *http.Client
+	SiteID     string
+	SitePass   string
+	ShopID     string
+	ShopPass   string
+	APIHost    string
 }
 
 // NewClient ... new client
@@ -39,11 +40,12 @@ func NewClient(
 	}
 
 	return &Client{
-		SiteID:   siteID,
-		SitePass: sitePass,
-		ShopID:   shopID,
-		ShopPass: shopPass,
-		APIHost:  apiHost,
+		HTTPClient: &http.Client{},
+		SiteID:     siteID,
+		SitePass:   sitePass,
+		ShopID:     shopID,
+		ShopPass:   shopPass,
+		APIHost:    apiHost,
 	}, nil
 }
 
@@ -98,11 +100,10 @@ func (c *Client) do(
 	}
 
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	client := &http.Client{}
 	var resp *http.Response
 	backoffCfg := backoff.WithMaxRetries(backoff.NewExponentialBackOff(), 4)
 	err = backoff.Retry(func() (err error) {
-		resp, err = client.Do(req)
+		resp, err = c.HTTPClient.Do(req)
 		if err != nil {
 			return err
 		}
