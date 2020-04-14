@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+
+	"github.com/cenkalti/backoff"
 )
 
 // Client ... gmo pg payment API client
@@ -69,7 +71,15 @@ func (c *Client) do(
 
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	client := &http.Client{}
-	resp, err := client.Do(req)
+	var resp *http.Response
+	backoffCfg := backoff.WithMaxRetries(backoff.NewExponentialBackOff(), 4)
+	err = backoff.Retry(func() (err error) {
+		resp, err = client.Do(req)
+		if err != nil {
+			return err
+		}
+		return nil
+	}, backoffCfg)
 	if err != nil {
 		return nil, err
 	}
