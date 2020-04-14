@@ -1,24 +1,28 @@
 package payment
 
-// RegisterBankAccountRequest ... input parameter for registering bank account
-type RegisterBankAccountRequest struct {
+import (
+	"github.com/abyssparanoia/go-gmo/internal/validate"
+)
+
+// EntryBankAccountRequest ... input parameter for Entrying bank account
+type EntryBankAccountRequest struct {
 	MemberID   string `json:"MemberID" validate:"required"`
-	MemberName string `json:"MemberName"`
+	MemberName string `json:"MemberName,omitempty"`
 	// 0 ... do not create member, 1 ... create member
 	CreateMember string `json:"CreateMember" validate:"required,oneof=0 1"`
 	RetURL       string `json:"RetURL" validate:"required,url"`
 	BankCode     string `json:"BankCode" validate:"required,len=4"`
-	BranchCode   string `json:"BranchCode"`
+	BranchCode   string `json:"BranchCode,omitempty"`
 	// 1 ... normal type, 2 ... touza type
-	AccountType      string `json:"AccountType"`
-	AccountNumber    string `json:"AccountNumber"`
-	AccountName      string `json:"AccountName"`
-	AccountNameKanji string `json:"AccountNameKanji"`
+	AccountType      string `json:"AccountType,omitempty"`
+	AccountNumber    string `json:"AccountNumber,omitempty"`
+	AccountName      string `json:"AccountName,omitempty"`
+	AccountNameKanji string `json:"AccountNameKanji,omitempty"`
 	ConsumerDevice   string `json:"ConsumerDevice" validate:"required,oneof=i ez sb pc"`
 }
 
-// RegisterBankAccountResponse ... response parameter
-type RegisterBankAccountResponse struct {
+// EntryBankAccountResponse ... response parameter
+type EntryBankAccountResponse struct {
 	TrainID  string `json:"TrainID"`
 	Token    string `json:"token"`
 	StartURL string `json:"StartUrl"`
@@ -26,8 +30,16 @@ type RegisterBankAccountResponse struct {
 	ErrInfo  string `json:"ErrInfo"`
 }
 
-// RegisterBankAccount ... register bank account
-func (cli *Client) RegisterBankAccount(req *RegisterBankAccountRequest) (res *RegisterBankAccountResponse, err error) {
-
-	return nil, nil
+// EntryBankAccount ... Entry bank account
+func (cli *Client) EntryBankAccount(
+	req *EntryBankAccountRequest,
+) (res *EntryBankAccountResponse, err error) {
+	if err := validate.Struct(req); err != nil {
+		return nil, err
+	}
+	_, err = cli.do("payment/BankaccountEntry.idPass", req, res)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
 }
