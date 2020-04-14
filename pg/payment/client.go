@@ -1,6 +1,7 @@
 package payment
 
 import (
+	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -56,14 +57,42 @@ type baseRequestBody struct {
 
 func (c *Client) do(
 	path string,
-	body io.Reader,
+	body interface{},
 	respBody interface{},
 ) (*http.Response, error) {
+
+	var reqBody map[string]interface{}
+
+	baseBody, err := json.Marshal(&baseRequestBody{
+		SiteID:   c.SiteID,
+		SitePass: c.SitePass,
+		ShopID:   c.ShopID,
+		ShopPass: c.ShopPass,
+	})
+	if err != nil {
+		return nil, err
+	}
+	if err = json.Unmarshal(baseBody, &reqBody); err != nil {
+		return nil, err
+	}
+
+	addtionalBody, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	if err = json.Unmarshal(addtionalBody, &reqBody); err != nil {
+		return nil, err
+	}
+
+	reqBodyReader, err := json.Marshal(&reqBody)
+	if err != nil {
+		return nil, err
+	}
 
 	req, err := http.NewRequest(
 		"POST",
 		fmt.Sprintf("%s/%s", c.APIHost, path),
-		body,
+		bytes.NewReader(reqBodyReader),
 	)
 	if err != nil {
 		return nil, err
