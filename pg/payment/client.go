@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"time"
 
 	"github.com/cenkalti/backoff"
 )
@@ -40,12 +41,14 @@ func NewClient(
 	}
 
 	return &Client{
-		HTTPClient: http.DefaultClient,
-		SiteID:     siteID,
-		SitePass:   sitePass,
-		ShopID:     shopID,
-		ShopPass:   shopPass,
-		APIHost:    apiHost,
+		HTTPClient: &http.Client{
+			Timeout: time.Second * 30,
+		},
+		SiteID:   siteID,
+		SitePass: sitePass,
+		ShopID:   shopID,
+		ShopPass: shopPass,
+		APIHost:  apiHost,
 	}, nil
 }
 
