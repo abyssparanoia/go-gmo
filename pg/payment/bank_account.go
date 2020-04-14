@@ -16,3 +16,18 @@ type RegisterBankAccountRequest struct {
 	AccountNameKanji string `json:"AccountNameKanji"`
 	ConsumerDevice   string `json:"ConsumerDevice" validate:"required,oneof=i ez sb pc"`
 }
+
+// RegisterBankAccountResponse ... response parameter
+type RegisterBankAccountResponse struct {
+	TrainID  string `json:"TrainID"`
+	Token    string `json:"token"`
+	StartURL string `json:"StartUrl"`
+	ErrCode  string `json:"ErrCode"`
+	ErrInfo  string `json:"ErrInfo"`
+}
+
+// RegisterBankAccount ... register bank account
+func (cli *Client) RegisterBankAccount(req *RegisterBankAccountRequest) (res *RegisterBankAccountResponse, err error) {
+
+	return nil, nil
+}
