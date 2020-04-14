@@ -13,7 +13,6 @@ import (
 
 // Client ... gmo pg payment API client
 type Client struct {
-	client   *http.Client
 	SiteID   string
 	SitePass string
 	ShopID   string
