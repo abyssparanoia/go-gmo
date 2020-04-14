@@ -1,2 +1,5 @@
 # go-gmo
-This is client library for GMO services
+
+Golnag client library for GMO services
+
+\*\* This library is still under development
