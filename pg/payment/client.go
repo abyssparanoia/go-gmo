@@ -40,7 +40,7 @@ func NewClient(
 	}
 
 	return &Client{
-		HTTPClient: &http.Client{},
+		HTTPClient: http.DefaultClient,
 		SiteID:     siteID,
 		SitePass:   sitePass,
 		ShopID:     shopID,

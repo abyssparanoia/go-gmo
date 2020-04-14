@@ -5,4 +5,6 @@ const (
 	apiHostSandbox = "https://pt01.mul-pay.jp"
 	// apiHostProduction ... production url
 	apiHostProduction = "https://p01.mul-pay.jp"
+
+	entryBankAccountPath = "payment/BankaccountEntry.idPass"
 )

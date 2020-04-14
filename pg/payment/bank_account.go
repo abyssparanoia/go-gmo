@@ -37,7 +37,7 @@ func (cli *Client) EntryBankAccount(
 	if err := validate.Struct(req); err != nil {
 		return nil, err
 	}
-	_, err = cli.do("payment/BankaccountEntry.idPass", req, res)
+	_, err = cli.do(entryBankAccountPath, req, res)
 	if err != nil {
 		return nil, err
 	}
