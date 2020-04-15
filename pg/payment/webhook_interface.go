@@ -31,6 +31,7 @@ type WebhookResultEntryBankAccountRequest struct {
 	BankCode              string                       `json:"BankCode"`
 	BranchCode            string                       `json:"BranchCode"`
 	AccountType           string                       `json:"AccountType"`
+	AccountNumber         string                       `json:"AccountNumber"`
 	ErrCode               string                       `json:"ErrCode"`
 	ErrDetail             string                       `json:"ErrDetail"`
 	AccountIdentification string                       `json:"AccountIdentification"`
