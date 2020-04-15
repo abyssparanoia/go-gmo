@@ -13,7 +13,7 @@ import (
 func TestEntryBancAccount(t *testing.T) {
 
 	expected := &EntryBankAccountResponse{
-		TrainID:  "trainID",
+		TranID:   "tranID",
 		Token:    "token",
 		StartURL: "startURL",
 		ErrCode:  "errCode",
@@ -49,6 +49,45 @@ func TestEntryBancAccount(t *testing.T) {
 	}
 
 	result, _ := cli.EntryBankAccount(req)
+
+	assert.Equal(t, expected, result)
+}
+
+func TestGetResultEntryBankAccount(t *testing.T) {
+	expected := &GetResultEntryBankAccountResponse{
+		TranID:                "tranID",
+		SiteID:                "siteID",
+		MemberID:              "memberID",
+		Status:                ResultEntryBankAccountStatusEntry,
+		BankCode:              "0000",
+		BranchCode:            "1234567",
+		AccountType:           "1",
+		AccountNumber:         "1234567",
+		AccountName:           "YAMADA TAROU",
+		ErrCode:               "errCode",
+		ErrDetail:             "errDetail",
+		AccountIdentification: "",
+	}
+
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		js, _ := json.Marshal(expected)
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(js)
+	}))
+	defer ts.Close()
+	defaultProxy := http.DefaultTransport.(*http.Transport).Proxy
+	http.DefaultTransport.(*http.Transport).Proxy = func(req *http.Request) (*url.URL, error) {
+		return url.Parse(ts.URL)
+	}
+	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
+
+	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
+	cli.APIHost = apiHostTest
+	req := &GetResultEntryBankAccountRequest{
+		TranID: "tranID",
+	}
+
+	result, _ := cli.GetResultEntryBankAccount(req)
 
 	assert.Equal(t, expected, result)
 }

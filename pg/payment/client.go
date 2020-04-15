@@ -29,8 +29,8 @@ func NewClient(
 	shopID,
 	shopPass string,
 	sandBox bool) (*Client, error) {
-	if !(siteID != "" && sitePass != "" && shopID != "" && shopPass != "") {
-		return nil, errors.New("Invalid parameters")
+	if !(siteID != "" && sitePass != "") {
+		return nil, errors.New("Not enough parameters")
 	}
 
 	var apiHost string

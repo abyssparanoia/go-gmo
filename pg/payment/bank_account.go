@@ -23,7 +23,7 @@ type EntryBankAccountRequest struct {
 
 // EntryBankAccountResponse ... response parameter
 type EntryBankAccountResponse struct {
-	TrainID  string `json:"TrainID"`
+	TranID   string `json:"TranID"`
 	Token    string `json:"Token"`
 	StartURL string `json:"StartUrl"`
 	ErrCode  string `json:"ErrCode"`
@@ -37,9 +37,44 @@ func (cli *Client) EntryBankAccount(
 	if err := validate.Struct(req); err != nil {
 		return nil, err
 	}
-
 	res := &EntryBankAccountResponse{}
 	_, err := cli.do(entryBankAccountPath, req, res)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+
+// GetResultEntryBankAccountRequest ... input parameter for getting result entry bank account
+type GetResultEntryBankAccountRequest struct {
+	TranID string `json:"TranID" validate:"required"`
+}
+
+// GetResultEntryBankAccountResponse ... response parameter
+type GetResultEntryBankAccountResponse struct {
+	TranID                string                       `json:"TranID"`
+	SiteID                string                       `json:"SiteID"`
+	MemberID              string                       `json:"MemberID"`
+	Status                ResultEntryBankAccountStatus `json:"Status"`
+	BankCode              string                       `json:"BankCode"`
+	BranchCode            string                       `json:"BranchCode"`
+	AccountType           string                       `json:"AccountType"`
+	AccountNumber         string                       `json:"AccountNumber"`
+	AccountName           string                       `json:"AccountName"`
+	ErrCode               string                       `json:"ErrCode"`
+	ErrDetail             string                       `json:"ErrDetail"`
+	AccountIdentification string                       `json:"AccountIdentification"`
+}
+
+// GetResultEntryBankAccount ... get result of entry bank account
+func (cli *Client) GetResultEntryBankAccount(
+	req *GetResultEntryBankAccountRequest,
+) (*GetResultEntryBankAccountResponse, error) {
+	if err := validate.Struct(req); err != nil {
+		return nil, err
+	}
+	res := &GetResultEntryBankAccountResponse{}
+	_, err := cli.do(getResultEntryBankAccountPath, req, res)
 	if err != nil {
 		return nil, err
 	}
