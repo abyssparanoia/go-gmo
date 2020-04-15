@@ -23,7 +23,7 @@ type EntryBankAccountRequest struct {
 
 // EntryBankAccountResponse ... response parameter
 type EntryBankAccountResponse struct {
-	TrainID  string `json:"TrainID"`
+	TranID   string `json:"TranID"`
 	Token    string `json:"Token"`
 	StartURL string `json:"StartUrl"`
 	ErrCode  string `json:"ErrCode"`

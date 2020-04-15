@@ -13,7 +13,7 @@ import (
 func TestEntryBancAccount(t *testing.T) {
 
 	expected := &EntryBankAccountResponse{
-		TrainID:  "trainID",
+		TranID:   "tranID",
 		Token:    "token",
 		StartURL: "startURL",
 		ErrCode:  "errCode",
