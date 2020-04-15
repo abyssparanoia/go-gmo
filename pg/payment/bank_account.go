@@ -33,11 +33,12 @@ type EntryBankAccountResponse struct {
 // EntryBankAccount ... Entry bank account
 func (cli *Client) EntryBankAccount(
 	req *EntryBankAccountRequest,
-) (res *EntryBankAccountResponse, err error) {
+) (*EntryBankAccountResponse, error) {
 	if err := validate.Struct(req); err != nil {
 		return nil, err
 	}
-	_, err = cli.do(entryBankAccountPath, req, res)
+	res := &EntryBankAccountResponse{}
+	_, err := cli.do(entryBankAccountPath, req, res)
 	if err != nil {
 		return nil, err
 	}
@@ -68,11 +69,12 @@ type GetResultEntryBankAccountResponse struct {
 // GetResultEntryBankAccount ... get result of entry bank account
 func (cli *Client) GetResultEntryBankAccount(
 	req *GetResultEntryBankAccountRequest,
-) (res *GetResultEntryBankAccountResponse, err error) {
+) (*GetResultEntryBankAccountResponse, error) {
 	if err := validate.Struct(req); err != nil {
 		return nil, err
 	}
-	_, err = cli.do(getResultEntryBankAccountPath, req, res)
+	res := &GetResultEntryBankAccountResponse{}
+	_, err := cli.do(getResultEntryBankAccountPath, req, res)
 	if err != nil {
 		return nil, err
 	}
