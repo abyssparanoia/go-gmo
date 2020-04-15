@@ -2,7 +2,6 @@ package payment
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -21,12 +20,10 @@ func TestEntryBancAccount(t *testing.T) {
 		ErrInfo:  "errInfo",
 	}
 
-	fmt.Println(expected)
-
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		js, _ := json.Marshal(expected)
 		w.Header().Set("Content-Type", "application/json")
-		fmt.Fprint(w, js)
+		w.Write(js)
 	}))
 	defer ts.Close()
 	defaultProxy := http.DefaultTransport.(*http.Transport).Proxy
@@ -36,6 +33,7 @@ func TestEntryBancAccount(t *testing.T) {
 	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
 	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
+	cli.APIHost = apiHostTest
 	req := &EntryBankAccountRequest{
 		MemberID:         "memberID",
 		MemberName:       "member name",
