@@ -1,33 +1,33 @@
 package payment
 
-// EntryResultBankAccountStatus ... entry bank account status
-type EntryResultBankAccountStatus string
+// ResultEntryBankAccountStatus ... entry bank account status
+type ResultEntryBankAccountStatus string
 
 const (
-	// EntryResultBankAccountStatusEntry ... entry complete
-	EntryResultBankAccountStatusEntry EntryResultBankAccountStatus = "ENTRY"
-	// EntryResultBankAccountStatusStart ... entry start
-	EntryResultBankAccountStatusStart EntryResultBankAccountStatus = "START"
-	// EntryResultBankAccountStatusTerm ... result confirm
-	EntryResultBankAccountStatusTerm EntryResultBankAccountStatus = "TERM"
-	// EntryResultBankAccountStatusSuccess ... entry success
-	EntryResultBankAccountStatusSuccess EntryResultBankAccountStatus = "SUCCESS"
-	// EntryResultBankAccountStatusFail ... entry fail because of bank reason
-	EntryResultBankAccountStatusFail EntryResultBankAccountStatus = "FAIL"
-	// EntryResultBankAccountStatusUnprocessed ... entry fail because of other reason
-	EntryResultBankAccountStatusUnprocessed EntryResultBankAccountStatus = "UNPROCESSED"
+	// ResultEntryBankAccountStatusEntry ... entry complete
+	ResultEntryBankAccountStatusEntry ResultEntryBankAccountStatus = "ENTRY"
+	// ResultEntryBankAccountStatusStart ... entry start
+	ResultEntryBankAccountStatusStart ResultEntryBankAccountStatus = "START"
+	// ResultEntryBankAccountStatusTerm ... result confirm
+	ResultEntryBankAccountStatusTerm ResultEntryBankAccountStatus = "TERM"
+	// ResultEntryBankAccountStatusSuccess ... entry success
+	ResultEntryBankAccountStatusSuccess ResultEntryBankAccountStatus = "SUCCESS"
+	// ResultEntryBankAccountStatusFail ... entry fail because of bank reason
+	ResultEntryBankAccountStatusFail ResultEntryBankAccountStatus = "FAIL"
+	// ResultEntryBankAccountStatusUnprocessed ... entry fail because of other reason
+	ResultEntryBankAccountStatusUnprocessed ResultEntryBankAccountStatus = "UNPROCESSED"
 )
 
-func (s EntryResultBankAccountStatus) String() string {
+func (s ResultEntryBankAccountStatus) String() string {
 	return string(s)
 }
 
-// WebhookEntryResultBankAccountRequest ... webhook request parameter
-type WebhookEntryResultBankAccountRequest struct {
+// WebhookResultEntryBankAccountRequest ... webhook request parameter
+type WebhookResultEntryBankAccountRequest struct {
 	TransactionID         string                       `json:"TransactionID"`
 	SiteID                string                       `json:"SiteID"`
 	MemberID              string                       `json:"MemberID"`
-	Result                EntryResultBankAccountStatus `json:"Result"`
+	Result                ResultEntryBankAccountStatus `json:"Result"`
 	BankCode              string                       `json:"BankCode"`
 	BranchCode            string                       `json:"BranchCode"`
 	AccountType           string                       `json:"AccountType"`
