@@ -52,7 +52,6 @@ func CreateAccountTranserCSV(
 	if err != nil {
 		return nil, err
 	}
-	defer file.Close()
 
 	if err = gocsv.MarshalFile(data, file); err != nil {
 		return nil, err
