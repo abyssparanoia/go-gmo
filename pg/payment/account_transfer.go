@@ -6,6 +6,8 @@ import (
 	"io"
 	"os"
 
+	"github.com/abyssparanoia/go-gmo/internal/validate"
+
 	"golang.org/x/text/encoding/japanese"
 	"golang.org/x/text/transform"
 
@@ -23,11 +25,22 @@ type AccountTransferRecord struct {
 	FreeText     string `csv:"自由項目"`
 }
 
+// Validate ... validate record
+func (atr *AccountTransferRecord) Validate() error {
+	return validate.Struct(atr)
+}
+
 // CreateAccountTranserCSV ... create csv file for account transfer
 func CreateAccountTranserCSV(
 	fileName string,
 	data []*AccountTransferRecord,
 ) (*os.File, error) {
+
+	for _, record := range data {
+		if err := record.Validate(); err != nil {
+			return nil, err
+		}
+	}
 
 	gocsv.SetCSVWriter(func(out io.Writer) *gocsv.SafeCSVWriter {
 		writer := csv.NewWriter(transform.NewWriter(out, japanese.ShiftJIS.NewEncoder()))
