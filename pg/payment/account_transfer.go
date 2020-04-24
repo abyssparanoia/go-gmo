@@ -1,5 +1,17 @@
 package payment
 
+import (
+	"encoding/csv"
+	"fmt"
+	"io"
+	"os"
+
+	"golang.org/x/text/encoding/japanese"
+	"golang.org/x/text/transform"
+
+	"github.com/gocarina/gocsv"
+)
+
 // AccountTransferRecord ... account transfer csv record
 type AccountTransferRecord struct {
 	SiteID       string `csv:"サイトID" validate:"required"`
@@ -9,4 +21,29 @@ type AccountTransferRecord struct {
 	OtherAmount  int    `csv:"税送料"`
 	PassbookText string `csv:"通帳記載内容" validate:"required"`
 	FreeText     string `csv:"自由項目"`
+}
+
+// CreateAccountTranserCSV ... create csv file for account transfer
+func CreateAccountTranserCSV(
+	fileName string,
+	data []*AccountTransferRecord,
+) (*os.File, error) {
+
+	gocsv.SetCSVWriter(func(out io.Writer) *gocsv.SafeCSVWriter {
+		writer := csv.NewWriter(transform.NewWriter(out, japanese.ShiftJIS.NewEncoder()))
+		writer.UseCRLF = true
+		return gocsv.NewSafeCSVWriter(writer)
+	})
+
+	file, err := os.OpenFile(fmt.Sprintf("%s.csv", fileName), os.O_CREATE|os.O_WRONLY, os.ModePerm)
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+
+	if err = gocsv.MarshalFile(data, file); err != nil {
+		return nil, err
+	}
+
+	return file, nil
 }
