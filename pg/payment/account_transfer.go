@@ -82,6 +82,7 @@ func CreateAccountTranserFileForSFTP(
 ) (*os.File, error) {
 
 	year := strconv.Itoa(uploadTime.Year())[2:]
+
 	orgMonth := int(uploadTime.Month())
 	var month string
 	if orgMonth < 10 {
@@ -89,7 +90,15 @@ func CreateAccountTranserFileForSFTP(
 	} else {
 		month = strconv.Itoa(orgMonth)
 	}
-	baseFileName := fmt.Sprintf("kfuri%s%s%s", shopID, year, month)
+
+	var sequenceStr string
+	if sequence < 10 {
+		sequenceStr = fmt.Sprintf("0%d", sequence)
+	} else {
+		sequenceStr = fmt.Sprintf("%d", sequence)
+	}
+
+	baseFileName := fmt.Sprintf("kfuri%s%s%s%s", shopID, year, month, sequenceStr)
 	txtFileName := fmt.Sprintf("%s.txt", baseFileName)
 	gzFileName := fmt.Sprintf("%s.tar.gz", baseFileName)
 
