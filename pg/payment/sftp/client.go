@@ -5,12 +5,14 @@ import (
 	"fmt"
 	"io/ioutil"
 
+	"github.com/pkg/sftp"
+
 	"golang.org/x/crypto/ssh"
 )
 
 // Client ... ssh client
 type Client struct {
-	*ssh.Client
+	*sftp.Client
 }
 
 // NewClient ... new client for sftp
@@ -37,7 +39,12 @@ func NewClient(
 		Auth:            authMethod,
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 	}
-	client, err := ssh.Dial("tcp", fmt.Sprintf("%s:%s", host, port), sshConfig)
+	conn, err := ssh.Dial("tcp", fmt.Sprintf("%s:%s", host, port), sshConfig)
+	if err != nil {
+		return nil, err
+	}
+
+	client, err := sftp.NewClient(conn)
 	if err != nil {
 		return nil, err
 	}
