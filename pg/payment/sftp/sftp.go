@@ -4,14 +4,30 @@ import (
 	"context"
 	"io"
 	"os"
+
+	"github.com/pkg/sftp"
+	"golang.org/x/crypto/ssh"
 )
 
 // SendAccountTransfer ... send account transfer file
-func (cli *Client) SendAccountTransfer(
+func (c *Client) SendAccountTransfer(
 	ctx context.Context,
 	file *os.File,
 ) error {
-	targetFile, err := cli.Create(file.Name())
+
+	conn, err := ssh.Dial("tcp", c.addr, c.sshConfig)
+	if err != nil {
+		return err
+	}
+	defer conn.Close()
+
+	client, err := sftp.NewClient(conn)
+	if err != nil {
+		return err
+	}
+	defer client.Close()
+
+	targetFile, err := client.Create(file.Name())
 	if err != nil {
 		return err
 	}
