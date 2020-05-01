@@ -6,28 +6,28 @@ import (
 
 // EntryBankAccountRequest ... input parameter for Entrying bank account
 type EntryBankAccountRequest struct {
-	MemberID   string `json:"MemberID" validate:"required"`
-	MemberName string `json:"MemberName,omitempty"`
+	MemberID   string `schema:"MemberID" validate:"required"`
+	MemberName string `schema:"MemberName,omitempty"`
 	// 0 ... do not create member, 1 ... create member
-	CreateMember string `json:"CreateMember" validate:"required,oneof=0 1"`
-	RetURL       string `json:"RetURL" validate:"required,url"`
-	BankCode     string `json:"BankCode" validate:"required,len=4"`
-	BranchCode   string `json:"BranchCode,omitempty"`
+	CreateMember string `schema:"CreateMember" validate:"required,oneof=0 1"`
+	RetURL       string `schema:"RetURL" validate:"required,url"`
+	BankCode     string `schema:"BankCode" validate:"required,len=4"`
+	BranchCode   string `schema:"BranchCode,omitempty"`
 	// 1 ... normal type, 2 ... touza type
-	AccountType      string `json:"AccountType,omitempty"`
-	AccountNumber    string `json:"AccountNumber,omitempty"`
-	AccountName      string `json:"AccountName,omitempty"`
-	AccountNameKanji string `json:"AccountNameKanji,omitempty"`
-	ConsumerDevice   string `json:"ConsumerDevice" validate:"required,oneof=i ez sb pc"`
+	AccountType      string `schema:"AccountType,omitempty"`
+	AccountNumber    string `schema:"AccountNumber,omitempty"`
+	AccountName      string `schema:"AccountName,omitempty"`
+	AccountNameKanji string `schema:"AccountNameKanji,omitempty"`
+	ConsumerDevice   string `schema:"ConsumerDevice" validate:"required,oneof=i ez sb pc"`
 }
 
 // EntryBankAccountResponse ... response parameter
 type EntryBankAccountResponse struct {
-	TranID   string `json:"TranID"`
-	Token    string `json:"Token"`
-	StartURL string `json:"StartUrl"`
-	ErrCode  string `json:"ErrCode"`
-	ErrInfo  string `json:"ErrInfo"`
+	TranID   string `schema:"TranID"`
+	Token    string `schema:"Token"`
+	StartURL string `schema:"StartUrl"`
+	ErrCode  string `schema:"ErrCode"`
+	ErrInfo  string `schema:"ErrInfo"`
 }
 
 // EntryBankAccount ... Entry bank account
@@ -47,23 +47,23 @@ func (cli *Client) EntryBankAccount(
 
 // GetResultEntryBankAccountRequest ... input parameter for getting result entry bank account
 type GetResultEntryBankAccountRequest struct {
-	TranID string `json:"TranID" validate:"required"`
+	TranID string `schema:"TranID" validate:"required"`
 }
 
 // GetResultEntryBankAccountResponse ... response parameter
 type GetResultEntryBankAccountResponse struct {
-	TranID                string                       `json:"TranID"`
-	SiteID                string                       `json:"SiteID"`
-	MemberID              string                       `json:"MemberID"`
-	Status                ResultEntryBankAccountStatus `json:"Status"`
-	BankCode              string                       `json:"BankCode"`
-	BranchCode            string                       `json:"BranchCode"`
-	AccountType           string                       `json:"AccountType"`
-	AccountNumber         string                       `json:"AccountNumber"`
-	AccountName           string                       `json:"AccountName"`
-	ErrCode               string                       `json:"ErrCode"`
-	ErrDetail             string                       `json:"ErrDetail"`
-	AccountIdentification string                       `json:"AccountIdentification"`
+	TranID                string                       `schema:"TranID"`
+	SiteID                string                       `schema:"SiteID"`
+	MemberID              string                       `schema:"MemberID"`
+	Status                ResultEntryBankAccountStatus `schema:"Status"`
+	BankCode              string                       `schema:"BankCode"`
+	BranchCode            string                       `schema:"BranchCode"`
+	AccountType           string                       `schema:"AccountType"`
+	AccountNumber         string                       `schema:"AccountNumber"`
+	AccountName           string                       `schema:"AccountName"`
+	ErrCode               string                       `schema:"ErrCode"`
+	ErrDetail             string                       `schema:"ErrDetail"`
+	AccountIdentification string                       `schema:"AccountIdentification"`
 }
 
 // GetResultEntryBankAccount ... get result of entry bank account

@@ -29,8 +29,6 @@ func TestClient(t *testing.T) {
 
 	formStr := form.Encode()
 
-	t.Logf(formStr)
-
 	var res Req
 
 	q, _ := url.ParseQuery(formStr)
@@ -39,21 +37,15 @@ func TestClient(t *testing.T) {
 
 	multiRes := parser.ParseToMultiObject(res)
 
-	t.Logf("%+v", multiRes)
-
 	var result []*Req
 
 	for _, res := range multiRes {
 		var req Req
-		t.Logf("%+v", res)
 		err = parser.MapToStruct(res, &req)
 		if err != nil {
-			t.Logf(err.Error())
 			continue
 		}
 		result = append(result, &req)
 	}
 
-	t.Logf("%+v", result[0])
-	t.Logf("%+v", result[1])
 }

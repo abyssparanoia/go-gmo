@@ -4,18 +4,18 @@ import "github.com/abyssparanoia/go-gmo/internal/pkg/validate"
 
 // SaveCardRequest ... save card request
 type SaveCardRequest struct {
-	MemberID     string `json:"MemberID" validate:"required,max=60"`
-	SeqMode      string `json:"SeqMode"`
-	CardSeq      string `json:"CardSeq"`
-	DefaultFlag  string `json:"DefaultFlag"`
-	CardName     string `json:"CardName"`
-	CardNo       string `json:"CardNo" validate:"required,len=16"`
-	CardPass     string `json:"CardPass"`
-	Expire       string `json:"Expire" validate:"required,len=4"`
-	HolderName   string `json:"HolderName"`
-	Token        string `json:"Token"`
-	UpdateType   string `json:"UpdateType"`
-	SecurityCode string `json:"SecurityCode"`
+	MemberID     string `schema:"MemberID" validate:"required,max=60"`
+	SeqMode      string `schema:"SeqMode"`
+	CardSeq      string `schema:"CardSeq"`
+	DefaultFlag  string `schema:"DefaultFlag"`
+	CardName     string `schema:"CardName"`
+	CardNo       string `schema:"CardNo" validate:"required,len=16"`
+	CardPass     string `schema:"CardPass"`
+	Expire       string `schema:"Expire" validate:"required,len=4"`
+	HolderName   string `schema:"HolderName"`
+	Token        string `schema:"Token"`
+	UpdateType   string `schema:"UpdateType"`
+	SecurityCode string `schema:"SecurityCode"`
 }
 
 // Validate ... validate
@@ -25,17 +25,17 @@ func (r *SaveCardRequest) Validate() error {
 
 // SaveCardResponse ... save card response
 type SaveCardResponse struct {
-	CardSeq                string `json:"CardSeq"`
-	CardNo                 string `json:"CardNo"`
-	Forward                string `json:"Forward"`
-	ErrCode                string `json:"ErrCode"`
-	ErrInfo                string `json:"ErrInfo"`
-	Brand                  string `json:"Brand"`
-	DomesticFlag           string `json:"DomesticFlag"`
-	IssuerCode             string `json:"IssuerCode"`
-	DebitPrepaidFlag       string `json:"DebitPrepaidFlag"`
-	DebitPrepaidIssuerName string `json:"DebitPrepaidIssuerName"`
-	ForwardFinal           string `json:"ForwardFinal"`
+	CardSeq                string `schema:"CardSeq"`
+	CardNo                 string `schema:"CardNo"`
+	Forward                string `schema:"Forward"`
+	ErrCode                string `schema:"ErrCode"`
+	ErrInfo                string `schema:"ErrInfo"`
+	Brand                  string `schema:"Brand"`
+	DomesticFlag           string `schema:"DomesticFlag"`
+	IssuerCode             string `schema:"IssuerCode"`
+	DebitPrepaidFlag       string `schema:"DebitPrepaidFlag"`
+	DebitPrepaidIssuerName string `schema:"DebitPrepaidIssuerName"`
+	ForwardFinal           string `schema:"ForwardFinal"`
 }
 
 // SaveCard ... save card
@@ -55,9 +55,9 @@ func (cli *Client) SaveCard(
 
 // DeleteCardRequest ... delete card request
 type DeleteCardRequest struct {
-	MemberID string `json:"MemberID" validate:"required,max=60"`
-	SeqMode  string `json:"SeqMode"`
-	CardSeq  string `json:"CardSeq"`
+	MemberID string `schema:"MemberID" validate:"required,max=60"`
+	SeqMode  string `schema:"SeqMode"`
+	CardSeq  string `schema:"CardSeq"`
 }
 
 // Validate ... validate
@@ -67,9 +67,9 @@ func (r *DeleteCardRequest) Validate() error {
 
 // DeleteCardResponse ... delete card response
 type DeleteCardResponse struct {
-	CardSeq string `json:"CardSeq"`
-	ErrCode string `json:"ErrCode"`
-	ErrInfo string `json:"ErrInfo"`
+	CardSeq string `schema:"CardSeq"`
+	ErrCode string `schema:"ErrCode"`
+	ErrInfo string `schema:"ErrInfo"`
 }
 
 // DeleteCard ... delete card
