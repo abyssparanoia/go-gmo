@@ -3,7 +3,6 @@ package creditcard
 import (
 	"bytes"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -15,6 +14,8 @@ import (
 // Client ... gmo pg payment API client
 type Client struct {
 	HTTPClient *http.Client
+	SiteID     string
+	SitePass   string
 	ShopID     string
 	ShopPass   string
 	APIHost    string
@@ -22,12 +23,11 @@ type Client struct {
 
 // NewClient ... new client
 func NewClient(
+	siteID,
+	sitePass,
 	shopID,
 	shopPass string,
 	sandBox bool) (*Client, error) {
-	if shopID == "" || shopPass == "" {
-		return nil, errors.New("Not enough parameters")
-	}
 
 	var apiHost string
 	if sandBox {
@@ -40,6 +40,8 @@ func NewClient(
 		HTTPClient: &http.Client{
 			Timeout: time.Second * 30,
 		},
+		SiteID:   siteID,
+		SitePass: sitePass,
 		ShopID:   shopID,
 		ShopPass: shopPass,
 		APIHost:  apiHost,
@@ -47,6 +49,8 @@ func NewClient(
 }
 
 type baseRequestBody struct {
+	SiteID   string `json:"SiteID"`
+	SitePass string `json:"SitePass"`
 	ShopID   string `json:"ShopID"`
 	ShopPass string `json:"ShopPass"`
 }
@@ -60,6 +64,8 @@ func (c *Client) do(
 	var reqBody map[string]interface{}
 
 	baseBody, err := json.Marshal(&baseRequestBody{
+		SiteID:   c.SiteID,
+		SitePass: c.SitePass,
 		ShopID:   c.ShopID,
 		ShopPass: c.ShopPass,
 	})

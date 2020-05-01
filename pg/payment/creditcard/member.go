@@ -36,3 +36,5 @@ func (cli *Client) SaveMember(
 	}
 	return res, nil
 }
+
+type UpdateMemberRequest struct{}

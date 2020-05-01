@@ -31,7 +31,7 @@ func TestEntryTran(t *testing.T) {
 	}
 	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-	cli, _ := NewClient("shopID", "shopPass", false)
+	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
 	cli.APIHost = apiHostTest
 	req := &EntryTranRequest{
 		OrderID:  "orderID",
