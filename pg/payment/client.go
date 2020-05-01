@@ -1,13 +1,14 @@
 package payment
 
 import (
-	"bytes"
-	"encoding/json"
 	"fmt"
-	"io"
+	"io/ioutil"
 	"net/http"
+	"net/url"
+	"strings"
 	"time"
 
+	"github.com/abyssparanoia/go-gmo/internal/pkg/parser"
 	"github.com/cenkalti/backoff"
 )
 
@@ -49,10 +50,10 @@ func NewClient(
 }
 
 type baseRequestBody struct {
-	SiteID   string `json:"SiteID"`
-	SitePass string `json:"SitePass"`
-	ShopID   string `json:"ShopID"`
-	ShopPass string `json:"ShopPass"`
+	SiteID   string `schema:"SiteID"`
+	SitePass string `schema:"SitePass"`
+	ShopID   string `schema:"ShopID"`
+	ShopPass string `schema:"ShopPass"`
 }
 
 func (c *Client) do(
@@ -61,30 +62,19 @@ func (c *Client) do(
 	respBody interface{},
 ) (*http.Response, error) {
 
-	var reqBody map[string]interface{}
-
-	baseBody, err := json.Marshal(&baseRequestBody{
+	baseForms := url.Values{}
+	err := parser.Encoder.Encode(&baseRequestBody{
 		SiteID:   c.SiteID,
 		SitePass: c.SitePass,
 		ShopID:   c.ShopID,
 		ShopPass: c.ShopPass,
-	})
+	}, baseForms)
 	if err != nil {
 		return nil, err
 	}
-	if err = json.Unmarshal(baseBody, &reqBody); err != nil {
-		return nil, err
-	}
 
-	addtionalBody, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	if err = json.Unmarshal(addtionalBody, &reqBody); err != nil {
-		return nil, err
-	}
-
-	reqBodyReader, err := json.Marshal(&reqBody)
+	additinalForms := url.Values{}
+	err = parser.Encoder.Encode(body, additinalForms)
 	if err != nil {
 		return nil, err
 	}
@@ -92,7 +82,7 @@ func (c *Client) do(
 	req, err := http.NewRequest(
 		"POST",
 		fmt.Sprintf("%s/%s", c.APIHost, path),
-		bytes.NewReader(reqBodyReader),
+		strings.NewReader(fmt.Sprintf("%s&%s", baseForms.Encode(), additinalForms.Encode())),
 	)
 	if err != nil {
 		return nil, err
@@ -113,15 +103,19 @@ func (c *Client) do(
 	}
 	defer resp.Body.Close()
 
-	if respBody != nil {
-		if w, ok := respBody.(io.Writer); ok {
-			io.Copy(w, resp.Body)
-		} else {
-			err = json.NewDecoder(resp.Body).Decode(respBody)
-			if err != nil && err != io.EOF {
-				return nil, err
-			}
-		}
+	bodyBytes, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	q, err := url.ParseQuery(string(bodyBytes))
+	if err != nil {
+		return nil, err
+	}
+
+	err = parser.Decoder.Decode(respBody, q)
+	if err != nil {
+		return nil, err
 	}
 
 	return resp, nil
