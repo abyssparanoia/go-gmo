@@ -1,4 +1,4 @@
-package payment
+package creditcard
 
 const (
 	apiHostSandbox                = "https://pt01.mul-pay.jp"
@@ -29,3 +29,17 @@ const (
 func (s ResultEntryBankAccountStatus) String() string {
 	return string(s)
 }
+
+// JobCD ... job cd type
+type JobCD string
+
+const (
+	// JobCDCheck ... check
+	JobCDCheck JobCD = "CHECK"
+	// JobCDCapture ... capture
+	JobCDCapture JobCD = "CAPTURE"
+	// JobCDAuth ... auth
+	JobCDAuth JobCD = "AUTH"
+	// JobCDSauth ... sauth
+	JobCDSauth JobCD = "SAUTH"
+)
