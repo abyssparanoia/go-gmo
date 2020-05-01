@@ -5,6 +5,7 @@ const (
 	apiHostProduction = "https://p01.mul-pay.jp"
 	apiHostTest       = "http://p01.mul-pay.jp"
 	entryTranPath     = "payment/EntryTran.idPass"
+	saveMemberPath    = "payment/SaveMember.idPass"
 )
 
 // JobCD ... job cd type
