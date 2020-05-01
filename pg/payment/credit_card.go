@@ -8,17 +8,17 @@ import (
 // SaveCardRequest ... save card request
 type SaveCardRequest struct {
 	MemberID     string `schema:"MemberID" validate:"required,max=60"`
-	SeqMode      string `schema:"SeqMode"`
-	CardSeq      string `schema:"CardSeq"`
-	DefaultFlag  string `schema:"DefaultFlag"`
-	CardName     string `schema:"CardName"`
+	SeqMode      string `schema:"SeqMode,omitempty"`
+	CardSeq      string `schema:"CardSeq,omitempty"`
+	DefaultFlag  string `schema:"DefaultFlag,omitempty"`
+	CardName     string `schema:"CardName,omitempty"`
 	CardNo       string `schema:"CardNo" validate:"required,len=16"`
-	CardPass     string `schema:"CardPass"`
+	CardPass     string `schema:"CardPass,omitempty"`
 	Expire       string `schema:"Expire" validate:"required,len=4"`
-	HolderName   string `schema:"HolderName"`
-	Token        string `schema:"Token"`
-	UpdateType   string `schema:"UpdateType"`
-	SecurityCode string `schema:"SecurityCode"`
+	HolderName   string `schema:"HolderName,omitempty"`
+	Token        string `schema:"Token,omitempty"`
+	UpdateType   string `schema:"UpdateType,omitempty"`
+	SecurityCode string `schema:"SecurityCode,omitempty"`
 }
 
 // Validate ... validate
@@ -28,17 +28,17 @@ func (r *SaveCardRequest) Validate() error {
 
 // SaveCardResponse ... save card response
 type SaveCardResponse struct {
-	CardSeq                string `schema:"CardSeq"`
-	CardNo                 string `schema:"CardNo"`
-	Forward                string `schema:"Forward"`
-	ErrCode                string `schema:"ErrCode"`
-	ErrInfo                string `schema:"ErrInfo"`
-	Brand                  string `schema:"Brand"`
-	DomesticFlag           string `schema:"DomesticFlag"`
-	IssuerCode             string `schema:"IssuerCode"`
-	DebitPrepaidFlag       string `schema:"DebitPrepaidFlag"`
-	DebitPrepaidIssuerName string `schema:"DebitPrepaidIssuerName"`
-	ForwardFinal           string `schema:"ForwardFinal"`
+	CardSeq                string `schema:"CardSeq,omitempty"`
+	CardNo                 string `schema:"CardNo,omitempty"`
+	Forward                string `schema:"Forward,omitempty"`
+	ErrCode                string `schema:"ErrCode,omitempty"`
+	ErrInfo                string `schema:"ErrInfo,omitempty"`
+	Brand                  string `schema:"Brand,omitempty"`
+	DomesticFlag           string `schema:"DomesticFlag,omitempty"`
+	IssuerCode             string `schema:"IssuerCode,omitempty"`
+	DebitPrepaidFlag       string `schema:"DebitPrepaidFlag,omitempty"`
+	DebitPrepaidIssuerName string `schema:"DebitPrepaidIssuerName,omitempty"`
+	ForwardFinal           string `schema:"ForwardFinal,omitempty"`
 }
 
 // SaveCard ... save card
@@ -59,8 +59,8 @@ func (cli *Client) SaveCard(
 // DeleteCardRequest ... delete card request
 type DeleteCardRequest struct {
 	MemberID string `schema:"MemberID" validate:"required,max=60"`
-	SeqMode  string `schema:"SeqMode"`
-	CardSeq  string `schema:"CardSeq"`
+	SeqMode  string `schema:"SeqMode,omitempty"`
+	CardSeq  string `schema:"CardSeq,omitempty"`
 }
 
 // Validate ... validate
@@ -70,9 +70,9 @@ func (r *DeleteCardRequest) Validate() error {
 
 // DeleteCardResponse ... delete card response
 type DeleteCardResponse struct {
-	CardSeq string `schema:"CardSeq"`
-	ErrCode string `schema:"ErrCode"`
-	ErrInfo string `schema:"ErrInfo"`
+	CardSeq string `schema:"CardSeq,omitempty"`
+	ErrCode string `schema:"ErrCode,omitempty"`
+	ErrInfo string `schema:"ErrInfo,omitempty"`
 }
 
 // DeleteCard ... delete card

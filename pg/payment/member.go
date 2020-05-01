@@ -7,7 +7,7 @@ import (
 // SaveMemberRequest ... save member request
 type SaveMemberRequest struct {
 	MemberID   string `schema:"MemberID" validate:"required,max=60"`
-	MemberName string `schema:"MemberName"`
+	MemberName string `schema:"MemberName,omitempty"`
 }
 
 // Validate ... validate
@@ -17,9 +17,9 @@ func (r *SaveMemberRequest) Validate() error {
 
 // SaveMemberResponse ... save member response
 type SaveMemberResponse struct {
-	MemberID string `schema:"MemberID"`
-	ErrCode  string `schema:"ErrCode"`
-	ErrInfo  string `schema:"ErrInfo"`
+	MemberID string `schema:"MemberID,omitempty"`
+	ErrCode  string `schema:"ErrCode,omitempty"`
+	ErrInfo  string `schema:"ErrInfo,omitempty"`
 }
 
 // SaveMember ... save member
@@ -40,7 +40,7 @@ func (cli *Client) SaveMember(
 // UpdateMemberRequest ... update member request
 type UpdateMemberRequest struct {
 	MemberID   string `schema:"MemberID" validate:"required,max=60"`
-	MemberName string `schema:"MemberName"`
+	MemberName string `schema:"MemberName,omitempty"`
 }
 
 // Validate ... validate
@@ -50,9 +50,9 @@ func (r *UpdateMemberRequest) Validate() error {
 
 // UpdateMemberResponse ... update member response
 type UpdateMemberResponse struct {
-	MemberID string `schema:"MemberID"`
-	ErrCode  string `schema:"ErrCode"`
-	ErrInfo  string `schema:"ErrInfo"`
+	MemberID string `schema:"MemberID,omitempty"`
+	ErrCode  string `schema:"ErrCode,omitempty"`
+	ErrInfo  string `schema:"ErrInfo,omitempty"`
 }
 
 // UpdateMember ... update member
@@ -82,9 +82,9 @@ func (r *DeleteMemberRequest) Validate() error {
 
 // DeleteMemberResponse ... delete member response
 type DeleteMemberResponse struct {
-	MemberID string `schema:"MemberID"`
-	ErrCode  string `schema:"ErrCode"`
-	ErrInfo  string `schema:"ErrInfo"`
+	MemberID string `schema:"MemberID,omitempty"`
+	ErrCode  string `schema:"ErrCode,omitempty"`
+	ErrInfo  string `schema:"ErrInfo,omitempty"`
 }
 
 // DeleteMember ... delete member
