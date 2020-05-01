@@ -9,7 +9,7 @@ type EntryTranRequest struct {
 	OrderID  string `schema:"OrderID" validate:"required,max=27"`
 	JobCD    JobCD  `schema:"JobCd" validate:"required"`
 	ItemCode string `schema:"ItemCode,omitempty"`
-	Amount   int    `schema:"Amount"`
+	Amount   int    `schema:"Amount,omitempty"`
 	Tax      int    `schema:"Tax,omitempty"`
 }
 
@@ -20,10 +20,10 @@ func (r *EntryTranRequest) Validate() error {
 
 // EntryTranResponse ... entry tran response
 type EntryTranResponse struct {
-	AccessID   string `schema:"AccessID"`
-	AccessPass string `schema:"AccessPass"`
-	ErrCode    string `schema:"ErrCode"`
-	ErrInfo    string `schema:"ErrInfo"`
+	AccessID   string `schema:"AccessID,omitempty"`
+	AccessPass string `schema:"AccessPass,omitempty"`
+	ErrCode    string `schema:"ErrCode,omitempty"`
+	ErrInfo    string `schema:"ErrInfo,omitempty"`
 }
 
 // EntryTran ... entry tran

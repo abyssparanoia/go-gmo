@@ -93,9 +93,9 @@ func (cli *Client) DeleteCard(
 // SearchCardRequest ...
 type SearchCardRequest struct {
 	MemberID        string `schema:"MemberID" validate:"required,max=60"`
-	SeqMode         string `schema:"SeqMode"`
-	CardSeq         string `schema:"CardSeq"`
-	UseFloatingMask string `schema:"UseFloatingMask"`
+	SeqMode         string `schema:"SeqMode,omitempty"`
+	CardSeq         string `schema:"CardSeq,omitempty"`
+	UseFloatingMask string `schema:"UseFloatingMask,omitempty"`
 }
 
 // Validate ... validate

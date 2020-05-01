@@ -23,11 +23,11 @@ type EntryBankAccountRequest struct {
 
 // EntryBankAccountResponse ... response parameter
 type EntryBankAccountResponse struct {
-	TranID   string `schema:"TranID"`
-	Token    string `schema:"Token"`
-	StartURL string `schema:"StartUrl"`
-	ErrCode  string `schema:"ErrCode"`
-	ErrInfo  string `schema:"ErrInfo"`
+	TranID   string `schema:"TranID,omitempty"`
+	Token    string `schema:"Token,omitempty"`
+	StartURL string `schema:"StartUrl,omitempty"`
+	ErrCode  string `schema:"ErrCode,omitempty"`
+	ErrInfo  string `schema:"ErrInfo,omitempty"`
 }
 
 // EntryBankAccount ... Entry bank account
@@ -52,18 +52,18 @@ type GetResultEntryBankAccountRequest struct {
 
 // GetResultEntryBankAccountResponse ... response parameter
 type GetResultEntryBankAccountResponse struct {
-	TranID                string                       `schema:"TranID"`
-	SiteID                string                       `schema:"SiteID"`
-	MemberID              string                       `schema:"MemberID"`
-	Status                ResultEntryBankAccountStatus `schema:"Status"`
-	BankCode              string                       `schema:"BankCode"`
-	BranchCode            string                       `schema:"BranchCode"`
-	AccountType           string                       `schema:"AccountType"`
-	AccountNumber         string                       `schema:"AccountNumber"`
-	AccountName           string                       `schema:"AccountName"`
-	ErrCode               string                       `schema:"ErrCode"`
-	ErrDetail             string                       `schema:"ErrDetail"`
-	AccountIdentification string                       `schema:"AccountIdentification"`
+	TranID                string                       `schema:"TranID,omitempty"`
+	SiteID                string                       `schema:"SiteI,omitemptyD"`
+	MemberID              string                       `schema:"MemberID,omitempty"`
+	Status                ResultEntryBankAccountStatus `schema:"Status,omitempty"`
+	BankCode              string                       `schema:"BankCode,omitempty"`
+	BranchCode            string                       `schema:"BranchCode,omitempty"`
+	AccountType           string                       `schema:"AccountType,omitempty"`
+	AccountNumber         string                       `schema:"AccountNumber,omitempty"`
+	AccountName           string                       `schema:"AccountName,omitempty"`
+	ErrCode               string                       `schema:"ErrCode,omitempty"`
+	ErrDetail             string                       `schema:"ErrDetail,omitempty"`
+	AccountIdentification string                       `schema:"AccountIdentification,omitempty"`
 }
 
 // GetResultEntryBankAccount ... get result of entry bank account

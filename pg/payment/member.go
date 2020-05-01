@@ -114,11 +114,11 @@ func (r *SearchMemberRequest) Validate() error {
 
 // SearchMemberResponse ... search member response
 type SearchMemberResponse struct {
-	MemberID   string `schema:"MemberID"`
-	MemberName string `schema:"MemberName"`
-	DeleteFlag string `schema:"DeleteFlag"`
-	ErrCode    string `schema:"ErrCode"`
-	ErrInfo    string `schema:"ErrInfo"`
+	MemberID   string `schema:"MemberID,omitempty"`
+	MemberName string `schema:"MemberName,omitempty"`
+	DeleteFlag string `schema:"DeleteFlag,omitempty"`
+	ErrCode    string `schema:"ErrCode,omitempty"`
+	ErrInfo    string `schema:"ErrInfo,omitempty"`
 }
 
 // SearchMember ... search member

@@ -50,10 +50,10 @@ func NewClient(
 }
 
 type baseRequestBody struct {
-	SiteID   string `schema:"SiteID"`
-	SitePass string `schema:"SitePass"`
-	ShopID   string `schema:"ShopID"`
-	ShopPass string `schema:"ShopPass"`
+	SiteID   string `schema:"SiteID,omitempty"`
+	SitePass string `schema:"SitePass,omitempty"`
+	ShopID   string `schema:"ShopID,omitempty"`
+	ShopPass string `schema:"ShopPass,omitempty"`
 }
 
 func (c *Client) do(
