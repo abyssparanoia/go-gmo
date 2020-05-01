@@ -1,12 +1,12 @@
 package payment
 
 import (
-	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
 	"testing"
 
+	"github.com/abyssparanoia/go-gmo/internal/pkg/parser"
 	"gopkg.in/go-playground/assert.v1"
 )
 
@@ -19,9 +19,10 @@ func TestSaveMember(t *testing.T) {
 	}
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		js, _ := json.Marshal(expected)
-		w.Header().Set("Content-Type", "application/json")
-		w.Write(js)
+		form := url.Values{}
+		_ = parser.Encoder.Encode(expected, form)
+		w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
+		w.Write([]byte(form.Encode()))
 	}))
 	defer ts.Close()
 	defaultProxy := http.DefaultTransport.(*http.Transport).Proxy
@@ -49,9 +50,10 @@ func TestUpdateMember(t *testing.T) {
 	}
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		js, _ := json.Marshal(expected)
-		w.Header().Set("Content-Type", "application/json")
-		w.Write(js)
+		form := url.Values{}
+		_ = parser.Encoder.Encode(expected, form)
+		w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
+		w.Write([]byte(form.Encode()))
 	}))
 	defer ts.Close()
 	defaultProxy := http.DefaultTransport.(*http.Transport).Proxy
@@ -79,9 +81,10 @@ func TestDeleteMember(t *testing.T) {
 	}
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		js, _ := json.Marshal(expected)
-		w.Header().Set("Content-Type", "application/json")
-		w.Write(js)
+		form := url.Values{}
+		_ = parser.Encoder.Encode(expected, form)
+		w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
+		w.Write([]byte(form.Encode()))
 	}))
 	defer ts.Close()
 	defaultProxy := http.DefaultTransport.(*http.Transport).Proxy
@@ -110,9 +113,10 @@ func TestSearchMember(t *testing.T) {
 	}
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		js, _ := json.Marshal(expected)
-		w.Header().Set("Content-Type", "application/json")
-		w.Write(js)
+		form := url.Values{}
+		_ = parser.Encoder.Encode(expected, form)
+		w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
+		w.Write([]byte(form.Encode()))
 	}))
 	defer ts.Close()
 	defaultProxy := http.DefaultTransport.(*http.Transport).Proxy

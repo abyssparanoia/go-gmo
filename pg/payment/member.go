@@ -6,8 +6,8 @@ import (
 
 // SaveMemberRequest ... save member request
 type SaveMemberRequest struct {
-	MemberID   string `json:"MemberID" validate:"required,max=60"`
-	MemberName string `json:"MemberName"`
+	MemberID   string `schema:"MemberID" validate:"required,max=60"`
+	MemberName string `schema:"MemberName,omitempty"`
 }
 
 // Validate ... validate
@@ -17,9 +17,9 @@ func (r *SaveMemberRequest) Validate() error {
 
 // SaveMemberResponse ... save member response
 type SaveMemberResponse struct {
-	MemberID string `json:"MemberID"`
-	ErrCode  string `json:"ErrCode"`
-	ErrInfo  string `json:"ErrInfo"`
+	MemberID string `schema:"MemberID,omitempty"`
+	ErrCode  string `schema:"ErrCode,omitempty"`
+	ErrInfo  string `schema:"ErrInfo,omitempty"`
 }
 
 // SaveMember ... save member
@@ -39,8 +39,8 @@ func (cli *Client) SaveMember(
 
 // UpdateMemberRequest ... update member request
 type UpdateMemberRequest struct {
-	MemberID   string `json:"MemberID" validate:"required,max=60"`
-	MemberName string `json:"MemberName"`
+	MemberID   string `schema:"MemberID" validate:"required,max=60"`
+	MemberName string `schema:"MemberName,omitempty"`
 }
 
 // Validate ... validate
@@ -50,9 +50,9 @@ func (r *UpdateMemberRequest) Validate() error {
 
 // UpdateMemberResponse ... update member response
 type UpdateMemberResponse struct {
-	MemberID string `json:"MemberID"`
-	ErrCode  string `json:"ErrCode"`
-	ErrInfo  string `json:"ErrInfo"`
+	MemberID string `schema:"MemberID,omitempty"`
+	ErrCode  string `schema:"ErrCode,omitempty"`
+	ErrInfo  string `schema:"ErrInfo,omitempty"`
 }
 
 // UpdateMember ... update member
@@ -72,7 +72,7 @@ func (cli *Client) UpdateMember(
 
 // DeleteMemberRequest ... delete member request
 type DeleteMemberRequest struct {
-	MemberID string `json:"MemberID" validate:"required,max=60"`
+	MemberID string `schema:"MemberID" validate:"required,max=60"`
 }
 
 // Validate ... validate
@@ -82,9 +82,9 @@ func (r *DeleteMemberRequest) Validate() error {
 
 // DeleteMemberResponse ... delete member response
 type DeleteMemberResponse struct {
-	MemberID string `json:"MemberID"`
-	ErrCode  string `json:"ErrCode"`
-	ErrInfo  string `json:"ErrInfo"`
+	MemberID string `schema:"MemberID,omitempty"`
+	ErrCode  string `schema:"ErrCode,omitempty"`
+	ErrInfo  string `schema:"ErrInfo,omitempty"`
 }
 
 // DeleteMember ... delete member
@@ -104,7 +104,7 @@ func (cli *Client) DeleteMember(
 
 // SearchMemberRequest ... search member request
 type SearchMemberRequest struct {
-	MemberID string `json:"MemberID" validate:"required,max=60"`
+	MemberID string `schema:"MemberID" validate:"required,max=60"`
 }
 
 // Validate ... validate
@@ -114,11 +114,11 @@ func (r *SearchMemberRequest) Validate() error {
 
 // SearchMemberResponse ... search member response
 type SearchMemberResponse struct {
-	MemberID   string `json:"MemberID"`
-	MemberName string `json:"MemberName"`
-	DeleteFlag string `json:"DeleteFlag"`
-	ErrCode    string `json:"ErrCode"`
-	ErrInfo    string `json:"ErrInfo"`
+	MemberID   string `schema:"MemberID,omitempty"`
+	MemberName string `schema:"MemberName,omitempty"`
+	DeleteFlag string `schema:"DeleteFlag,omitempty"`
+	ErrCode    string `schema:"ErrCode,omitempty"`
+	ErrInfo    string `schema:"ErrInfo,omitempty"`
 }
 
 // SearchMember ... search member

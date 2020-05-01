@@ -6,11 +6,11 @@ import (
 
 // EntryTranRequest ... entry tran request type
 type EntryTranRequest struct {
-	OrderID  string `json:"OrderID" validate:"required,max=27"`
-	JobCD    JobCD  `json:"JobCd" validate:"required"`
-	ItemCode string `json:"ItemCode,omitempty"`
-	Amount   int    `json:"Amount"`
-	Tax      int    `json:"Tax,omitempty"`
+	OrderID  string `schema:"OrderID" validate:"required,max=27"`
+	JobCD    JobCD  `schema:"JobCd" validate:"required"`
+	ItemCode string `schema:"ItemCode,omitempty"`
+	Amount   int    `schema:"Amount,omitempty"`
+	Tax      int    `schema:"Tax,omitempty"`
 }
 
 // Validate ... validate
@@ -20,10 +20,10 @@ func (r *EntryTranRequest) Validate() error {
 
 // EntryTranResponse ... entry tran response
 type EntryTranResponse struct {
-	AccessID   string `json:"AccessID"`
-	AccessPass string `json:"AccessPass"`
-	ErrCode    string `json:"ErrCode"`
-	ErrInfo    string `json:"ErrInfo"`
+	AccessID   string `schema:"AccessID,omitempty"`
+	AccessPass string `schema:"AccessPass,omitempty"`
+	ErrCode    string `schema:"ErrCode,omitempty"`
+	ErrInfo    string `schema:"ErrInfo,omitempty"`
 }
 
 // EntryTran ... entry tran
