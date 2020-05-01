@@ -1,7 +1,7 @@
 package payment
 
 import (
-	"github.com/abyssparanoia/go-gmo/internal/validate"
+	"github.com/abyssparanoia/go-gmo/internal/pkg/validate"
 )
 
 // EntryBankAccountRequest ... input parameter for Entrying bank account
