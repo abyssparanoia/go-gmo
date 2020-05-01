@@ -43,3 +43,7 @@ const (
 	// JobCDSauth ... sauth
 	JobCDSauth JobCD = "SAUTH"
 )
+
+func (j JobCD) String() string {
+	return string(j)
+}
