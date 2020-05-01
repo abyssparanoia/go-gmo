@@ -3,7 +3,6 @@ package payment
 import (
 	"bytes"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -29,9 +28,6 @@ func NewClient(
 	shopID,
 	shopPass string,
 	sandBox bool) (*Client, error) {
-	if !(siteID != "" && sitePass != "") {
-		return nil, errors.New("Not enough parameters")
-	}
 
 	var apiHost string
 	if sandBox {

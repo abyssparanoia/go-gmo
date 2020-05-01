@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/abyssparanoia/go-gmo/internal/validate"
+	"github.com/abyssparanoia/go-gmo/internal/pkg/validate"
 
 	"golang.org/x/text/encoding/japanese"
 	"golang.org/x/text/transform"

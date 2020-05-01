@@ -6,6 +6,13 @@ const (
 	apiHostTest                   = "http://p01.mul-pay.jp"
 	entryBankAccountPath          = "payment/BankAccountEntry.idPass"
 	getResultEntryBankAccountPath = "payment/BankAccountTranResult.idPass"
+	entryTranPath                 = "payment/EntryTran.idPass"
+	saveMemberPath                = "payment/SaveMember.idPass"
+	updateMemberPath              = "payment/UpdateMember.idPass"
+	deleteMemberPath              = "payment/DeleteMember.idPass"
+	searchMemberPath              = "payment/SearchMember.idPass"
+	saveCardPath                  = "payment/SaveCard.idPass"
+	deleteCardPath                = "payment/DeleteCard.idPass"
 )
 
 // ResultEntryBankAccountStatus ... entry bank account status
@@ -28,4 +35,22 @@ const (
 
 func (s ResultEntryBankAccountStatus) String() string {
 	return string(s)
+}
+
+// JobCD ... job cd type
+type JobCD string
+
+const (
+	// JobCDCheck ... check
+	JobCDCheck JobCD = "CHECK"
+	// JobCDCapture ... capture
+	JobCDCapture JobCD = "CAPTURE"
+	// JobCDAuth ... auth
+	JobCDAuth JobCD = "AUTH"
+	// JobCDSauth ... sauth
+	JobCDSauth JobCD = "SAUTH"
+)
+
+func (j JobCD) String() string {
+	return string(j)
 }
