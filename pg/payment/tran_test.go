@@ -1,4 +1,4 @@
-package creditcard
+package payment
 
 import (
 	"encoding/json"

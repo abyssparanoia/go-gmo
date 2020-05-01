@@ -1,4 +1,4 @@
-package creditcard
+package payment
 
 import (
 	"github.com/abyssparanoia/go-gmo/internal/pkg/validate"
