@@ -105,21 +105,21 @@ func (r *SearchCardRequest) Validate() error {
 
 // SearchCardResponseDetail ... detail
 type SearchCardResponseDetail struct {
-	CardSeq                string `schema:"CardSeq"`
-	DefaultFlag            string `schema:"DefaultFlag"`
-	CardName               string `schema:"CardName"`
-	CardNo                 string `schema:"CardNo"`
-	Expire                 string `schema:"Expire"`
-	HolderName             string `schema:"HolderName"`
-	DeleteFlag             string `schema:"DeleteFlag"`
-	ErrCode                string `schema:"ErrCode"`
-	ErrInfo                string `schema:"ErrInfo"`
-	Brand                  string `schema:"Brand"`
-	DomesticFlag           string `schema:"DomesticFlag"`
-	IssuerCode             string `schema:"IssuerCode"`
-	DebitPrepaidFlag       string `schema:"DebitPrepaidFlag"`
-	DebitPrepaidIssuerName string `schema:"DebitPrepaidIssuerName"`
-	ForwardFinal           string `schema:"ForwardFinal"`
+	CardSeq                string `schema:"CardSeq,omitempty"`
+	DefaultFlag            string `schema:"DefaultFlag,omitempty"`
+	CardName               string `schema:"CardName,omitempty"`
+	CardNo                 string `schema:"CardNo,omitempty"`
+	Expire                 string `schema:"Expire,omitempty"`
+	HolderName             string `schema:"HolderName,omitempty"`
+	DeleteFlag             string `schema:"DeleteFlag,omitempty"`
+	ErrCode                string `schema:"ErrCode,omitempty"`
+	ErrInfo                string `schema:"ErrInfo,omitempty"`
+	Brand                  string `schema:"Brand,omitempty"`
+	DomesticFlag           string `schema:"DomesticFlag,omitempty"`
+	IssuerCode             string `schema:"IssuerCode,omitempty"`
+	DebitPrepaidFlag       string `schema:"DebitPrepaidFlag,omitempty"`
+	DebitPrepaidIssuerName string `schema:"DebitPrepaidIssuerName,omitempty"`
+	ForwardFinal           string `schema:"ForwardFinal,omitempty"`
 }
 
 // SearchCardResponse ... search card response
@@ -144,16 +144,15 @@ func (cli *Client) SearchCard(
 	}
 
 	parsedResList := parser.ParseToMultiObject(res)
-
-	var convertRes *SearchCardResponse
+	convertRes := &SearchCardResponse{}
 	convertRes.Cards = make([]*SearchCardResponseDetail, len(parsedResList))
-	for _, parsedRes := range parsedResList {
+	for idx, parsedRes := range parsedResList {
 		var dst SearchCardResponseDetail
 		err = parser.MapToStruct(parsedRes, &dst)
 		if err != nil {
 			return nil, err
 		}
-		convertRes.Cards = append(convertRes.Cards, &dst)
+		convertRes.Cards[idx] = &dst
 	}
 
 	convertRes.ErrCode = res.ErrCode

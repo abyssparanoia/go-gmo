@@ -74,3 +74,44 @@ func TestDeleteCard(t *testing.T) {
 	result, _ := cli.DeleteCard(req)
 	assert.Equal(t, expected, result)
 }
+
+func TestSearchCard(t *testing.T) {
+
+	expected := &SearchCardResponse{
+		Cards: []*SearchCardResponseDetail{
+			{
+				CardSeq: "0001",
+			},
+			{
+				CardSeq: "0002",
+			},
+		},
+		ErrCode: "errCode",
+		ErrInfo: "errInfo",
+	}
+
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		form := url.Values{}
+		_ = parser.Encoder.Encode(&SearchCardResponseDetail{
+			CardSeq: "0001|0002",
+			ErrCode: "errCode",
+			ErrInfo: "errInfo",
+		}, form)
+		w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
+		w.Write([]byte(form.Encode()))
+	}))
+	defer ts.Close()
+	defaultProxy := http.DefaultTransport.(*http.Transport).Proxy
+	http.DefaultTransport.(*http.Transport).Proxy = func(req *http.Request) (*url.URL, error) {
+		return url.Parse(ts.URL)
+	}
+	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
+
+	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
+	cli.APIHost = apiHostTest
+	req := &SearchCardRequest{
+		MemberID: "memberID",
+	}
+	result, _ := cli.SearchCard(req)
+	assert.Equal(t, expected, result)
+}

@@ -23,7 +23,7 @@ func ParseToMultiObject(dst interface{}) []map[string]interface{} {
 	for i := 0; i < values.NumField(); i++ {
 		v := values.Field(i).Interface()
 		f := fields.Field(i).Name
-		if f == errCode || f == errInfo {
+		if f == errCode || f == errInfo || v == "" {
 			continue
 		}
 		fieldNames = append(fieldNames, f)
