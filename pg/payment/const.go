@@ -10,6 +10,7 @@ const (
 	saveMemberPath                = "payment/SaveMember.idPass"
 	updateMemberPath              = "payment/UpdateMember.idPass"
 	deleteMemberPath              = "payment/DeleteMember.idPass"
+	searchMemberPath              = "payment/SearchMember.idPass"
 )
 
 // ResultEntryBankAccountStatus ... entry bank account status

@@ -101,3 +101,37 @@ func (cli *Client) DeleteMember(
 	}
 	return res, nil
 }
+
+// SearchMemberRequest ... search member request
+type SearchMemberRequest struct {
+	MemberID string `json:"MemberID" validate:"required,max=60"`
+}
+
+// Validate ... validate
+func (r *SearchMemberRequest) Validate() error {
+	return validate.Struct(r)
+}
+
+// SearchMemberResponse ... search member response
+type SearchMemberResponse struct {
+	MemberID   string `json:"MemberID"`
+	MemberName string `json:"MemberName"`
+	DeleteFlag string `json:"DeleteFlag"`
+	ErrCode    string `json:"ErrCode"`
+	ErrInfo    string `json:"ErrInfo"`
+}
+
+// SearchMember ... search member
+func (cli *Client) SearchMember(
+	req *SearchMemberRequest,
+) (*SearchMemberResponse, error) {
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
+	res := &SearchMemberResponse{}
+	_, err := cli.do(searchMemberPath, req, res)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
