@@ -69,3 +69,35 @@ func (cli *Client) UpdateMember(
 	}
 	return res, nil
 }
+
+// DeleteMemberRequest ... delete member request
+type DeleteMemberRequest struct {
+	MemberID string `json:"MemberID" validate:"required,max=60"`
+}
+
+// Validate ... validate
+func (r *DeleteMemberRequest) Validate() error {
+	return validate.Struct(r)
+}
+
+// DeleteMemberResponse ... delete member response
+type DeleteMemberResponse struct {
+	MemberID string `json:"MemberID"`
+	ErrCode  string `json:"ErrCode"`
+	ErrInfo  string `json:"ErrInfo"`
+}
+
+// DeleteMember ... delete member
+func (cli *Client) DeleteMember(
+	req *DeleteMemberRequest,
+) (*DeleteMemberResponse, error) {
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
+	res := &DeleteMemberResponse{}
+	_, err := cli.do(deleteMemberPath, req, res)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}

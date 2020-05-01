@@ -9,6 +9,7 @@ const (
 	entryTranPath                 = "payment/EntryTran.idPass"
 	saveMemberPath                = "payment/SaveMember.idPass"
 	updateMemberPath              = "payment/UpdateMember.idPass"
+	deleteMemberPath              = "payment/DeleteMember.idPass"
 )
 
 // ResultEntryBankAccountStatus ... entry bank account status
