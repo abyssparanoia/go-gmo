@@ -14,8 +14,6 @@ func TestSaveMember(t *testing.T) {
 
 	expected := &SaveMemberResponse{
 		MemberID: "memberID",
-		ErrCode:  "errCode",
-		ErrInfo:  "errInfo",
 	}
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -45,8 +43,6 @@ func TestUpdateMember(t *testing.T) {
 
 	expected := &UpdateMemberResponse{
 		MemberID: "memberID",
-		ErrCode:  "errCode",
-		ErrInfo:  "errInfo",
 	}
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -76,8 +72,6 @@ func TestDeleteMember(t *testing.T) {
 
 	expected := &DeleteMemberResponse{
 		MemberID: "memberID",
-		ErrCode:  "errCode",
-		ErrInfo:  "errInfo",
 	}
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -108,8 +102,6 @@ func TestSearchMember(t *testing.T) {
 		MemberID:   "memberID",
 		MemberName: "memberName",
 		DeleteFlag: "0",
-		ErrCode:    "errCode",
-		ErrInfo:    "errInfo",
 	}
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

@@ -11,14 +11,10 @@ func TestClient(t *testing.T) {
 
 	type Req struct {
 		CardSeq string `schema:"CardSeq"`
-		ErrCode string `schema:"ErrCode"`
-		ErrInfo string `schema:"ErrInfo"`
 	}
 
 	r := &Req{
 		CardSeq: "cardSeq|cardSeq2",
-		ErrCode: "errCode|errCode2",
-		ErrInfo: "errInfo",
 	}
 
 	form := url.Values{}

@@ -15,8 +15,6 @@ func TestEntryTran(t *testing.T) {
 	expected := &EntryTranResponse{
 		AccessID:   "accessID",
 		AccessPass: "accessPass",
-		ErrCode:    "errCode",
-		ErrInfo:    "errInfo",
 	}
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
