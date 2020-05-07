@@ -10,6 +10,7 @@ import (
 
 const errCode string = "ErrCode"
 const errInfo string = "ErrInfo"
+const errDetail string = "ErrDetail"
 
 // ParseToMultiObject ... parse to multi object
 func ParseToMultiObject(dst interface{}) []map[string]interface{} {
@@ -48,7 +49,9 @@ func ParseError(dst interface{}) error {
 	dstMap := StructToMap(dst)
 	errInfoField, ok := dstMap[errInfo]
 	if !ok {
-		panic("no error info field")
+		if errInfoField, ok = dstMap[errDetail]; !ok {
+			return nil
+		}
 	}
 	errInfoFieldStr, ok := errInfoField.(string)
 	if !ok {
