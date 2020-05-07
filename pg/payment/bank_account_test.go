@@ -16,8 +16,6 @@ func TestEntryBancAccount(t *testing.T) {
 		TranID:   "tranID",
 		Token:    "token",
 		StartURL: "startURL",
-		ErrCode:  "errCode",
-		ErrInfo:  "errInfo",
 	}
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -65,8 +63,6 @@ func TestGetResultEntryBankAccount(t *testing.T) {
 		AccountType:           "1",
 		AccountNumber:         "1234567",
 		AccountName:           "YAMADA TAROU",
-		ErrCode:               "errCode",
-		ErrDetail:             "errDetail",
 		AccountIdentification: "",
 	}
 

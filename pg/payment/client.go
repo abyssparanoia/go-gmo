@@ -118,5 +118,10 @@ func (c *Client) do(
 		return nil, err
 	}
 
+	err = parser.ParseError(respBody)
+	if err != nil {
+		return nil, err
+	}
+
 	return resp, nil
 }

@@ -14,8 +14,6 @@ func TestSaveCard(t *testing.T) {
 
 	expected := &SaveCardResponse{
 		CardSeq: "0001",
-		ErrCode: "errCode",
-		ErrInfo: "errInfo",
 	}
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -48,8 +46,6 @@ func TestDeleteCard(t *testing.T) {
 
 	expected := &DeleteCardResponse{
 		CardSeq: "0001",
-		ErrCode: "errCode",
-		ErrInfo: "errInfo",
 	}
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -86,16 +82,12 @@ func TestSearchCard(t *testing.T) {
 				CardSeq: "0002",
 			},
 		},
-		ErrCode: "errCode",
-		ErrInfo: "errInfo",
 	}
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		form := url.Values{}
 		_ = parser.Encoder.Encode(&SearchCardResponseDetail{
 			CardSeq: "0001|0002",
-			ErrCode: "errCode",
-			ErrInfo: "errInfo",
 		}, form)
 		w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
 		w.Write([]byte(form.Encode()))
