@@ -15,6 +15,7 @@ const (
 	deleteCardPath                = "payment/DeleteCard.idPass"
 	searchCardPath                = "payment/SearchCard.idPass"
 	entryTranGANBPath             = "payment/EntryTranGANB.idPass"
+	execTranGANGPath              = "payment/ExecTranGANB.idPass"
 )
 
 // ResultEntryBankAccountStatus ... entry bank account status

@@ -38,3 +38,54 @@ func (cli *Client) EntryTranGANB(
 	}
 	return res, nil
 }
+
+// ExecTranGANBRequest ... execc tran for bank transfer request type
+type ExecTranGANBRequest struct {
+	AccessID                  string `schema:"AccessID" validate:"required"`
+	AccessPass                string `schema:"AccessPass" validate:"required"`
+	OrderID                   string `schema:"OrderID" validate:"required"`
+	ClientField1              string `schema:"ClientField1"`
+	ClientField2              string `schema:"ClientField2"`
+	ClientField3              string `schema:"ClientField3"`
+	AccountHolderOptionalName string `schema:"AccountHolderOptionalName"`
+	TradeDays                 int    `schema:"TradeDays"`
+	TradeReason               string `schema:"TradeReason"`
+	TradeClientName           string `schema:"TradeClientName"`
+	TradeClientMailaddress    string `schema:"TradeClientMailaddress"`
+}
+
+// Validate ... validate
+func (r *ExecTranGANBRequest) Validate() error {
+	return validate.Struct(r)
+}
+
+// ExecTranGANBResponse ... exec tran for bank transfer response type
+type ExecTranGANBResponse struct {
+	AccessID          string `schema:"AccessID,omitempty"`
+	BankCode          string `schema:"BankCode,omitempty"`
+	BankName          string `schema:"BankName,omitempty"`
+	BranchCode        string `schema:"BranchCode,omitempty"`
+	BranchName        string `schema:"BranchName,omitempty"`
+	AccountType       string `schema:"AccountType,omitempty"`
+	AccountNumber     string `schema:"AccountNumber,omitempty"`
+	AccountName       string `schema:"AccountName,omitempty"`
+	AccountHolderName string `schema:"AccountHolderName,omitempty"`
+	AvailableDate     string `schema:"AvailableDate,omitempty"`
+	ErrCode           string `schema:"ErrCode,omitempty"`
+	ErrInfo           string `schema:"ErrInfo,omitempty"`
+}
+
+// ExecTranGANB ... exec tran for bank transfer
+func (cli *Client) ExecTranGANB(
+	req *ExecTranGANBRequest,
+) (*ExecTranGANBResponse, error) {
+	if err := validate.Struct(req); err != nil {
+		return nil, err
+	}
+	res := &ExecTranGANBResponse{}
+	_, err := cli.do(execTranGANGPath, req, res)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
