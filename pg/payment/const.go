@@ -14,6 +14,9 @@ const (
 	saveCardPath                  = "payment/SaveCard.idPass"
 	deleteCardPath                = "payment/DeleteCard.idPass"
 	searchCardPath                = "payment/SearchCard.idPass"
+	entryTranGANBPath             = "payment/EntryTranGANB.idPass"
+	execTranGANGPath              = "payment/ExecTranGANB.idPass"
+	searchTradeMultiPath          = "paylment/SearchTradeMulti.idPass"
 )
 
 // ResultEntryBankAccountStatus ... entry bank account status
@@ -54,4 +57,24 @@ const (
 
 func (j JobCD) String() string {
 	return string(j)
+}
+
+// TradeMultiStatus ... search trade multi status
+type TradeMultiStatus string
+
+const (
+	// TradeMultiStatusUnprocessed ... unprocessed
+	TradeMultiStatusUnprocessed TradeMultiStatus = "UNPROCESSED"
+	// TradeMultiStatusTrading ... proccessing
+	TradeMultiStatusTrading TradeMultiStatus = "TRADING"
+	// TradeMultiStatusPaysuccess ... success
+	TradeMultiStatusPaysuccess TradeMultiStatus = "PAYSUCCESS"
+	// TradeMultiStatusStop ... stop
+	TradeMultiStatusStop TradeMultiStatus = "STOP"
+	// TradeMultiStatusExpired ... expired
+	TradeMultiStatusExpired TradeMultiStatus = "EXPIRED"
+)
+
+func (s TradeMultiStatus) String() string {
+	return string(s)
 }
