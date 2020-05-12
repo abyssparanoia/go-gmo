@@ -1,0 +1,4 @@
+export SHOP_ID=""
+export SHOP_PASSWORD=""
+export SITE_ID=""
+export SITE_PASSWORD=""
