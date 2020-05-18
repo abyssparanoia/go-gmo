@@ -3,7 +3,13 @@ package parser
 import "github.com/gorilla/schema"
 
 // Encoder ... encoder
-var Encoder = schema.NewEncoder()
+var Encoder = func() *schema.Encoder {
+	return schema.NewEncoder()
+}
 
 // Decoder ... decoder
-var Decoder = schema.NewDecoder()
+var Decoder = func() *schema.Decoder {
+	decoder := schema.NewDecoder()
+	decoder.IgnoreUnknownKeys(true)
+	return decoder
+}
