@@ -1,6 +1,8 @@
-package payment
+package main
 
 import (
+	"fmt"
+
 	"github.com/abyssparanoia/go-gmo/pg/payment"
 	"github.com/caarlos0/env/v6"
 )
@@ -21,5 +23,6 @@ func newClient() *payment.Client {
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println("initilize client")
 	return cli
 }
