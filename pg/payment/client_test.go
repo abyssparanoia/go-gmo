@@ -18,7 +18,7 @@ func TestClient(t *testing.T) {
 	}
 
 	form := url.Values{}
-	err := parser.Encoder.Encode(r, form)
+	err := parser.Encoder().Encode(r, form)
 	if err != nil {
 		t.Logf(err.Error())
 	}
@@ -29,7 +29,7 @@ func TestClient(t *testing.T) {
 
 	q, _ := url.ParseQuery(formStr)
 
-	err = parser.Decoder.Decode(&res, q)
+	err = parser.Decoder().Decode(&res, q)
 
 	multiRes := parser.ParseToMultiObject(res)
 
