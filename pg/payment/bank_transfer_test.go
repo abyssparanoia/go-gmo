@@ -19,7 +19,7 @@ func TestEntryGANBTran(t *testing.T) {
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		form := url.Values{}
-		_ = parser.Encoder.Encode(expected, form)
+		_ = parser.Encoder().Encode(expected, form)
 		w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
 		w.Write([]byte(form.Encode()))
 	}))
@@ -48,7 +48,7 @@ func TestExecGANBTran(t *testing.T) {
 	}
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		form := url.Values{}
-		_ = parser.Encoder.Encode(expected, form)
+		_ = parser.Encoder().Encode(expected, form)
 		w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
 		w.Write([]byte(form.Encode()))
 	}))
@@ -76,7 +76,7 @@ func TestSearchTradeMulti(t *testing.T) {
 	}
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		form := url.Values{}
-		_ = parser.Encoder.Encode(expected, form)
+		_ = parser.Encoder().Encode(expected, form)
 		w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
 		w.Write([]byte(form.Encode()))
 	}))

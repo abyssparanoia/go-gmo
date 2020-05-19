@@ -63,7 +63,7 @@ func (c *Client) do(
 ) (*http.Response, error) {
 
 	baseForms := url.Values{}
-	err := parser.Encoder.Encode(&baseRequestBody{
+	err := parser.Encoder().Encode(&baseRequestBody{
 		SiteID:   c.SiteID,
 		SitePass: c.SitePass,
 		ShopID:   c.ShopID,
@@ -74,7 +74,7 @@ func (c *Client) do(
 	}
 
 	additinalForms := url.Values{}
-	err = parser.Encoder.Encode(body, additinalForms)
+	err = parser.Encoder().Encode(body, additinalForms)
 	if err != nil {
 		return nil, err
 	}
@@ -113,7 +113,7 @@ func (c *Client) do(
 		return nil, err
 	}
 
-	err = parser.Decoder.Decode(respBody, q)
+	err = parser.Decoder().Decode(respBody, q)
 	if err != nil {
 		return nil, err
 	}
