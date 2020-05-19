@@ -127,6 +127,8 @@ type SearchTradeMultiResponse struct {
 	GanbTotalTransferAmount  int              `schema:"GanbTotalTransferAmount,omitempty"`
 	GanbTotalTransferCount   int              `schema:"GanbTotalTransferCount,omitempty"`
 	GanbLatestTransferAmount int              `schema:"GanbLatestTransferCount,omitempty"`
+	ErrCode                  string           `schema:"ErrCode,omitempty"`
+	ErrInfo                  string           `schema:"ErrInfo,omitempty"`
 }
 
 // SearchTradeMulti ... search trade multi
