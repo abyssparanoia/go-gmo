@@ -16,7 +16,7 @@ const (
 	searchCardPath                = "payment/SearchCard.idPass"
 	entryTranGANBPath             = "payment/EntryTranGANB.idPass"
 	execTranGANGPath              = "payment/ExecTranGANB.idPass"
-	searchTradeMultiPath          = "paylment/SearchTradeMulti.idPass"
+	searchTradeMultiPath          = "payment/SearchTradeMulti.idPass"
 )
 
 // ResultEntryBankAccountStatus ... entry bank account status
