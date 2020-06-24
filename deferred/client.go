@@ -109,7 +109,7 @@ func (c *Client) doAndUnmarshalXML(ctx context.Context, method httpMethod, rawUR
 		target = errPtr
 	}
 	if target == nil {
-		// dont need to unmershal just return status code
+		// dont need to unmarshal just return status code
 		return status, nil
 	}
 
