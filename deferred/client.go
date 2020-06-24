@@ -1,7 +1,14 @@
 package deferred
 
 import (
+	"bytes"
+	"context"
+	"encoding/xml"
+	"fmt"
+	"io/ioutil"
 	"net/http"
+	"net/url"
+	"path"
 	"time"
 )
 
@@ -45,6 +52,73 @@ type baseRequestBody struct {
 	ConnectPassword  string `xml:"connectPassword"`
 }
 
-func (c *Client) do() (*http.Response, error) {
-	return nil, nil
+type httpMethod string
+
+func (m httpMethod) string() string {
+	return string(m)
+}
+
+const (
+	GET    httpMethod = "GET"
+	POST   httpMethod = "POST"
+	PUT    httpMethod = "PUT"
+	DELETE httpMethod = "DELETE"
+	PATCH  httpMethod = "PATCH"
+)
+
+// reqPtr can be nil if body is not needed
+// resPtr can be nil if client want only status code
+// errPtr can be nil if client want only status code when status => 400
+func (c *Client) doAndUnmarshalXML(ctx context.Context, method httpMethod, rawURL string, paths []string,
+	queries map[string]string, reqPtr, respPtr, errPtr interface{}) (int, error) {
+	base, err := url.Parse(rawURL)
+	if err != nil {
+		return 0, err
+	}
+	copied := *base
+	copied.Path = path.Join(copied.Path, path.Join(paths...))
+	if len(queries) > 0 {
+		q := copied.Query()
+		for k, v := range queries {
+			q.Set(k, v)
+		}
+		copied.RawQuery = q.Encode()
+	}
+	reqData, err := xml.Marshal(reqPtr)
+	if err != nil {
+		return 0, fmt.Errorf("httpclient: xml.Marshal(reqPtr) reqPtr=%v : %w", reqPtr, err)
+	}
+
+	req, err := http.NewRequest(method.string(), copied.String(), bytes.NewBuffer(reqData))
+	if err != nil {
+		return 0, fmt.Errorf("httpclient: http.NewRequest reqPtr=%v : %w", reqPtr, err)
+	}
+	req.Header.Add("Content-Type", "application/xml; charset=utf-8")
+	resp, err := c.HTTPClient.Do(req)
+	if err != nil {
+		return 0, fmt.Errorf("httpclient: c.HTTPClient.Do reqPtr=%v : %w", reqPtr, err)
+	}
+	defer resp.Body.Close()
+
+	// target is a pointer of struct to unmershal response body
+	var target interface{}
+	status := resp.StatusCode
+	if status < http.StatusBadRequest {
+		target = respPtr
+	} else {
+		target = errPtr
+	}
+	if target == nil {
+		// dont need to unmershal just return status code
+		return status, nil
+	}
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return 0, fmt.Errorf("httpclient: ioutil.ReadAll response=%v: %w", resp, err)
+	}
+	if err := xml.Unmarshal(body, target); err != nil {
+		return 0, fmt.Errorf("httpclient: xml.Unmarshal(data, target) data=%v: %w", string(body), err)
+	}
+	return status, nil
 }
