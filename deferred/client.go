@@ -8,9 +8,9 @@ import (
 // Client ... gmo deferred payment client
 type Client struct {
 	HTTPClient       *http.Client
-	AuthenticationID string `xml:"authenticationId"`
-	ShopCode         string `xml:"shopCode"`
-	ConnectPassword  string `xml:"connectPassword"`
+	AuthenticationID string
+	ShopCode         string
+	ConnectPassword  string
 	APIHost          string
 }
 
@@ -37,4 +37,14 @@ func NewClient(
 		ConnectPassword:  connectPassword,
 		APIHost:          apiHost,
 	}, nil
+}
+
+type baseRequestBody struct {
+	AuthenticationID string `xml:"authenticationId"`
+	ShopCode         string `xml:"shopCode"`
+	ConnectPassword  string `xml:"connectPassword"`
+}
+
+func (c *Client) do() (*http.Response, error) {
+	return nil, nil
 }
