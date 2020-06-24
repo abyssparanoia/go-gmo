@@ -6,7 +6,7 @@ import (
 	"golang.org/x/text/encoding/japanese"
 	"golang.org/x/text/transform"
 
-	"github.com/abyssparanoia/go-gmo/pg/payment"
+	"github.com/abyssparanoia/go-gmo/payment"
 )
 
 func main() {
