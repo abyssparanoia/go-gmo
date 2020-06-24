@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/abyssparanoia/go-gmo/pg/payment"
+	"github.com/abyssparanoia/go-gmo/payment"
 	"github.com/caarlos0/env/v6"
 )
 
