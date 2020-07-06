@@ -80,3 +80,11 @@ const (
 func (s TradeMultiStatus) String() string {
 	return string(s)
 }
+
+// PayType ... pay type
+type PayType string
+
+const (
+	// PayEasyPayType ... pay easy
+	PayEasyPayType PayType = "4"
+)
