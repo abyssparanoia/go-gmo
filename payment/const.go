@@ -17,6 +17,8 @@ const (
 	entryTranGANBPath             = "payment/EntryTranGANB.idPass"
 	execTranGANGPath              = "payment/ExecTranGANB.idPass"
 	searchTradeMultiPath          = "payment/SearchTradeMulti.idPass"
+	payEasyEntryTranPath          = "payment/EntryTranPayEasy.idPass"
+	payEasyExecTranPath           = "payment/ExecTranPayEasy.idPass"
 )
 
 // ResultEntryBankAccountStatus ... entry bank account status
@@ -78,3 +80,11 @@ const (
 func (s TradeMultiStatus) String() string {
 	return string(s)
 }
+
+// PayType ... pay type
+type PayType string
+
+const (
+	// PayEasyPayType ... pay easy
+	PayEasyPayType PayType = "4"
+)

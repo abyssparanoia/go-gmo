@@ -10,9 +10,9 @@ import (
 	"gopkg.in/go-playground/assert.v1"
 )
 
-func TestEntryGANBTran(t *testing.T) {
+func TestPayEasyEntryTran(t *testing.T) {
 
-	expected := &EntryTranGANBResponse{
+	expected := &PayEasyEntryTranResponse{
 		AccessID:   "accessID",
 		AccessPass: "accessPass",
 	}
@@ -32,19 +32,19 @@ func TestEntryGANBTran(t *testing.T) {
 
 	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
 	cli.APIHost = apiHostTest
-	req := &EntryTranGANBRequest{
+	req := &PayEasyEntryTranRequest{
 		OrderID: "orderID",
 		Amount:  4214144,
 		Tax:     2414,
 	}
-	result, _ := cli.EntryTranGANB(req)
+	result, _ := cli.PayEasyEntryTran(req)
 	assert.Equal(t, expected, result)
 }
 
-func TestExecGANBTran(t *testing.T) {
+func TestPayEasyExecTran(t *testing.T) {
 
-	expected := &ExecTranGANBResponse{
-		AccessID: "accessID",
+	expected := &PayEasyExecTranResponse{
+		OrderID: "orderID",
 	}
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		form := url.Values{}
@@ -61,11 +61,15 @@ func TestExecGANBTran(t *testing.T) {
 
 	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
 	cli.APIHost = apiHostTest
-	req := &ExecTranGANBRequest{
-		AccessID:   "accessID",
-		AccessPass: "accessPass",
-		OrderID:    "orderID",
+
+	req := &PayEasyExecTranRequest{
+		AccessID:     "accessID",
+		AccessPass:   "accessPass",
+		OrderID:      "orderID",
+		CustomerName: "田中太郎",
+		CustomerKana: "タナカタロウ",
+		TelNo:        "012345678910",
 	}
-	result, _ := cli.ExecTranGANB(req)
+	result, _ := cli.PayEasyExecTran(req)
 	assert.Equal(t, expected, result)
 }
