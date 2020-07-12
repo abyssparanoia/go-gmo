@@ -1,6 +1,19 @@
 package deferred
 
+type ShopInfo struct {
+	AuthenticationID string `xml:"authenticationId"`
+	ShopCode         string `xml:"shopCode"`
+	ConnectPassword  string `xml:"connectPassword"`
+}
+
+type HTTPInfo struct {
+	HTTPHeader string `xml:"httpHeader"`
+	DeviceInfo string `xml:"deviceInfo"`
+}
+
 type RegisterRequestParam struct {
+	ShopInfo   *ShopInfo  `xml:"shopInfo"`
+	HTTPInfo   *HTTPInfo  `xml:"httpInfo"`
 	Buyer      *Buyer     `xml:"buyer"`
 	Deliveries Deliveries `xml:"deliveries"`
 }
