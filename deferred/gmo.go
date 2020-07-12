@@ -1,7 +1,8 @@
 package deferred
 
-type RegisterParam struct {
-	Buyer Buyer `xml:"buyer"`
+type RegisterRequestParam struct {
+	Buyer      *Buyer     `xml:"buyer"`
+	Deliveries Deliveries `xml:"deliveries"`
 }
 
 type Buyer struct {
@@ -59,3 +60,22 @@ type Detail struct {
 type Details []*Detail
 
 func (c *Client) Register() {}
+
+type RegisterResponseParam struct {
+	Result            string             `xml:"result"`
+	Errors            Errors             `xml:"errors"`
+	TransactionResult *TransactionResult `xml:"transactionResult"`
+}
+
+type Error struct {
+	ErrorCode    string `xml:"errorCode"`
+	ErrorMessage string `xml:"errorMessage"`
+}
+
+type Errors []*Error
+
+type TransactionResult struct {
+	ShopTransactionID string `xml:"shopTransactionId"`
+	GMOTransactionID  string `xml:"gmoTransactionId"`
+	AuthorResult      string `xml:"authorResult"`
+}
