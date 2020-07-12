@@ -12,7 +12,7 @@ require (
 	github.com/leodido/go-urn v1.2.0 // indirect
 	github.com/pkg/sftp v1.11.0
 	github.com/stretchr/testify v1.6.1
-	golang.org/x/crypto v0.0.0-20200707235045-ab33eee955e0
+	golang.org/x/crypto v0.0.0-20200709230013-948cd5f35899
 	golang.org/x/text v0.3.3
 	gopkg.in/go-playground/assert.v1 v1.2.1
 )
