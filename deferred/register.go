@@ -1,6 +1,8 @@
 package deferred
 
-import "context"
+import (
+	"context"
+)
 
 type shopInfo struct {
 	AuthenticationID string `xml:"authenticationId"`
@@ -97,77 +99,4 @@ type transactionResult struct {
 
 func (c *Client) RegisterTransaction(ctx context.Context, req *registerRequestParam) (*RegisterResponseParam, error) {
 	return nil, nil
-}
-
-type Buyer struct {
-	ShopTransactionID string
-	ShopOrderDate     string
-	FullName          string
-	FullNameKana      string
-	ZipCode           string
-	Address           string
-	CompanyName       string
-	DepartmentName    string
-	Tel1              string
-	Tel2              string
-	Email             string
-	Email2            string
-	BilledAmount      string
-	GMOExtend1        string
-	PaymentType       string
-	Sex               string
-	BirthDay          string
-	MemberRegistDate  string
-	BuyCount          string
-	BuyAmountTotal    string
-	MemberID          string
-}
-
-type Delivery struct {
-	DeliveryCustomer *deliveryCustomer
-	Details          Details
-}
-
-type Deliveries []*delivery
-
-type DeliveryCustomer struct {
-	FullName       string
-	FullNameKana   string
-	ZipCode        string
-	Address        string
-	CompanyName    string
-	DepartmentName string
-	Tel            string
-}
-
-type Detail struct {
-	DetailName     string
-	DetailPrice    string
-	DetailQuantity string
-	GMOExtend2     string
-	GMOExtend3     string
-	GMOExtend4     string
-	DetailBrand    string
-	DetailCategory string
-}
-
-type Details []*Detail
-
-type RegisterResponseParam struct {
-	Result            string             `xml:"result"`
-	Errors            Errors             `xml:"errors"`
-	TransactionResult *TransactionResult `xml:"transactionResult"`
-}
-
-type Error struct {
-	ErrorCode    string `xml:"errorCode"`
-	ErrorMessage string `xml:"errorMessage"`
-}
-
-type Errors []*Error
-
-type TransactionResult struct {
-	ShopTransactionID string `xml:"shopTransactionId"`
-	GMOTransactionID  string `xml:"gmoTransactionId"`
-	AuthorResult      string `xml:"authorResult"`
 }
