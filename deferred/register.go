@@ -1,24 +1,26 @@
 package deferred
 
-type ShopInfo struct {
+import "context"
+
+type shopInfo struct {
 	AuthenticationID string `xml:"authenticationId"`
 	ShopCode         string `xml:"shopCode"`
 	ConnectPassword  string `xml:"connectPassword"`
 }
 
-type HTTPInfo struct {
+type httpInfo struct {
 	HTTPHeader string `xml:"httpHeader"`
 	DeviceInfo string `xml:"deviceInfo"`
 }
 
-type RegisterRequestParam struct {
-	ShopInfo   *ShopInfo  `xml:"shopInfo"`
-	HTTPInfo   *HTTPInfo  `xml:"httpInfo"`
-	Buyer      *Buyer     `xml:"buyer"`
-	Deliveries Deliveries `xml:"deliveries"`
+type registerRequestParam struct {
+	ShopInfo   *shopInfo  `xml:"shopInfo"`
+	HTTPInfo   *httpInfo  `xml:"httpInfo"`
+	Buyer      *buyer     `xml:"buyer"`
+	Deliveries deliveries `xml:"deliveries"`
 }
 
-type Buyer struct {
+type buyer struct {
 	ShopTransactionID string `xml:"shopTransactionId"`
 	ShopOrderDate     string `xml:"ShopOrderDate"`
 	FullName          string `xml:"fullName"`
@@ -42,14 +44,14 @@ type Buyer struct {
 	MemberID          string `xml:"memberID"`
 }
 
-type Delivery struct {
-	DeliveryCustomer *DeliveryCustomer `xml:"deliveryCustomer"`
+type delivery struct {
+	DeliveryCustomer *deliveryCustomer `xml:"deliveryCustomer"`
 	Details          Details           `xml:"details"`
 }
 
-type Deliveries []*Delivery
+type deliveries []*delivery
 
-type DeliveryCustomer struct {
+type deliveryCustomer struct {
 	FullName       string `xml:"fullName"`
 	FullNameKana   string `xml:"fullNameKana"`
 	ZipCode        string `xml:"zipCode"`
@@ -59,7 +61,7 @@ type DeliveryCustomer struct {
 	Tel            string `xml:"tel"`
 }
 
-type Detail struct {
+type detail struct {
 	DetailName     string `xml:"detailName"`
 	DetailPrice    string `xml:"detailPrice"`
 	DetailQuantity string `xml:"detailQuantity"`
@@ -70,9 +72,86 @@ type Detail struct {
 	DetailCategory string `xml:"detailCategory"`
 }
 
-type Details []*Detail
+type details []*detail
 
 func (c *Client) Register() {}
+
+type registerResponseParam struct {
+	Result            string             `xml:"result"`
+	Errors            Errors             `xml:"errors"`
+	TransactionResult *TransactionResult `xml:"transactionResult"`
+}
+
+type gmoError struct {
+	ErrorCode    string `xml:"errorCode"`
+	ErrorMessage string `xml:"errorMessage"`
+}
+
+type errors []*gmoError
+
+type transactionResult struct {
+	ShopTransactionID string `xml:"shopTransactionId"`
+	GMOTransactionID  string `xml:"gmoTransactionId"`
+	AuthorResult      string `xml:"authorResult"`
+}
+
+func (c *Client) RegisterTransaction(ctx context.Context, req *registerRequestParam) (*RegisterResponseParam, error) {
+	return nil, nil
+}
+
+type Buyer struct {
+	ShopTransactionID string
+	ShopOrderDate     string
+	FullName          string
+	FullNameKana      string
+	ZipCode           string
+	Address           string
+	CompanyName       string
+	DepartmentName    string
+	Tel1              string
+	Tel2              string
+	Email             string
+	Email2            string
+	BilledAmount      string
+	GMOExtend1        string
+	PaymentType       string
+	Sex               string
+	BirthDay          string
+	MemberRegistDate  string
+	BuyCount          string
+	BuyAmountTotal    string
+	MemberID          string
+}
+
+type Delivery struct {
+	DeliveryCustomer *deliveryCustomer
+	Details          Details
+}
+
+type Deliveries []*delivery
+
+type DeliveryCustomer struct {
+	FullName       string
+	FullNameKana   string
+	ZipCode        string
+	Address        string
+	CompanyName    string
+	DepartmentName string
+	Tel            string
+}
+
+type Detail struct {
+	DetailName     string
+	DetailPrice    string
+	DetailQuantity string
+	GMOExtend2     string
+	GMOExtend3     string
+	GMOExtend4     string
+	DetailBrand    string
+	DetailCategory string
+}
+
+type Details []*Detail
 
 type RegisterResponseParam struct {
 	Result            string             `xml:"result"`
