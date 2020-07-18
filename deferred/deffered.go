@@ -1,5 +1,30 @@
 package deferred
 
+type RegisterRequestParam struct {
+	Buyer      *Buyer
+	Deliveries Deliveries
+}
+
+func (o *RegisterRequestParam) toParam() *registerRequestParam {
+	p := &registerRequestParam{
+		Buyer: func() *buyer {
+			if o.Buyer == nil {
+				return nil
+			} else {
+				return o.Buyer.toParam()
+			}
+		}(),
+		Deliveries: func() deliveries {
+			r := make(deliveries, len(o.Deliveries))
+			for i, d := range o.Deliveries {
+				r[i] = d.toParam()
+			}
+			return r
+		}(),
+	}
+	return p
+}
+
 type Buyer struct {
 	ShopTransactionID string
 	ShopOrderDate     string
@@ -64,7 +89,13 @@ func (o *Delivery) toParam() *delivery {
 			}
 			return nil
 		}(),
-		Details: o.Details,
+		Details: func() details {
+			r := make(details, len(o.Details))
+			for i, d := range o.Details {
+				r[i] = d.toParam()
+			}
+			return r
+		}(),
 	}
 	return p
 }
@@ -125,13 +156,20 @@ type RegisterResponseParam struct {
 	Result            string
 	Errors            Errors
 	TransactionResult *TransactionResult
+	Status            int
 }
 
-func NewRegisterResponseParam(o *registerResponseParam) *RegisterResponseParam {
+func newRegisterResponseParam(o *registerResponseParam) *RegisterResponseParam {
 	p := &RegisterResponseParam{
-		Result:            o.Result,
-		Errors:            o.Errors,
-		TransactionResult: o.TransactionResult,
+		Result: o.Result,
+		Errors: func() Errors {
+			r := make(Errors, len(o.Errors))
+			for i, d := range o.Errors {
+				r[i] = newError(d)
+			}
+			return r
+		}(),
+		TransactionResult: newTransactionResult(o.TransactionResult),
 	}
 	return p
 }
@@ -141,7 +179,7 @@ type Error struct {
 	ErrorMessage string
 }
 
-func NewError(o *gmoError) *Error {
+func newError(o *gmoError) *Error {
 	p := &Error{
 		ErrorCode:    o.ErrorCode,
 		ErrorMessage: o.ErrorMessage,
@@ -157,7 +195,7 @@ type TransactionResult struct {
 	AuthorResult      string
 }
 
-func NewTransactionResult(o *transactionResult) *TransactionResult {
+func newTransactionResult(o *transactionResult) *TransactionResult {
 	p := &TransactionResult{
 		ShopTransactionID: o.ShopTransactionID,
 		GMOTransactionID:  o.GMOTransactionID,
