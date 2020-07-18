@@ -48,7 +48,7 @@ type buyer struct {
 
 type delivery struct {
 	DeliveryCustomer *deliveryCustomer `xml:"deliveryCustomer"`
-	Details          Details           `xml:"details"`
+	Details          details           `xml:"details"`
 }
 
 type deliveries []*delivery
@@ -76,12 +76,10 @@ type detail struct {
 
 type details []*detail
 
-func (c *Client) Register() {}
-
 type registerResponseParam struct {
 	Result            string             `xml:"result"`
-	Errors            Errors             `xml:"errors"`
-	TransactionResult *TransactionResult `xml:"transactionResult"`
+	Errors            errors             `xml:"errors"`
+	TransactionResult *transactionResult `xml:"transactionResult"`
 }
 
 type gmoError struct {
@@ -97,6 +95,20 @@ type transactionResult struct {
 	AuthorResult      string `xml:"authorResult"`
 }
 
-func (c *Client) RegisterTransaction(ctx context.Context, req *registerRequestParam) (*RegisterResponseParam, error) {
-	return nil, nil
+func (c *Client) RegisterTransaction(ctx context.Context, req *RegisterRequestParam) (*RegisterResponseParam, error) {
+	body := req.toParam()
+	respParam := registerResponseParam{}
+	body.ShopInfo = &shopInfo{
+		AuthenticationID: c.AuthenticationID,
+		ShopCode:         c.ShopCode,
+		ConnectPassword:  c.ConnectPassword,
+	}
+	status, err := c.doAndUnmarshalXML(ctx, POST, c.APIHost, []string{"auto", "transaction.do"}, map[string]string{},
+		body, &respParam)
+	if err != nil {
+		return nil, err
+	}
+	resp := newRegisterResponseParam(&respParam)
+	resp.Status = status
+	return resp, nil
 }
