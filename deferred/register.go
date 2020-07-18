@@ -90,9 +90,12 @@ type gmoError struct {
 type errors []*gmoError
 
 type transactionResult struct {
-	ShopTransactionID string `xml:"shopTransactionId"`
-	GMOTransactionID  string `xml:"gmoTransactionId"`
-	AuthorResult      string `xml:"authorResult"`
+	ShopTransactionID string   `xml:"shopTransactionId"`
+	GMOTransactionID  string   `xml:"gmoTransactionId"`
+	AuthorResult      string   `xml:"authorResult"`
+	AutoAutherResult  string   `xml:"autoAuthorResult"`
+	MaulAuthorResult  string   `xml:"maulAuthorResult"`
+	Reasons           []string `xml:"reasons"`
 }
 
 func (c *Client) RegisterTransaction(ctx context.Context, req *RegisterRequestParam) (*RegisterResponseParam, error) {
