@@ -70,7 +70,12 @@ const (
 // resPtr can be nil if client want only status code
 // errPtr can be nil if client want only status code when status => 400
 func (c *Client) doAndUnmarshalXML(ctx context.Context, method httpMethod, rawURL string, paths []string,
-	queries map[string]string, reqPtr, respPtr, errPtr interface{}) (int, error) {
+	queries map[string]string, reqPtr, respPtr interface{}) (int, error) {
+	select {
+	default:
+	case <-ctx.Done():
+		return 0, ctx.Err()
+	}
 	base, err := url.Parse(rawURL)
 	if err != nil {
 		return 0, err
@@ -84,6 +89,7 @@ func (c *Client) doAndUnmarshalXML(ctx context.Context, method httpMethod, rawUR
 		}
 		copied.RawQuery = q.Encode()
 	}
+
 	reqData, err := xml.Marshal(reqPtr)
 	if err != nil {
 		return 0, fmt.Errorf("httpclient: xml.Marshal(reqPtr) reqPtr=%v : %w", reqPtr, err)
@@ -100,15 +106,8 @@ func (c *Client) doAndUnmarshalXML(ctx context.Context, method httpMethod, rawUR
 	}
 	defer resp.Body.Close()
 
-	// target is a pointer of struct to unmershal response body
-	var target interface{}
 	status := resp.StatusCode
-	if status < http.StatusBadRequest {
-		target = respPtr
-	} else {
-		target = errPtr
-	}
-	if target == nil {
+	if respPtr == nil {
 		// dont need to unmarshal just return status code
 		return status, nil
 	}
@@ -117,7 +116,7 @@ func (c *Client) doAndUnmarshalXML(ctx context.Context, method httpMethod, rawUR
 	if err != nil {
 		return 0, fmt.Errorf("httpclient: ioutil.ReadAll response=%v: %w", resp, err)
 	}
-	if err := xml.Unmarshal(body, target); err != nil {
+	if err := xml.Unmarshal(body, respPtr); err != nil {
 		return 0, fmt.Errorf("httpclient: xml.Unmarshal(data, target) data=%v: %w", string(body), err)
 	}
 	return status, nil
