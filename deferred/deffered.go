@@ -1,5 +1,7 @@
 package deferred
 
+// structs for library client
+
 type RegisterRequestParam struct {
 	Buyer      *Buyer
 	Deliveries Deliveries
@@ -193,6 +195,9 @@ type TransactionResult struct {
 	ShopTransactionID string
 	GMOTransactionID  string
 	AuthorResult      string
+	AutoAutherResult  string
+	MaulAuthorResult  string
+	Reasons           []string
 }
 
 func newTransactionResult(o *transactionResult) *TransactionResult {
@@ -200,6 +205,47 @@ func newTransactionResult(o *transactionResult) *TransactionResult {
 		ShopTransactionID: o.ShopTransactionID,
 		GMOTransactionID:  o.GMOTransactionID,
 		AuthorResult:      o.AuthorResult,
+		AutoAutherResult:  o.AutoAutherResult,
+		MaulAuthorResult:  o.MaulAuthorResult,
+		Reasons:           o.Reasons,
+	}
+	return p
+}
+
+type Transaction struct {
+	GMOTransactionID string
+}
+
+func (o *Transaction) toParam() *transaction {
+	p := &transaction{
+		GMOTransactionID: o.GMOTransactionID,
+	}
+	return p
+}
+
+type AuthorizationResultGetRequest struct {
+	Transaction *Transaction
+}
+
+func (o *AuthorizationResultGetRequest) toParam() *authorizationResultGetRequest {
+	p := &authorizationResultGetRequest{
+		Transaction: o.Transaction.toParam(),
+	}
+	return p
+}
+
+type AuthorizationResultGetResponse struct {
+	Result            string
+	Errors            Errors
+	TransactionResult *TransactionResult
+	Status            int
+}
+
+func newAuthorizationResultGetResponse(o *authorizationResultGetResponse) *AuthorizationResultGetResponse {
+	p := &AuthorizationResultGetResponse{
+		Result:            o.Result,
+		Errors:            o.Errors,
+		TransactionResult: o.TransactionResult,
 	}
 	return p
 }
