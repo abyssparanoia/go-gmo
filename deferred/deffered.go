@@ -17,11 +17,11 @@ func (o *RegisterRequestParam) toParam() *registerRequestParam {
 			}
 		}(),
 		Deliveries: func() deliveries {
-			r := make(deliveries, len(o.Deliveries))
+			r := make([]*delivery, len(o.Deliveries))
 			for i, d := range o.Deliveries {
 				r[i] = d.toParam()
 			}
-			return r
+			return deliveries{r}
 		}(),
 	}
 	return p
@@ -92,11 +92,11 @@ func (o *Delivery) toParam() *delivery {
 			return nil
 		}(),
 		Details: func() details {
-			r := make(details, len(o.Details))
+			r := make([]*detail, len(o.Details))
 			for i, d := range o.Details {
 				r[i] = d.toParam()
 			}
-			return r
+			return details{r}
 		}(),
 	}
 	return p
@@ -165,8 +165,11 @@ func newRegisterResponseParam(o *registerResponseParam) *RegisterResponseParam {
 	p := &RegisterResponseParam{
 		Result: o.Result,
 		Errors: func() Errors {
-			r := make(Errors, len(o.Errors))
-			for i, d := range o.Errors {
+			if o.Errors == nil {
+				return Errors{}
+			}
+			r := make(Errors, len(o.Errors.ErrorsInner))
+			for i, d := range o.Errors.ErrorsInner {
 				r[i] = newError(d)
 			}
 			return r
