@@ -2,6 +2,11 @@ package deferred
 
 import (
 	"context"
+	"errors"
+)
+
+var (
+	errInvalidParameterPassed = errors.New("invalid parameter passed")
 )
 
 type shopInfo struct {
@@ -24,26 +29,26 @@ type registerRequestParam struct {
 
 type buyer struct {
 	ShopTransactionID string `xml:"shopTransactionId"`
-	ShopOrderDate     string `xml:"ShopOrderDate"`
+	ShopOrderDate     string `xml:"shopOrderDate"`
 	FullName          string `xml:"fullName"`
-	FullNameKana      string `xml:"fullNameKana"`
+	FullNameKana      string `xml:"fullKanaName"`
 	ZipCode           string `xml:"zipCode"`
 	Address           string `xml:"address"`
 	CompanyName       string `xml:"companyName"`
 	DepartmentName    string `xml:"departmentName"`
 	Tel1              string `xml:"tel1"`
 	Tel2              string `xml:"tel2"`
-	Email             string `xml:"email"`
+	Email             string `xml:"email1"`
 	Email2            string `xml:"email2"`
-	BilledAmount      string `xml:"BilledAmount"`
+	BilledAmount      string `xml:"billedAmount"`
 	GMOExtend1        string `xml:"gmoExtend1"`
 	PaymentType       string `xml:"paymentType"`
 	Sex               string `xml:"sex"`
 	BirthDay          string `xml:"birthDay"`
 	MemberRegistDate  string `xml:"memberRegistDate"`
 	BuyCount          string `xml:"buyCount"`
-	BuyAmountTotal    string `xml:"buyAmountTotal"`
-	MemberID          string `xml:"memberID"`
+	BuyAmountTotal    string `xml:"buyAmoutTotal"`
+	MemberID          string `xml:"memberId"`
 }
 
 type delivery struct {
@@ -51,11 +56,13 @@ type delivery struct {
 	Details          details           `xml:"details"`
 }
 
-type deliveries []*delivery
+type deliveries struct {
+	DeliveryInner []*delivery `xml:"delivery"`
+}
 
 type deliveryCustomer struct {
 	FullName       string `xml:"fullName"`
-	FullNameKana   string `xml:"fullNameKana"`
+	FullNameKana   string `xml:"fullKanaName"`
 	ZipCode        string `xml:"zipCode"`
 	Address        string `xml:"address"`
 	CompanyName    string `xml:"companyName"`
@@ -74,11 +81,13 @@ type detail struct {
 	DetailCategory string `xml:"detailCategory"`
 }
 
-type details []*detail
+type details struct {
+	DetailsInner []*detail `xml:"detail"`
+}
 
 type registerResponseParam struct {
 	Result            string             `xml:"result"`
-	Errors            errors             `xml:"errors"`
+	Errors            *gmoErrors         `xml:"errors"`
 	TransactionResult *transactionResult `xml:"transactionResult"`
 }
 
@@ -87,7 +96,9 @@ type gmoError struct {
 	ErrorMessage string `xml:"errorMessage"`
 }
 
-type errors []*gmoError
+type gmoErrors struct {
+	ErrorsInner []*gmoError `xml:"error"`
+}
 
 type transactionResult struct {
 	ShopTransactionID string   `xml:"shopTransactionId"`
@@ -99,6 +110,9 @@ type transactionResult struct {
 }
 
 func (c *Client) RegisterTransaction(ctx context.Context, req *RegisterRequestParam) (*RegisterResponseParam, error) {
+	if req == nil {
+		return nil, errInvalidParameterPassed
+	}
 	body := req.toParam()
 	respParam := registerResponseParam{}
 	body.ShopInfo = &shopInfo{
