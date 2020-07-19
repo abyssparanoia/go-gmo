@@ -21,6 +21,10 @@ type Client struct {
 	APIHost          string
 }
 
+var defaultHTTPClient = &http.Client{
+	Timeout: time.Second * 30,
+}
+
 // NewClient ... new client
 func NewClient(
 	authenticationID,
@@ -36,9 +40,7 @@ func NewClient(
 	}
 
 	return &Client{
-		HTTPClient: &http.Client{
-			Timeout: time.Second * 30,
-		},
+		HTTPClient:       defaultHTTPClient,
 		AuthenticationID: authenticationID,
 		ShopCode:         shopCode,
 		ConnectPassword:  connectPassword,
@@ -111,7 +113,6 @@ func (c *Client) doAndUnmarshalXML(ctx context.Context, method httpMethod, rawUR
 		// dont need to unmarshal just return status code
 		return status, nil
 	}
-
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return 0, fmt.Errorf("httpclient: ioutil.ReadAll response=%v: %w", resp, err)
