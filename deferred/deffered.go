@@ -214,3 +214,70 @@ func newTransactionResult(o *transactionResult) *TransactionResult {
 	}
 	return p
 }
+
+type ShippingReportRequest struct {
+	Transaction *ShippingReportTransaction
+}
+
+func (o *ShippingReportRequest) toParam() *shippingReportRequest {
+	p := &shippingReportRequest{
+		Transaction: func() *shippingReportTransaction {
+			if o.Transaction == nil {
+				return nil
+			}
+			return o.Transaction.toParam()
+		}(),
+	}
+	return p
+}
+
+type ShippingReportTransaction struct {
+	GMOTransactionID string
+	PDCompanyCode    string
+	SlipNo           string
+}
+
+func (o *ShippingReportTransaction) toParam() *shippingReportTransaction {
+	p := &shippingReportTransaction{
+		GMOTransactionID: o.GMOTransactionID,
+		PDCompanyCode:    o.PDCompanyCode,
+		SlipNo:           o.SlipNo,
+	}
+	return p
+}
+
+type TransactionInfo struct {
+	GMOTransactionID string
+}
+
+func newTransactionInfo(o *transactionInfo) *TransactionInfo {
+	p := &TransactionInfo{
+		GMOTransactionID: o.GMOTransactionID,
+	}
+	return p
+}
+
+type ShippingReportResponse struct {
+	Result          string
+	Errors          Errors
+	Status          int
+	TransactionInfo *TransactionInfo
+}
+
+func newShippingReportResponse(o *shippingReportResponse) *ShippingReportResponse {
+	p := &ShippingReportResponse{
+		Result: o.Result,
+		Errors: func() Errors {
+			if o.Errors == nil {
+				return Errors{}
+			}
+			r := make(Errors, len(o.Errors.ErrorsInner))
+			for i, d := range o.Errors.ErrorsInner {
+				r[i] = newError(d)
+			}
+			return r
+		}(),
+		TransactionInfo: newTransactionInfo(o.TransactionInfo),
+	}
+	return p
+}
