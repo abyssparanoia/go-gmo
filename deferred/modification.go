@@ -9,10 +9,6 @@ type modifyRequest struct {
 	KindInfo   *kindInfo  `xml:"kindInfo"`
 }
 
-type kindInfo struct {
-	UpdateKind uint8 `xml:"updateKind"`
-}
-
 type modifyResponse struct {
 	Result            string             `xml:"result"`
 	Errors            *gmoErrors         `xml:"errors"`
