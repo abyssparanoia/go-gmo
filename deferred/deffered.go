@@ -214,3 +214,50 @@ func newTransactionResult(o *transactionResult) *TransactionResult {
 	}
 	return p
 }
+
+type Transaction struct {
+	GMOTransactionID string
+}
+
+func (o *Transaction) toParam() *transaction {
+	p := &transaction{
+		GMOTransactionID: o.GMOTransactionID,
+	}
+	return p
+}
+
+type AuthResultGetRequest struct {
+	Transaction *Transaction
+}
+
+func (o *AuthResultGetRequest) toParam() *authResultGetRequest {
+	p := &authResultGetRequest{
+		Transaction: o.Transaction.toParam(),
+	}
+	return p
+}
+
+type AuthResultGetResponse struct {
+	Result            string
+	Errors            Errors
+	TransactionResult *TransactionResult
+	Status            int
+}
+
+func newAuthResultGetResponse(o *authResultGetResponse) *AuthResultGetResponse {
+	p := &AuthResultGetResponse{
+		Result: o.Result,
+		Errors: func() Errors {
+			if o.Errors == nil {
+				return Errors{}
+			}
+			r := make(Errors, len(o.Errors.ErrorsInner))
+			for i, d := range o.Errors.ErrorsInner {
+				r[i] = newError(d)
+			}
+			return r
+		}(),
+		TransactionResult: newTransactionResult(o.TransactionResult),
+	}
+	return p
+}
