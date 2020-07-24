@@ -40,6 +40,7 @@ func (o *RegisterRequestParam) toParam() *registerRequestParam {
 }
 
 type Buyer struct {
+	GMOTransactionID  string
 	ShopTransactionID string
 	ShopOrderDate     string
 	FullName          string
@@ -65,6 +66,7 @@ type Buyer struct {
 
 func (o *Buyer) toParam() *buyer {
 	p := &buyer{
+		GMOTransactionID:  o.GMOTransactionID,
 		ShopTransactionID: o.ShopTransactionID,
 		ShopOrderDate:     o.ShopOrderDate,
 		FullName:          o.FullName,
@@ -227,6 +229,120 @@ func newTransactionResult(o *transactionResult) *TransactionResult {
 	return p
 }
 
+type ModifyRequest struct {
+	Buyer      *Buyer
+	Deliveries Deliveries
+	KindInfo   *KindInfo
+}
+
+func (o *ModifyRequest) toParam() *modifyRequest {
+	p := &modifyRequest{
+		Buyer: func() *buyer {
+			if o.Buyer == nil {
+				return nil
+			}
+			return o.Buyer.toParam()
+		}(),
+		Deliveries: func() deliveries {
+			r := make([]*delivery, len(o.Deliveries))
+			for i, d := range o.Deliveries {
+				r[i] = d.toParam()
+			}
+			return deliveries{r}
+		}(),
+		KindInfo: func() *kindInfo {
+			if o.KindInfo == nil {
+				return nil
+			}
+			return o.KindInfo.toParam()
+		}(),
+	}
+	return p
+}
+
+type KindInfo struct {
+	UpdateKind UpdateKind
+}
+
+func (o *KindInfo) toParam() *kindInfo {
+	p := &kindInfo{
+		UpdateKind: o.UpdateKind.Uint8(),
+	}
+	return p
+}
+
+type ModifyResponse struct {
+	Result            string
+	Errors            Errors
+	TransactionResult *TransactionResult
+	Status            int
+}
+
+func newModifyResponse(o *modifyResponse) *ModifyResponse {
+	p := &ModifyResponse{
+		Result: o.Result,
+		Errors: func() Errors {
+			if o.Errors == nil {
+				return Errors{}
+			}
+			r := make(Errors, len(o.Errors.ErrorsInner))
+			for i, d := range o.Errors.ErrorsInner {
+				r[i] = newError(d)
+			}
+			return r
+		}(),
+		TransactionResult: newTransactionResult(o.TransactionResult),
+	}
+	return p
+}
+
+type Transaction struct {
+	GMOTransactionID string
+}
+
+func (o *Transaction) toParam() *transaction {
+	p := &transaction{
+		GMOTransactionID: o.GMOTransactionID,
+	}
+	return p
+}
+
+type AuthResultGetRequest struct {
+	Transaction *Transaction
+}
+
+func (o *AuthResultGetRequest) toParam() *authResultGetRequest {
+	p := &authResultGetRequest{
+		Transaction: o.Transaction.toParam(),
+	}
+	return p
+}
+
+type AuthResultGetResponse struct {
+	Result            string
+	Errors            Errors
+	TransactionResult *TransactionResult
+	Status            int
+}
+
+func newAuthResultGetResponse(o *authResultGetResponse) *AuthResultGetResponse {
+	p := &AuthResultGetResponse{
+		Result: o.Result,
+		Errors: func() Errors {
+			if o.Errors == nil {
+				return Errors{}
+			}
+			r := make(Errors, len(o.Errors.ErrorsInner))
+			for i, d := range o.Errors.ErrorsInner {
+				r[i] = newError(d)
+			}
+			return r
+		}(),
+		TransactionResult: newTransactionResult(o.TransactionResult),
+	}
+	return p
+}
+
 type ShippingReportRequest struct {
 	Transaction *ShippingReportTransaction
 }
@@ -313,17 +429,6 @@ func (o *ShippingModifyRequest) toParam() *shippingModifyRequest {
 			}
 			return o.KindInfo.toParam()
 		}(),
-	}
-	return p
-}
-
-type KindInfo struct {
-	UpdateKind UpdateKind
-}
-
-func (o *KindInfo) toParam() *kindInfo {
-	p := &kindInfo{
-		UpdateKind: o.UpdateKind.Uint8(),
 	}
 	return p
 }

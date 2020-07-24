@@ -28,6 +28,7 @@ type registerRequestParam struct {
 }
 
 type buyer struct {
+	GMOTransactionID  string `xml:"gmoTransactionId"`
 	ShopTransactionID string `xml:"shopTransactionId"`
 	ShopOrderDate     string `xml:"shopOrderDate"`
 	FullName          string `xml:"fullName"`
