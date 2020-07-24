@@ -2,6 +2,18 @@ package deferred
 
 // structs for library client
 
+type UpdateKind uint8
+
+func (u UpdateKind) Uint8() uint8 {
+	return uint8(u)
+}
+
+const (
+	_ UpdateKind = iota
+	Modification
+	Cancel
+)
+
 type RegisterRequestParam struct {
 	Buyer      *Buyer
 	Deliveries Deliveries
@@ -278,6 +290,70 @@ func newShippingReportResponse(o *shippingReportResponse) *ShippingReportRespons
 			return r
 		}(),
 		TransactionInfo: newTransactionInfo(o.TransactionInfo),
+	}
+	return p
+}
+
+type ShippingModifyRequest struct {
+	Transaction *ShippingReportTransaction
+	KindInfo    *KindInfo
+}
+
+func (o *ShippingModifyRequest) toParam() *shippingModifyRequest {
+	p := &shippingModifyRequest{
+		Transaction: func() *shippingReportTransaction {
+			if o.KindInfo == nil {
+				return nil
+			}
+			return o.Transaction.toParam()
+		}(),
+		KindInfo: func() *kindInfo {
+			if o.KindInfo == nil {
+				return nil
+			}
+			return o.KindInfo.toParam()
+		}(),
+	}
+	return p
+}
+
+type KindInfo struct {
+	UpdateKind UpdateKind
+}
+
+func (o *KindInfo) toParam() *kindInfo {
+	p := &kindInfo{
+		UpdateKind: o.UpdateKind.Uint8(),
+	}
+	return p
+}
+
+type ShippingModifyResponse struct {
+	Result            string
+	Errors            Errors
+	Status            int
+	TransactionResult *TransactionResult
+}
+
+func newShippingModifyResponse(o *shippingModifyResponse) *ShippingModifyResponse {
+	p := &ShippingModifyResponse{
+		Result: o.Result,
+		Errors: func() Errors {
+			if o.Errors == nil {
+				return Errors{}
+			}
+			r := make(Errors, len(o.Errors.ErrorsInner))
+			for i, d := range o.Errors.ErrorsInner {
+				r[i] = newError(d)
+			}
+			return r
+		}(),
+		TransactionResult: func() *TransactionResult {
+			if o.TransactionResult == nil {
+				return &TransactionResult{}
+			}
+			return newTransactionResult(o.TransactionResult)
+		}(),
 	}
 	return p
 }
