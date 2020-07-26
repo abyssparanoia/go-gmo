@@ -186,9 +186,6 @@ func newRegisterResponseParam(o *registerResponseParam) *RegisterResponseParam {
 	p := &RegisterResponseParam{
 		Result: o.Result,
 		Errors: func() Errors {
-			if o.Errors == nil {
-				return Errors{}
-			}
 			r := make(Errors, len(o.Errors.ErrorsInner))
 			for i, d := range o.Errors.ErrorsInner {
 				r[i] = newError(d)
@@ -468,21 +465,13 @@ func newShippingModifyResponse(o *shippingModifyResponse) *ShippingModifyRespons
 	p := &ShippingModifyResponse{
 		Result: o.Result,
 		Errors: func() Errors {
-			if o.Errors == nil {
-				return Errors{}
-			}
 			r := make(Errors, len(o.Errors.ErrorsInner))
 			for i, d := range o.Errors.ErrorsInner {
 				r[i] = newError(d)
 			}
 			return r
 		}(),
-		TransactionResult: func() *TransactionResult {
-			if o.TransactionResult == nil {
-				return &TransactionResult{}
-			}
-			return newTransactionResult(o.TransactionResult)
-		}(),
+		TransactionResult: newTransactionResult(o.TransactionResult),
 	}
 	return p
 }
