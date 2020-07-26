@@ -180,6 +180,9 @@ type RegisterResponseParam struct {
 }
 
 func newRegisterResponseParam(o *registerResponseParam) *RegisterResponseParam {
+	if o == nil {
+		return nil
+	}
 	p := &RegisterResponseParam{
 		Result: o.Result,
 		Errors: func() Errors {
@@ -203,6 +206,9 @@ type Error struct {
 }
 
 func newError(o *gmoError) *Error {
+	if o == nil {
+		return nil
+	}
 	p := &Error{
 		ErrorCode:    o.ErrorCode,
 		ErrorMessage: o.ErrorMessage,
@@ -222,6 +228,9 @@ type TransactionResult struct {
 }
 
 func newTransactionResult(o *transactionResult) *TransactionResult {
+	if o == nil {
+		return nil
+	}
 	p := &TransactionResult{
 		ShopTransactionID: o.ShopTransactionID,
 		GMOTransactionID:  o.GMOTransactionID,
@@ -279,6 +288,9 @@ type ModifyResponse struct {
 }
 
 func newModifyResponse(o *modifyResponse) *ModifyResponse {
+	if o == nil {
+		return nil
+	}
 	p := &ModifyResponse{
 		Result: o.Result,
 		Errors: func() Errors {
@@ -332,6 +344,9 @@ type AuthResultGetResponse struct {
 }
 
 func newAuthResultGetResponse(o *authResultGetResponse) *AuthResultGetResponse {
+	if o == nil {
+		return nil
+	}
 	p := &AuthResultGetResponse{
 		Result: o.Result,
 		Errors: func() Errors {
@@ -386,6 +401,9 @@ type TransactionInfo struct {
 }
 
 func newTransactionInfo(o *transactionInfo) *TransactionInfo {
+	if o == nil {
+		return nil
+	}
 	p := &TransactionInfo{
 		GMOTransactionID: o.GMOTransactionID,
 	}
@@ -400,6 +418,9 @@ type ShippingReportResponse struct {
 }
 
 func newShippingReportResponse(o *shippingReportResponse) *ShippingReportResponse {
+	if o == nil {
+		return nil
+	}
 	p := &ShippingReportResponse{
 		Result: o.Result,
 		Errors: func() Errors {
@@ -441,6 +462,9 @@ type ShippingModifyResponse struct {
 }
 
 func newShippingModifyResponse(o *shippingModifyResponse) *ShippingModifyResponse {
+	if o == nil {
+		return nil
+	}
 	p := &ShippingModifyResponse{
 		Result: o.Result,
 		Errors: func() Errors {
