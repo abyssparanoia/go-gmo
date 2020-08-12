@@ -20,14 +20,11 @@ type RegisterRequestParam struct {
 }
 
 func (o *RegisterRequestParam) toParam() *registerRequestParam {
+	if o == nil {
+		return nil
+	}
 	p := &registerRequestParam{
-		Buyer: func() *buyer {
-			if o.Buyer == nil {
-				return nil
-			} else {
-				return o.Buyer.toParam()
-			}
-		}(),
+		Buyer: o.Buyer.toParam(),
 		Deliveries: func() deliveries {
 			r := make([]*delivery, len(o.Deliveries))
 			for i, d := range o.Deliveries {
@@ -65,6 +62,9 @@ type Buyer struct {
 }
 
 func (o *Buyer) toParam() *buyer {
+	if o == nil {
+		return nil
+	}
 	p := &buyer{
 		GMOTransactionID:  o.GMOTransactionID,
 		ShopTransactionID: o.ShopTransactionID,
@@ -98,13 +98,11 @@ type Delivery struct {
 }
 
 func (o *Delivery) toParam() *delivery {
+	if o == nil {
+		return nil
+	}
 	p := &delivery{
-		DeliveryCustomer: func() *deliveryCustomer {
-			if o.DeliveryCustomer != nil {
-				return o.DeliveryCustomer.toParam()
-			}
-			return nil
-		}(),
+		DeliveryCustomer: o.DeliveryCustomer.toParam(),
 		Details: func() details {
 			r := make([]*detail, len(o.Details))
 			for i, d := range o.Details {
@@ -129,6 +127,9 @@ type DeliveryCustomer struct {
 }
 
 func (o *DeliveryCustomer) toParam() *deliveryCustomer {
+	if o == nil {
+		return nil
+	}
 	p := &deliveryCustomer{
 		FullName:       o.FullName,
 		FullNameKana:   o.FullNameKana,
@@ -153,6 +154,9 @@ type Detail struct {
 }
 
 func (o *Detail) toParam() *detail {
+	if o == nil {
+		return nil
+	}
 	p := &detail{
 		DetailName:     o.DetailName,
 		DetailPrice:    o.DetailPrice,
@@ -176,12 +180,12 @@ type RegisterResponseParam struct {
 }
 
 func newRegisterResponseParam(o *registerResponseParam) *RegisterResponseParam {
+	if o == nil {
+		return nil
+	}
 	p := &RegisterResponseParam{
 		Result: o.Result,
 		Errors: func() Errors {
-			if o.Errors == nil {
-				return Errors{}
-			}
 			r := make(Errors, len(o.Errors.ErrorsInner))
 			for i, d := range o.Errors.ErrorsInner {
 				r[i] = newError(d)
@@ -199,6 +203,9 @@ type Error struct {
 }
 
 func newError(o *gmoError) *Error {
+	if o == nil {
+		return nil
+	}
 	p := &Error{
 		ErrorCode:    o.ErrorCode,
 		ErrorMessage: o.ErrorMessage,
@@ -218,6 +225,9 @@ type TransactionResult struct {
 }
 
 func newTransactionResult(o *transactionResult) *TransactionResult {
+	if o == nil {
+		return nil
+	}
 	p := &TransactionResult{
 		ShopTransactionID: o.ShopTransactionID,
 		GMOTransactionID:  o.GMOTransactionID,
@@ -236,13 +246,11 @@ type ModifyRequest struct {
 }
 
 func (o *ModifyRequest) toParam() *modifyRequest {
+	if o == nil {
+		return nil
+	}
 	p := &modifyRequest{
-		Buyer: func() *buyer {
-			if o.Buyer == nil {
-				return nil
-			}
-			return o.Buyer.toParam()
-		}(),
+		Buyer: o.Buyer.toParam(),
 		Deliveries: func() deliveries {
 			r := make([]*delivery, len(o.Deliveries))
 			for i, d := range o.Deliveries {
@@ -250,12 +258,7 @@ func (o *ModifyRequest) toParam() *modifyRequest {
 			}
 			return deliveries{r}
 		}(),
-		KindInfo: func() *kindInfo {
-			if o.KindInfo == nil {
-				return nil
-			}
-			return o.KindInfo.toParam()
-		}(),
+		KindInfo: o.KindInfo.toParam(),
 	}
 	return p
 }
@@ -265,6 +268,9 @@ type KindInfo struct {
 }
 
 func (o *KindInfo) toParam() *kindInfo {
+	if o == nil {
+		return nil
+	}
 	p := &kindInfo{
 		UpdateKind: o.UpdateKind.Uint8(),
 	}
@@ -279,6 +285,9 @@ type ModifyResponse struct {
 }
 
 func newModifyResponse(o *modifyResponse) *ModifyResponse {
+	if o == nil {
+		return nil
+	}
 	p := &ModifyResponse{
 		Result: o.Result,
 		Errors: func() Errors {
@@ -301,6 +310,9 @@ type Transaction struct {
 }
 
 func (o *Transaction) toParam() *transaction {
+	if o == nil {
+		return nil
+	}
 	p := &transaction{
 		GMOTransactionID: o.GMOTransactionID,
 	}
@@ -312,6 +324,9 @@ type AuthResultGetRequest struct {
 }
 
 func (o *AuthResultGetRequest) toParam() *authResultGetRequest {
+	if o == nil {
+		return nil
+	}
 	p := &authResultGetRequest{
 		Transaction: o.Transaction.toParam(),
 	}
@@ -326,6 +341,9 @@ type AuthResultGetResponse struct {
 }
 
 func newAuthResultGetResponse(o *authResultGetResponse) *AuthResultGetResponse {
+	if o == nil {
+		return nil
+	}
 	p := &AuthResultGetResponse{
 		Result: o.Result,
 		Errors: func() Errors {
@@ -348,13 +366,11 @@ type ShippingReportRequest struct {
 }
 
 func (o *ShippingReportRequest) toParam() *shippingReportRequest {
+	if o == nil {
+		return nil
+	}
 	p := &shippingReportRequest{
-		Transaction: func() *shippingReportTransaction {
-			if o.Transaction == nil {
-				return nil
-			}
-			return o.Transaction.toParam()
-		}(),
+		Transaction: o.Transaction.toParam(),
 	}
 	return p
 }
@@ -366,6 +382,9 @@ type ShippingReportTransaction struct {
 }
 
 func (o *ShippingReportTransaction) toParam() *shippingReportTransaction {
+	if o == nil {
+		return nil
+	}
 	p := &shippingReportTransaction{
 		GMOTransactionID: o.GMOTransactionID,
 		PDCompanyCode:    o.PDCompanyCode,
@@ -379,6 +398,9 @@ type TransactionInfo struct {
 }
 
 func newTransactionInfo(o *transactionInfo) *TransactionInfo {
+	if o == nil {
+		return nil
+	}
 	p := &TransactionInfo{
 		GMOTransactionID: o.GMOTransactionID,
 	}
@@ -393,6 +415,9 @@ type ShippingReportResponse struct {
 }
 
 func newShippingReportResponse(o *shippingReportResponse) *ShippingReportResponse {
+	if o == nil {
+		return nil
+	}
 	p := &ShippingReportResponse{
 		Result: o.Result,
 		Errors: func() Errors {
@@ -416,19 +441,12 @@ type ShippingModifyRequest struct {
 }
 
 func (o *ShippingModifyRequest) toParam() *shippingModifyRequest {
+	if o == nil {
+		return nil
+	}
 	p := &shippingModifyRequest{
-		Transaction: func() *shippingReportTransaction {
-			if o.KindInfo == nil {
-				return nil
-			}
-			return o.Transaction.toParam()
-		}(),
-		KindInfo: func() *kindInfo {
-			if o.KindInfo == nil {
-				return nil
-			}
-			return o.KindInfo.toParam()
-		}(),
+		Transaction: o.Transaction.toParam(),
+		KindInfo:    o.KindInfo.toParam(),
 	}
 	return p
 }
@@ -441,24 +459,19 @@ type ShippingModifyResponse struct {
 }
 
 func newShippingModifyResponse(o *shippingModifyResponse) *ShippingModifyResponse {
+	if o == nil {
+		return nil
+	}
 	p := &ShippingModifyResponse{
 		Result: o.Result,
 		Errors: func() Errors {
-			if o.Errors == nil {
-				return Errors{}
-			}
 			r := make(Errors, len(o.Errors.ErrorsInner))
 			for i, d := range o.Errors.ErrorsInner {
 				r[i] = newError(d)
 			}
 			return r
 		}(),
-		TransactionResult: func() *TransactionResult {
-			if o.TransactionResult == nil {
-				return &TransactionResult{}
-			}
-			return newTransactionResult(o.TransactionResult)
-		}(),
+		TransactionResult: newTransactionResult(o.TransactionResult),
 	}
 	return p
 }
