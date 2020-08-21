@@ -102,7 +102,7 @@ func TestAlterTran(t *testing.T) {
 	req := &AlterTranRequest{
 		AccessID:   "accessID",
 		AccessPass: "accessPass",
-		JobCD:      JobCDCapture,
+		JobCD:      JobCDSales,
 		Amount:     1000,
 	}
 	result, _ := cli.AlterTran(req)

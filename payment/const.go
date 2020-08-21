@@ -57,6 +57,10 @@ const (
 	JobCDAuth JobCD = "AUTH"
 	// JobCDSauth ... sauth
 	JobCDSauth JobCD = "SAUTH"
+	// JobCDSales ... sales
+	JobCDSales JobCD = "SALES"
+	// JobCDCancel ... cancel
+	JobCDCancel JobCD = "CANCEL"
 )
 
 func (j JobCD) String() string {
