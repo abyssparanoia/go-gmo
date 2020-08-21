@@ -6,7 +6,7 @@ import (
 
 // EntryTranRequest ... entry tran request type
 type EntryTranRequest struct {
-	OrderID  string `schema:"OrderID" validate:"required,len=27"`
+	OrderID  string `schema:"OrderID" validate:"required,lte=27"`
 	JobCD    JobCD  `schema:"JobCd" validate:"required"`
 	ItemCode string `schema:"ItemCode,omitempty"`
 	Amount   int    `schema:"Amount,omitempty"`
@@ -45,12 +45,12 @@ func (cli *Client) EntryTran(
 type ExecTranRequest struct {
 	AccessID     string `schema:"AccessID" validate:"required"`
 	AccessPass   string `schema:"AccessPass" validate:"required"`
-	OrderID      string `schema:"OrderID" validate:"required,len=27"`
+	OrderID      string `schema:"OrderID" validate:"required,lte=27"`
 	Method       string `schema:"Method,omitempty"`
 	PayTimes     int    `schema:"PayTimes"`
 	MemberID     string `schema:"MemberID" validate:"required"`
 	SeqMode      string `schema:"SeqMode" validate:"required,len=1"`
-	CardSeq      int    `schema:"CardSeq" validate:"required,len=4"`
+	CardSeq      int    `schema:"CardSeq" validate:"required,lte=4"`
 	CardPass     string `schema:"CardPass"`
 	SecurityCode string `schema:"SecurityCode"`
 }

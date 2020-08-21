@@ -42,3 +42,37 @@ func TestEntryTran(t *testing.T) {
 	result, _ := cli.EntryTran(req)
 	assert.Equal(t, expected, result)
 }
+
+func TestExecTran(t *testing.T) {
+
+	expected := &ExecTranResponse{
+		ACS:    "acs",
+		ACSUrl: "acs_url",
+	}
+
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		form := url.Values{}
+		_ = parser.Encoder().Encode(expected, form)
+		w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
+		w.Write([]byte(form.Encode()))
+	}))
+	defer ts.Close()
+	defaultProxy := http.DefaultTransport.(*http.Transport).Proxy
+	http.DefaultTransport.(*http.Transport).Proxy = func(req *http.Request) (*url.URL, error) {
+		return url.Parse(ts.URL)
+	}
+	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
+
+	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
+	cli.APIHost = apiHostTest
+	req := &ExecTranRequest{
+		AccessID:   "accessID",
+		AccessPass: "accessPass",
+		OrderID:    "orderID",
+		MemberID:   "memberID",
+		SeqMode:    "1",
+		CardSeq:    1,
+	}
+	result, _ := cli.ExecTran(req)
+	assert.Equal(t, expected, result)
+}
