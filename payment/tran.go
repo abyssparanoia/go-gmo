@@ -76,7 +76,7 @@ func (cli *Client) ExecTran(
 		return nil, err
 	}
 	res := &ExecTranResponse{}
-	_, err := cli.do(entryTranPath, req, res)
+	_, err := cli.do(execTranPath, req, res)
 	if err != nil {
 		return nil, err
 	}
