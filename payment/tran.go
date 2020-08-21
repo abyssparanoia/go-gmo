@@ -123,3 +123,42 @@ func (cli *Client) AlterTran(
 	}
 	return res, nil
 }
+
+// ChangeTranRequest ... change tran request
+type ChangeTranRequest struct {
+	AccessID   string `schema:"AccessID" validate:"required"`
+	AccessPass string `schema:"AccessPass" validate:"required"`
+	JobCD      JobCD  `schema:"JobCd" validate:"required"`
+	Amount     int    `schema:"Amount" validate:"required"`
+	Tax        int    `schema:"Tax,omitempty"`
+}
+
+// Validate ... validate
+func (r *ChangeTranRequest) Validate() error {
+	return validate.Struct(r)
+}
+
+// ChangeTranResponse ... change tran response
+type ChangeTranResponse struct {
+	AccessID   string `schema:"AccessID,omitempty"`
+	AccessPass string `schema:"AccessPass,omitempty"`
+	Forward    string `schema:"Forward,omitempty"`
+	Approve    string `schema:"Approve,omitempty"`
+	TranID     string `schema:"TranID,omitempty"`
+	TranDate   string `schema:"TranDate,omitempty"`
+}
+
+// ChangeTran ... change tran
+func (cli *Client) ChangeTran(
+	req *ChangeTranRequest,
+) (*ChangeTranResponse, error) {
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
+	res := &ChangeTranResponse{}
+	_, err := cli.do(changeTranPath, req, res)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
