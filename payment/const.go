@@ -8,6 +8,7 @@ const (
 	getResultEntryBankAccountPath = "payment/BankAccountTranResult.idPass"
 	entryTranPath                 = "payment/EntryTran.idPass"
 	execTranPath                  = "payment/ExecTran.idPass"
+	alterTranPath                 = "payment/AlterTran.idPass"
 	saveMemberPath                = "payment/SaveMember.idPass"
 	updateMemberPath              = "payment/UpdateMember.idPass"
 	deleteMemberPath              = "payment/DeleteMember.idPass"

@@ -82,3 +82,44 @@ func (cli *Client) ExecTran(
 	}
 	return res, nil
 }
+
+// AlterTranRequest ... alter tran request
+type AlterTranRequest struct {
+	AccessID   string `schema:"AccessID" validate:"required"`
+	AccessPass string `schema:"AccessPass" validate:"required"`
+	JobCD      JobCD  `schema:"JobCd" validate:"required"`
+	Amount     int    `schema:"Amount,omitempty"`
+	Tax        int    `schema:"Tax,omitempty"`
+	Method     string `schema:"Method,omitempty"`
+	PayTimes   int    `schema:"PayTimes,omitempty"`
+}
+
+// Validate ... validate
+func (r *AlterTranRequest) Validate() error {
+	return validate.Struct(r)
+}
+
+// AlterTranResponse ... alter tran response
+type AlterTranResponse struct {
+	AccessID   string `schema:"AccessID,omitempty"`
+	AccessPass string `schema:"AccessPass,omitempty"`
+	Forward    string `schema:"Forward,omitempty"`
+	Approve    string `schema:"Approve,omitempty"`
+	TranID     string `schema:"TranID,omitempty"`
+	TranDate   string `schema:"TranDate,omitempty"`
+}
+
+// AlterTran ... alter tran
+func (cli *Client) AlterTran(
+	req *AlterTranRequest,
+) (*AlterTranResponse, error) {
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
+	res := &AlterTranResponse{}
+	_, err := cli.do(alterTranPath, req, res)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
