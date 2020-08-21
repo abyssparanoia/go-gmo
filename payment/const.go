@@ -7,6 +7,8 @@ const (
 	entryBankAccountPath          = "payment/BankAccountEntry.idPass"
 	getResultEntryBankAccountPath = "payment/BankAccountTranResult.idPass"
 	entryTranPath                 = "payment/EntryTran.idPass"
+	execTranPath                  = "payment/ExecTran.idPass"
+	alterTranPath                 = "payment/AlterTran.idPass"
 	saveMemberPath                = "payment/SaveMember.idPass"
 	updateMemberPath              = "payment/UpdateMember.idPass"
 	deleteMemberPath              = "payment/DeleteMember.idPass"
@@ -55,6 +57,10 @@ const (
 	JobCDAuth JobCD = "AUTH"
 	// JobCDSauth ... sauth
 	JobCDSauth JobCD = "SAUTH"
+	// JobCDSales ... sales
+	JobCDSales JobCD = "SALES"
+	// JobCDCancel ... cancel
+	JobCDCancel JobCD = "CANCEL"
 )
 
 func (j JobCD) String() string {
