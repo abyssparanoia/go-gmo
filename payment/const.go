@@ -9,6 +9,7 @@ const (
 	entryTranPath                 = "payment/EntryTran.idPass"
 	execTranPath                  = "payment/ExecTran.idPass"
 	alterTranPath                 = "payment/AlterTran.idPass"
+	changeTranPath                = "payment/ChangeTran.idPass"
 	saveMemberPath                = "payment/SaveMember.idPass"
 	updateMemberPath              = "payment/UpdateMember.idPass"
 	deleteMemberPath              = "payment/DeleteMember.idPass"
