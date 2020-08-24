@@ -62,10 +62,18 @@ func (r *ExecTranRequest) Validate() error {
 
 // ExecTranResponse ... exec tran response
 type ExecTranResponse struct {
-	ACS    string `schema:"ACS"`
-	ACSUrl string `schema:"ACSUrl"`
-	PaReq  string `schema:"PaReq"`
-	MD     string `schema:"MD"`
+	ACS         string `schema:"ACS"`
+	OrderID     string `schema:"OrderID"`
+	Forward     string `schema:"forward"`
+	Method      string `schema:"Method"`
+	PayTimes    string `schema:"PayTimes"`
+	Approve     string `schema:"Approve"`
+	TranID      string `schema:"TranID"`
+	TranDate    string `schema:"TranDate"`
+	CheckString string `schema:"CheckString"`
+	ACSUrl      string `schema:"ACSUrl"`
+	PaReq       string `schema:"PaReq"`
+	MD          string `schema:"MD"`
 }
 
 // ExecTran ... exec tran
