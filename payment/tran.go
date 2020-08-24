@@ -74,6 +74,8 @@ type ExecTranResponse struct {
 	ACSUrl      string `schema:"ACSUrl"`
 	PaReq       string `schema:"PaReq"`
 	MD          string `schema:"MD"`
+	ErrCode     string `schema:"ErrCode,omitempty"`
+	ErrInfo     string `schema:"ErrInfo,omitempty"`
 }
 
 // ExecTran ... exec tran
