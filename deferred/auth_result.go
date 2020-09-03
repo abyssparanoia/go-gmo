@@ -3,12 +3,12 @@ package deferred
 import "context"
 
 type transaction struct {
-	GMOTransactionID string `xml:"gmoTransactionId"`
+	GMOTransactionID string `xml:"gmoTransactionId" validate:"required"`
 }
 
 type authResultGetRequest struct {
 	ShopInfo    *shopInfo    `xml:"shopInfo"`
-	Transaction *transaction `xml:"transaction"`
+	Transaction *transaction `xml:"transaction" validate:"required"`
 }
 
 type authResultGetResponse struct {
@@ -21,7 +21,10 @@ func (c *Client) GetAuthResult(ctx context.Context, req *AuthResultGetRequest) (
 	if req == nil {
 		return nil, errInvalidParameterPassed
 	}
-	body := req.toParam()
+	body, err := req.toParam()
+	if err != nil {
+		return nil, err
+	}
 	respParam := authResultGetResponse{}
 	body.ShopInfo = &shopInfo{
 		AuthenticationID: c.AuthenticationID,

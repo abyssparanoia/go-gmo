@@ -4,8 +4,8 @@ import "context"
 
 type shippingModifyRequest struct {
 	ShopInfo    *shopInfo                  `xml:"shopInfo"`
-	Transaction *shippingReportTransaction `xml:"transaction"`
-	KindInfo    *kindInfo                  `xml:"kindInfo"`
+	Transaction *shippingReportTransaction `xml:"transaction" validate:"required"`
+	KindInfo    *kindInfo                  `xml:"kindInfo" validate:"required"`
 }
 
 type kindInfo struct {
@@ -22,7 +22,10 @@ func (c *Client) ModifyShippingReport(ctx context.Context, req *ShippingModifyRe
 	if req == nil {
 		return nil, errInvalidParameterPassed
 	}
-	body := req.toParam()
+	body, err := req.toParam()
+	if err != nil {
+		return nil, err
+	}
 	respParam := shippingModifyResponse{}
 	body.ShopInfo = &shopInfo{
 		AuthenticationID: c.AuthenticationID,

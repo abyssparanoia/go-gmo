@@ -37,6 +37,7 @@ func TestDeferred_ModifyTransaction(t *testing.T) {
 						UpdateKind: Cancel,
 					},
 					Buyer: &Buyer{
+						GMOTransactionID:  "20090300001",
 						ShopTransactionID: "1111-2222-3333-4444",
 						ShopOrderDate:     "2012/04/01",
 						FullName:          "山田太郎",

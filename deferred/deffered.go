@@ -1,5 +1,7 @@
 package deferred
 
+import "github.com/abyssparanoia/go-gmo/internal/pkg/validate"
+
 // structs for library client
 
 type UpdateKind uint8
@@ -19,9 +21,9 @@ type RegisterRequestParam struct {
 	Deliveries Deliveries
 }
 
-func (o *RegisterRequestParam) toParam() *registerRequestParam {
+func (o *RegisterRequestParam) toParam() (*registerRequestParam, error) {
 	if o == nil {
-		return nil
+		return nil, nil
 	}
 	p := &registerRequestParam{
 		Buyer: o.Buyer.toParam(),
@@ -33,7 +35,10 @@ func (o *RegisterRequestParam) toParam() *registerRequestParam {
 			return deliveries{r}
 		}(),
 	}
-	return p
+	if err := validate.Struct(p); err != nil {
+		return nil, err
+	}
+	return p, nil
 }
 
 type Buyer struct {
@@ -245,12 +250,12 @@ type ModifyRequest struct {
 	KindInfo   *KindInfo
 }
 
-func (o *ModifyRequest) toParam() *modifyRequest {
+func (o *ModifyRequest) toParam() (*modifyRequest, error) {
 	if o == nil {
-		return nil
+		return nil, nil
 	}
 	p := &modifyRequest{
-		Buyer: o.Buyer.toParam(),
+		Buyer: o.Buyer.toParamModification(),
 		Deliveries: func() deliveries {
 			r := make([]*delivery, len(o.Deliveries))
 			for i, d := range o.Deliveries {
@@ -260,7 +265,10 @@ func (o *ModifyRequest) toParam() *modifyRequest {
 		}(),
 		KindInfo: o.KindInfo.toParam(),
 	}
-	return p
+	if err := validate.Struct(p); err != nil {
+		return nil, err
+	}
+	return p, nil
 }
 
 type KindInfo struct {
@@ -323,14 +331,17 @@ type AuthResultGetRequest struct {
 	Transaction *Transaction
 }
 
-func (o *AuthResultGetRequest) toParam() *authResultGetRequest {
+func (o *AuthResultGetRequest) toParam() (*authResultGetRequest, error) {
 	if o == nil {
-		return nil
+		return nil, nil
 	}
 	p := &authResultGetRequest{
 		Transaction: o.Transaction.toParam(),
 	}
-	return p
+	if err := validate.Struct(p); err != nil {
+		return nil, err
+	}
+	return p, nil
 }
 
 type AuthResultGetResponse struct {
@@ -365,14 +376,17 @@ type ShippingReportRequest struct {
 	Transaction *ShippingReportTransaction
 }
 
-func (o *ShippingReportRequest) toParam() *shippingReportRequest {
+func (o *ShippingReportRequest) toParam() (*shippingReportRequest, error) {
 	if o == nil {
-		return nil
+		return nil, nil
 	}
 	p := &shippingReportRequest{
 		Transaction: o.Transaction.toParam(),
 	}
-	return p
+	if err := validate.Struct(p); err != nil {
+		return nil, err
+	}
+	return p, nil
 }
 
 type ShippingReportTransaction struct {
@@ -440,15 +454,18 @@ type ShippingModifyRequest struct {
 	KindInfo    *KindInfo
 }
 
-func (o *ShippingModifyRequest) toParam() *shippingModifyRequest {
+func (o *ShippingModifyRequest) toParam() (*shippingModifyRequest, error) {
 	if o == nil {
-		return nil
+		return nil, nil
 	}
 	p := &shippingModifyRequest{
 		Transaction: o.Transaction.toParam(),
 		KindInfo:    o.KindInfo.toParam(),
 	}
-	return p
+	if err := validate.Struct(p); err != nil {
+		return nil, err
+	}
+	return p, nil
 }
 
 type ShippingModifyResponse struct {
