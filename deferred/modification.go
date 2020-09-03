@@ -19,7 +19,10 @@ func (c *Client) ModifyTransaction(ctx context.Context, req *ModifyRequest) (*Mo
 	if req == nil {
 		return nil, errInvalidParameterPassed
 	}
-	body := req.toParam()
+	body, err := req.toParam()
+	if err != nil {
+		return nil, err
+	}
 	respParam := modifyResponse{}
 	body.ShopInfo = &shopInfo{
 		AuthenticationID: c.AuthenticationID,

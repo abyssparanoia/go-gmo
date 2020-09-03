@@ -250,9 +250,9 @@ type ModifyRequest struct {
 	KindInfo   *KindInfo
 }
 
-func (o *ModifyRequest) toParam() *modifyRequest {
+func (o *ModifyRequest) toParam() (*modifyRequest, error) {
 	if o == nil {
-		return nil
+		return nil, nil
 	}
 	p := &modifyRequest{
 		Buyer: o.Buyer.toParamModification(),
@@ -265,7 +265,10 @@ func (o *ModifyRequest) toParam() *modifyRequest {
 		}(),
 		KindInfo: o.KindInfo.toParam(),
 	}
-	return p
+	if err := validate.Struct(p); err != nil {
+		return nil, err
+	}
+	return p, nil
 }
 
 type KindInfo struct {
