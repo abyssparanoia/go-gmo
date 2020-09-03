@@ -4,13 +4,13 @@ import "context"
 
 type shippingReportRequest struct {
 	ShopInfo    *shopInfo                  `xml:"shopInfo"`
-	Transaction *shippingReportTransaction `xml:"transaction"`
+	Transaction *shippingReportTransaction `xml:"transaction" validate:"required"`
 }
 
 type shippingReportTransaction struct {
-	GMOTransactionID string `xml:"gmoTransactionId"`
-	PDCompanyCode    string `xml:"pdcompanycode"`
-	SlipNo           string `xml:"slipno"`
+	GMOTransactionID string `xml:"gmoTransactionId" validate:"required"`
+	PDCompanyCode    string `xml:"pdcompanycode" validate:"required"`
+	SlipNo           string `xml:"slipno" validate:"required"`
 	InvoiceIssueDate string `xml:"invoiceIssueDate"`
 }
 
@@ -28,7 +28,10 @@ func (c *Client) PostShippingReport(ctx context.Context, req *ShippingReportRequ
 	if req == nil {
 		return nil, errInvalidParameterPassed
 	}
-	body := req.toParam()
+	body, err := req.toParam()
+	if err != nil {
+		return nil, err
+	}
 	respParam := shippingReportResponse{}
 	body.ShopInfo = &shopInfo{
 		AuthenticationID: c.AuthenticationID,

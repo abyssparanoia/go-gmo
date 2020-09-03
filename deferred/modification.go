@@ -3,10 +3,10 @@ package deferred
 import "context"
 
 type modifyRequest struct {
-	ShopInfo   *shopInfo  `xml:"shopInfo"`
-	Buyer      *buyer     `xml:"buyer"`
-	Deliveries deliveries `xml:"deliveries"`
-	KindInfo   *kindInfo  `xml:"kindInfo"`
+	ShopInfo   *shopInfo          `xml:"shopInfo"`
+	Buyer      *buyerModification `xml:"buyer" validate:"required"`
+	Deliveries deliveries         `xml:"deliveries"`
+	KindInfo   *kindInfo          `xml:"kindInfo" validate:"required"`
 }
 
 type modifyResponse struct {
