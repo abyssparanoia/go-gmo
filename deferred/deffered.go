@@ -492,3 +492,199 @@ func newShippingModifyResponse(o *shippingModifyResponse) *ShippingModifyRespons
 	}
 	return p
 }
+
+type InvoiceGetRequest struct {
+	GMOTransactionID string
+}
+
+func (o *InvoiceGetRequest) toParam() (*invoiceRequest, error) {
+	p := &invoiceRequest{
+		Transaction: &transaction{
+			GMOTransactionID: o.GMOTransactionID,
+		},
+	}
+	if err := validate.Struct(p); err != nil {
+		return nil, err
+	}
+	return p, nil
+}
+
+type InvoiceGetResponse struct {
+	Status                        int
+	GMOTransactionID              string
+	DeliveryZip                   string
+	DeliveryAddress1              string
+	DeliveryAddress2              string
+	PurchaseCompanyName           string
+	PurchaseDepartmentName        string
+	PurchaseUserName              string
+	ShopName                      string
+	ShopTransactionID             string
+	InvoiceMatter1                string
+	InvoiceMatter2                string
+	InvoiceMatter3                string
+	InvoiceMatter4                string
+	InvoiceMatter5                string
+	GMOCompanyName                string
+	GMOInfo1                      string
+	GMOInfo2                      string
+	GMOInfo3                      string
+	GMOInfo4                      string
+	InvoiceTitle                  string
+	InvoiceGreeting1              string
+	InvoiceGreeting2              string
+	InvoiceGreeting3              string
+	InvoiceGreeting4              string
+	Yobi1                         string
+	Yobi2                         string
+	Yobi3                         string
+	Yobi4                         string
+	Yobi5                         string
+	Yobi6                         string
+	Yobi7                         string
+	Yobi8                         string
+	Yobi9                         string
+	Yobi10                        string
+	BilledAmount                  string
+	BilledAmountTax               string
+	OrderDate                     string
+	InvoiceIssueDate              string
+	PaymentDueDate                string
+	TrackingNumber                string
+	BankNoteWording               string
+	BankName                      string
+	Bankcode                      string
+	DepositType                   string
+	AccountNumber                 string
+	BankAccountHolder             string
+	VotesBilledAmount             string
+	VotesFrontUpperInfo           string
+	VotesBarCode                  string
+	DocketBilledAmount            string
+	DocketPurchaseAddress         string
+	DocketPurchaseCompanyName     string
+	DocketPurchaseDepartmentName  string
+	DocketPurchaseUserName        string
+	DocketTrackingNumber          string
+	DocketX                       string
+	ReceiptPurchaseCompanyName    string
+	ReceiptPurchaseDepartmentName string
+	ReceiptPurchaseUserName       string
+	ReceiptTrackingNumber1        string
+	ReceiptTrackingNumber2        string
+	ReceiptAmount                 string
+	ReceiptTax                    string
+	ReceiptShopName               string
+	ReceiptPrintWord              string
+	String                        string
+	Yobi11                        string
+	Yobi12                        string
+	Yobi13                        string
+	Yobi14                        string
+	Yobi15                        string
+	GoodsDetail                   GoodsDetail
+}
+
+func newInvoiceGetResponse(o *invoiceResponse) *InvoiceGetResponse {
+	p := &InvoiceGetResponse{
+		GMOTransactionID:              o.GMOTransactionID,
+		DeliveryZip:                   o.DeliveryZip,
+		DeliveryAddress1:              o.DeliveryAddress1,
+		DeliveryAddress2:              o.DeliveryAddress2,
+		PurchaseCompanyName:           o.PurchaseCompanyName,
+		PurchaseDepartmentName:        o.PurchaseDepartmentName,
+		PurchaseUserName:              o.PurchaseUserName,
+		ShopName:                      o.ShopName,
+		ShopTransactionID:             o.ShopTransactionID,
+		InvoiceMatter1:                o.InvoiceMatter1,
+		InvoiceMatter2:                o.InvoiceMatter2,
+		InvoiceMatter3:                o.InvoiceMatter3,
+		InvoiceMatter4:                o.InvoiceMatter4,
+		InvoiceMatter5:                o.InvoiceMatter5,
+		GMOCompanyName:                o.GMOCompanyName,
+		GMOInfo1:                      o.GMOInfo1,
+		GMOInfo2:                      o.GMOInfo2,
+		GMOInfo3:                      o.GMOInfo3,
+		GMOInfo4:                      o.GMOInfo4,
+		InvoiceTitle:                  o.InvoiceTitle,
+		InvoiceGreeting1:              o.InvoiceGreeting1,
+		InvoiceGreeting2:              o.InvoiceGreeting2,
+		InvoiceGreeting3:              o.InvoiceGreeting3,
+		InvoiceGreeting4:              o.InvoiceGreeting4,
+		Yobi1:                         o.Yobi1,
+		Yobi2:                         o.Yobi2,
+		Yobi3:                         o.Yobi3,
+		Yobi4:                         o.Yobi4,
+		Yobi5:                         o.Yobi5,
+		Yobi6:                         o.Yobi6,
+		Yobi7:                         o.Yobi7,
+		Yobi8:                         o.Yobi8,
+		Yobi9:                         o.Yobi9,
+		Yobi10:                        o.Yobi10,
+		BilledAmount:                  o.BilledAmount,
+		BilledAmountTax:               o.BilledAmountTax,
+		OrderDate:                     o.OrderDate,
+		InvoiceIssueDate:              o.InvoiceIssueDate,
+		PaymentDueDate:                o.PaymentDueDate,
+		TrackingNumber:                o.TrackingNumber,
+		BankNoteWording:               o.BankNoteWording,
+		BankName:                      o.BankName,
+		Bankcode:                      o.Bankcode,
+		DepositType:                   o.DepositType,
+		AccountNumber:                 o.AccountNumber,
+		BankAccountHolder:             o.BankAccountHolder,
+		VotesBilledAmount:             o.VotesBilledAmount,
+		VotesFrontUpperInfo:           o.VotesFrontUpperInfo,
+		VotesBarCode:                  o.VotesBarCode,
+		DocketBilledAmount:            o.DocketBilledAmount,
+		DocketPurchaseAddress:         o.DocketPurchaseAddress,
+		DocketPurchaseCompanyName:     o.DocketPurchaseCompanyName,
+		DocketPurchaseDepartmentName:  o.DocketPurchaseDepartmentName,
+		DocketPurchaseUserName:        o.DocketPurchaseUserName,
+		DocketTrackingNumber:          o.DocketTrackingNumber,
+		DocketX:                       o.DocketX,
+		ReceiptPurchaseCompanyName:    o.ReceiptPurchaseCompanyName,
+		ReceiptPurchaseDepartmentName: o.ReceiptPurchaseDepartmentName,
+		ReceiptPurchaseUserName:       o.ReceiptPurchaseUserName,
+		ReceiptTrackingNumber1:        o.ReceiptTrackingNumber1,
+		ReceiptTrackingNumber2:        o.ReceiptTrackingNumber2,
+		ReceiptAmount:                 o.ReceiptAmount,
+		ReceiptTax:                    o.ReceiptTax,
+		ReceiptShopName:               o.ReceiptShopName,
+		ReceiptPrintWord:              o.ReceiptPrintWord,
+		String:                        o.String,
+		Yobi11:                        o.Yobi11,
+		Yobi12:                        o.Yobi12,
+		Yobi13:                        o.Yobi13,
+		Yobi14:                        o.Yobi14,
+		Yobi15:                        o.Yobi15,
+		GoodsDetail: func() GoodsDetail {
+			return GoodsDetail{
+				GoodsName:   o.DetailList.GoodsDetail.GoodsName,
+				GoodsNum:    o.DetailList.GoodsDetail.GoodsNum,
+				GoodsPrice:  o.DetailList.GoodsDetail.GoodsPrice,
+				GoodsAmount: o.DetailList.GoodsDetail.GoodsAmount,
+				GoodsTax:    o.DetailList.GoodsDetail.GoodsTax,
+				Yobi16:      o.DetailList.GoodsDetail.Yobi16,
+				Yobi17:      o.DetailList.GoodsDetail.Yobi17,
+				Yobi18:      o.DetailList.GoodsDetail.Yobi18,
+				Yobi19:      o.DetailList.GoodsDetail.Yobi19,
+				Yobi20:      o.DetailList.GoodsDetail.Yobi20,
+			}
+		}(),
+	}
+	return p
+}
+
+type GoodsDetail struct {
+	GoodsName   string
+	GoodsNum    int64
+	GoodsPrice  float64
+	GoodsAmount float64
+	GoodsTax    float64
+	Yobi16      string
+	Yobi17      string
+	Yobi18      string
+	Yobi19      string
+	Yobi20      string
+}
