@@ -1,8 +1,6 @@
 package deferred
 
 import (
-	"fmt"
-
 	"github.com/abyssparanoia/go-gmo/internal/pkg/validate"
 )
 
@@ -686,7 +684,6 @@ func newInvoiceGetResponse(o *invoiceResult) *InvoiceGetResponse {
 			}
 			r := make(Errors, len(o.Errors.ErrorsInner))
 			for i, d := range o.Errors.ErrorsInner {
-				fmt.Printf("%+v\n", d)
 				r[i] = newInvoiceError(d)
 			}
 			return r
