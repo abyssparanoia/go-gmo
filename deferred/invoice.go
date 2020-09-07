@@ -1,13 +1,19 @@
 package deferred
 
-import "context"
+import (
+	"context"
+)
 
 type invoiceRequest struct {
 	ShopInfo    *shopInfo    `xml:"shopInfo"`
 	Transaction *transaction `xml:"transaction" validate:"required"`
 }
 
-type invoiceResponse struct {
+type invoiceResult struct {
+	InvoiceDataResult invoiceDataResult `xml:"invoiceDataResult"`
+}
+
+type invoiceDataResult struct {
 	GMOTransactionID              string `xml:"gmoTransactionID"`
 	DeliveryZip                   string `xml:"deliveryZip"`
 	DeliveryAddress1              string `xml:"deliveryAddress1"`
@@ -103,7 +109,7 @@ func (c *Client) GetInvoice(ctx context.Context, req *InvoiceGetRequest) (*Invoi
 	if err != nil {
 		return nil, err
 	}
-	respParam := invoiceResponse{}
+	respParam := invoiceResult{}
 	body.ShopInfo = &shopInfo{
 		AuthenticationID: c.AuthenticationID,
 		ShopCode:         c.ShopCode,
