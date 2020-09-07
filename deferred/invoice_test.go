@@ -194,6 +194,44 @@ func TestDeferred_GetInvoice(t *testing.T) {
 					GoodsPrice:  105,
 					GoodsAmount: 5250,
 				},
+				Errors: Errors{},
+			},
+		},
+		{
+			name: "error",
+			args: args{
+				ctx: context.Background(),
+				req: &InvoiceGetRequest{
+					GMOTransactionID: "20090300001",
+				},
+			},
+			responseParam: responseParam{
+				statusCode: http.StatusOK,
+				body: `
+				<?xml version='1.0' encoding='utf-8'?>
+				<response>
+					<result> NG</result>
+					<errors>
+						<error>
+							<errorcode>XXX</errorcode>
+							<errormessage>該当の取引は無効です</errormessage>
+						</error>
+					</errors>
+					<invoicedataresult>
+					<gmoTransactionId>12900000018</gmoTransactionId>
+					</invoicedataresult>
+				</response>
+					`,
+				header: map[string]string{},
+			},
+			want: &InvoiceGetResponse{
+				Status: 200,
+				Errors: Errors{
+					{
+						ErrorCode:    "XXX",
+						ErrorMessage: "該当の取引は無効です",
+					},
+				},
 			},
 		},
 	}

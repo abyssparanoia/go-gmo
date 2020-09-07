@@ -1,6 +1,10 @@
 package deferred
 
-import "github.com/abyssparanoia/go-gmo/internal/pkg/validate"
+import (
+	"fmt"
+
+	"github.com/abyssparanoia/go-gmo/internal/pkg/validate"
+)
 
 // structs for library client
 
@@ -583,9 +587,13 @@ type InvoiceGetResponse struct {
 	Yobi14                        string
 	Yobi15                        string
 	GoodsDetail                   GoodsDetail
+	Errors                        Errors
 }
 
 func newInvoiceGetResponse(o *invoiceResult) *InvoiceGetResponse {
+	if o == nil {
+		return nil
+	}
 	p := &InvoiceGetResponse{
 		GMOTransactionID:              o.InvoiceDataResult.GMOTransactionID,
 		DeliveryZip:                   o.InvoiceDataResult.DeliveryZip,
@@ -671,6 +679,17 @@ func newInvoiceGetResponse(o *invoiceResult) *InvoiceGetResponse {
 				Yobi19:      o.InvoiceDataResult.DetailList.GoodsDetail.Yobi19,
 				Yobi20:      o.InvoiceDataResult.DetailList.GoodsDetail.Yobi20,
 			}
+		}(),
+		Errors: func() Errors {
+			if o.Errors == nil {
+				return nil
+			}
+			r := make(Errors, len(o.Errors.ErrorsInner))
+			for i, d := range o.Errors.ErrorsInner {
+				fmt.Printf("%+v\n", d)
+				r[i] = newInvoiceError(d)
+			}
+			return r
 		}(),
 	}
 	return p

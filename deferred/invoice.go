@@ -10,7 +10,28 @@ type invoiceRequest struct {
 }
 
 type invoiceResult struct {
+	Errors            *invoiceErrors    `xml:"errors"`
 	InvoiceDataResult invoiceDataResult `xml:"invoiceDataResult"`
+}
+
+type invoiceError struct {
+	ErrorCode    string `xml:"errorcode"`
+	ErrorMessage string `xml:"errormessage"`
+}
+
+type invoiceErrors struct {
+	ErrorsInner []*invoiceError `xml:"error"`
+}
+
+func newInvoiceError(o *invoiceError) *Error {
+	if o == nil {
+		return nil
+	}
+	p := &Error{
+		ErrorCode:    o.ErrorCode,
+		ErrorMessage: o.ErrorMessage,
+	}
+	return p
 }
 
 type invoiceDataResult struct {
