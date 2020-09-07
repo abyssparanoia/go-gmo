@@ -28,84 +28,28 @@ type registerRequestParam struct {
 }
 
 type buyer struct {
-	GMOTransactionID  string `xml:"gmoTransactionId"`
+	GMOTransactionID  string `xml:"gmoTransactionId,omitempty"`
 	ShopTransactionID string `xml:"shopTransactionId" validate:"required"`
 	ShopOrderDate     string `xml:"shopOrderDate" validate:"required"`
 	FullName          string `xml:"fullName" validate:"required"`
-	FullNameKana      string `xml:"fullKanaName"`
+	FullNameKana      string `xml:"fullKanaName,omitempty"`
 	ZipCode           string `xml:"zipCode" validate:"required"`
 	Address           string `xml:"address" validate:"required"`
-	CompanyName       string `xml:"companyName"`
-	DepartmentName    string `xml:"departmentName"`
+	CompanyName       string `xml:"companyName,omitempty"`
+	DepartmentName    string `xml:"departmentName,omitempty"`
 	Tel1              string `xml:"tel1" validate:"required"`
-	Tel2              string `xml:"tel2"`
+	Tel2              string `xml:"tel2,omitempty"`
 	Email             string `xml:"email1" validate:"required"`
-	Email2            string `xml:"email2"`
-	BilledAmount      string `xml:"billedAmount" validate:"required"`
-	GMOExtend1        string `xml:"gmoExtend1"`
-	PaymentType       string `xml:"paymentType" validate:"required"`
-	Sex               string `xml:"sex"`
-	BirthDay          string `xml:"birthDay"`
-	MemberRegistDate  string `xml:"memberRegistDate"`
-	BuyCount          string `xml:"buyCount"`
-	BuyAmountTotal    string `xml:"buyAmoutTotal"`
-	MemberID          string `xml:"memberId"`
-}
-
-type buyerModification struct {
-	GMOTransactionID  string `xml:"gmoTransactionId" validate:"required"`
-	ShopTransactionID string `xml:"shopTransactionId"`
-	ShopOrderDate     string `xml:"shopOrderDate"`
-	FullName          string `xml:"fullName"`
-	FullNameKana      string `xml:"fullKanaName"`
-	ZipCode           string `xml:"zipCode"`
-	Address           string `xml:"address"`
-	CompanyName       string `xml:"companyName"`
-	DepartmentName    string `xml:"departmentName"`
-	Tel1              string `xml:"tel1"`
-	Tel2              string `xml:"tel2"`
-	Email             string `xml:"email1"`
-	Email2            string `xml:"email2"`
-	BilledAmount      string `xml:"billedAmount"`
-	GMOExtend1        string `xml:"gmoExtend1"`
-	PaymentType       string `xml:"paymentType"`
-	Sex               string `xml:"sex"`
-	BirthDay          string `xml:"birthDay"`
-	MemberRegistDate  string `xml:"memberRegistDate"`
-	BuyCount          string `xml:"buyCount"`
-	BuyAmountTotal    string `xml:"buyAmoutTotal"`
-	MemberID          string `xml:"memberId"`
-}
-
-func (o *Buyer) toParamModification() *buyerModification {
-	if o == nil {
-		return nil
-	}
-	p := &buyerModification{
-		GMOTransactionID:  o.GMOTransactionID,
-		ShopTransactionID: o.ShopTransactionID,
-		ShopOrderDate:     o.ShopOrderDate,
-		FullName:          o.FullName,
-		FullNameKana:      o.FullNameKana,
-		ZipCode:           o.ZipCode,
-		Address:           o.Address,
-		CompanyName:       o.CompanyName,
-		DepartmentName:    o.DepartmentName,
-		Tel1:              o.Tel1,
-		Tel2:              o.Tel2,
-		Email:             o.Email,
-		Email2:            o.Email2,
-		BilledAmount:      o.BilledAmount,
-		GMOExtend1:        o.GMOExtend1,
-		PaymentType:       o.PaymentType,
-		Sex:               o.Sex,
-		BirthDay:          o.BirthDay,
-		MemberRegistDate:  o.MemberRegistDate,
-		BuyCount:          o.BuyCount,
-		BuyAmountTotal:    o.BuyAmountTotal,
-		MemberID:          o.MemberID,
-	}
-	return p
+	Email2            string `xml:"email2,omitempty"`
+	BilledAmount      string `xml:"billedAmount,omitempty" validate:"required"`
+	GMOExtend1        string `xml:"gmoExtend1,omitempty"`
+	PaymentType       string `xml:"paymentType,omitempty" validate:"required"`
+	Sex               string `xml:"sex,omitempty"`
+	BirthDay          string `xml:"birthDay,omitempty"`
+	MemberRegistDate  string `xml:"memberRegistDate,omitempty"`
+	BuyCount          string `xml:"buyCount,omitempty"`
+	BuyAmountTotal    string `xml:"buyAmoutTotal,omitempty"`
+	MemberID          string `xml:"memberId,omitempty"`
 }
 
 type delivery struct {
@@ -118,24 +62,24 @@ type deliveries struct {
 }
 
 type deliveryCustomer struct {
-	FullName       string `xml:"fullName"`
-	FullNameKana   string `xml:"fullKanaName"`
-	ZipCode        string `xml:"zipCode"`
-	Address        string `xml:"address"`
-	CompanyName    string `xml:"companyName"`
-	DepartmentName string `xml:"departmentName"`
-	Tel            string `xml:"tel"`
+	FullName       string `xml:"fullName,omitempty"`
+	FullNameKana   string `xml:"fullKanaName,omitempty"`
+	ZipCode        string `xml:"zipCode,omitempty"`
+	Address        string `xml:"address,omitempty"`
+	CompanyName    string `xml:"companyName,omitempty"`
+	DepartmentName string `xml:"departmentName,omitempty"`
+	Tel            string `xml:"tel,omitempty"`
 }
 
 type detail struct {
 	DetailName     string `xml:"detailName" validate:"required"`
 	DetailPrice    string `xml:"detailPrice" validate:"required"`
 	DetailQuantity string `xml:"detailQuantity" validate:"required"`
-	GMOExtend2     string `xml:"gmoExtend2"`
-	GMOExtend3     string `xml:"gmoExtend3"`
-	GMOExtend4     string `xml:"gmoExtend4"`
-	DetailBrand    string `xml:"detailBrand"`
-	DetailCategory string `xml:"detailCategory"`
+	GMOExtend2     string `xml:"gmoExtend2,omitempty"`
+	GMOExtend3     string `xml:"gmoExtend3,omitempty"`
+	GMOExtend4     string `xml:"gmoExtend4,omitempty"`
+	DetailBrand    string `xml:"detailBrand,omitempty"`
+	DetailCategory string `xml:"detailCategory,omitempty"`
 }
 
 type details struct {
