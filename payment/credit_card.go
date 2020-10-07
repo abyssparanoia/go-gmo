@@ -12,9 +12,9 @@ type SaveCardRequest struct {
 	CardSeq      string `schema:"CardSeq,omitempty"`
 	DefaultFlag  string `schema:"DefaultFlag,omitempty"`
 	CardName     string `schema:"CardName,omitempty"`
-	CardNo       string `schema:"CardNo" validate:"required,len=16"`
+	CardNo       string `schema:"CardNo,omitempty"`
 	CardPass     string `schema:"CardPass,omitempty"`
-	Expire       string `schema:"Expire" validate:"required,len=4"`
+	Expire       string `schema:"Expire,omitempty"`
 	HolderName   string `schema:"HolderName,omitempty"`
 	Token        string `schema:"Token,omitempty"`
 	UpdateType   string `schema:"UpdateType,omitempty"`
