@@ -8,7 +8,7 @@ require (
 	github.com/cenkalti/backoff/v4 v4.1.0
 	github.com/go-playground/validator v9.31.0+incompatible
 	github.com/go-playground/validator/v10 v10.4.1
-	github.com/gocarina/gocsv v0.0.0-20200925213129-04be9ee2e1a2
+	github.com/gocarina/gocsv v0.0.0-20201204095220-fdebcd3dd3f2
 	github.com/gorilla/schema v1.2.0
 	github.com/pkg/sftp v1.12.0
 	github.com/stretchr/testify v1.6.1
