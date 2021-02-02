@@ -11,7 +11,7 @@ require (
 	github.com/gocarina/gocsv v0.0.0-20201208093247-67c824bc04d4
 	github.com/gorilla/schema v1.2.0
 	github.com/pkg/sftp v1.12.0
-	github.com/stretchr/testify v1.6.1
+	github.com/stretchr/testify v1.7.0
 	golang.org/x/crypto v0.0.0-20201221181555-eec23a3978ad
 	golang.org/x/text v0.3.4
 	gopkg.in/go-playground/assert.v1 v1.2.1
