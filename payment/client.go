@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/abyssparanoia/go-gmo/internal/pkg/parser"
+	"github.com/abyssparanoia/go-gmo/internal/pkg/shiftjis_transformer"
 	"github.com/cenkalti/backoff"
 )
 
@@ -74,6 +75,11 @@ func (c *Client) do(
 	}
 
 	additinalForms := url.Values{}
+
+	if err := shiftjis_transformer.EncodeToShiftJISFromUTF8(body); err != nil {
+		return nil, err
+	}
+
 	err = parser.Encoder().Encode(body, additinalForms)
 	if err != nil {
 		return nil, err
@@ -104,6 +110,11 @@ func (c *Client) do(
 	defer resp.Body.Close()
 
 	bodyBytes, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	bodyBytes, err = shiftjis_transformer.DecodeToUTF8FromShiftJIS(bodyBytes)
 	if err != nil {
 		return nil, err
 	}
