@@ -117,6 +117,8 @@ type AlterTranResponse struct {
 	Approve    string `schema:"Approve,omitempty"`
 	TranID     string `schema:"TranID,omitempty"`
 	TranDate   string `schema:"TranDate,omitempty"`
+	ErrCode    string `schema:"ErrCode,omitempty"`
+	ErrInfo    string `schema:"ErrInfo,omitempty"`
 }
 
 // AlterTran ... alter tran
@@ -156,6 +158,8 @@ type ChangeTranResponse struct {
 	Approve    string `schema:"Approve,omitempty"`
 	TranID     string `schema:"TranID,omitempty"`
 	TranDate   string `schema:"TranDate,omitempty"`
+	ErrCode    string `schema:"ErrCode,omitempty"`
+	ErrInfo    string `schema:"ErrInfo,omitempty"`
 }
 
 // ChangeTran ... change tran
