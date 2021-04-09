@@ -1,12 +1,11 @@
 module github.com/abyssparanoia/go-gmo
 
-go 1.13
+go 1.15
 
 require (
 	github.com/caarlos0/env/v6 v6.5.0
 	github.com/cenkalti/backoff v2.2.1+incompatible
 	github.com/davecgh/go-spew v1.1.1 // indirect
-	github.com/go-playground/universal-translator v0.17.0 // indirect
 	github.com/go-playground/validator/v10 v10.5.0
 	github.com/gocarina/gocsv v0.0.0-20210408192840-02d7211d929d
 	github.com/gorilla/schema v1.2.0
