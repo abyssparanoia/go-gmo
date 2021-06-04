@@ -11,9 +11,7 @@ require (
 	github.com/gorilla/schema v1.2.0
 	github.com/kr/text v0.2.0 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
-	github.com/moul/http2curl v1.0.0
 	github.com/pkg/sftp v1.13.0
-	github.com/smartystreets/goconvey v1.6.4 // indirect
 	github.com/stretchr/testify v1.7.0
 	golang.org/x/crypto v0.0.0-20210503195802-e9a32991a82e
 	golang.org/x/net v0.0.0-20210226172049-e18ecbb05110
