@@ -3,7 +3,7 @@ module github.com/abyssparanoia/go-gmo
 go 1.15
 
 require (
-	github.com/caarlos0/env/v6 v6.6.2
+	github.com/caarlos0/env/v6 v6.7.0
 	github.com/cenkalti/backoff v2.2.1+incompatible
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/go-playground/validator/v10 v10.9.0
