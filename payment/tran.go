@@ -50,7 +50,7 @@ type ExecTranRequest struct {
 	PayTimes     int    `schema:"PayTimes"`
 	MemberID     string `schema:"MemberID" validate:"required"`
 	SeqMode      string `schema:"SeqMode" validate:"required,len=1"`
-	CardSeq      int    `schema:"CardSeq" validate:"lte=4"`
+	CardSeq      int    `schema:"CardSeq" validate:"lte=9999"`
 	CardPass     string `schema:"CardPass"`
 	SecurityCode string `schema:"SecurityCode"`
 }
