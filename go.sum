@@ -34,6 +34,8 @@ github.com/gocarina/gocsv v0.0.0-20210516172204-ca9e8a8ddea8 h1:hp1oqdzmv37vPLYF
 github.com/gocarina/gocsv v0.0.0-20210516172204-ca9e8a8ddea8/go.mod h1:5YoVOkjYAQumqlV356Hj3xeYh4BdZuLE0/nRkf2NKkI=
 github.com/gocarina/gocsv v0.0.0-20211020200912-82fc2684cc48 h1:hLeicZW4XBuaISuJPfjkprg0SP0xxsQmb31aJZ6lnIw=
 github.com/gocarina/gocsv v0.0.0-20211020200912-82fc2684cc48/go.mod h1:5YoVOkjYAQumqlV356Hj3xeYh4BdZuLE0/nRkf2NKkI=
+github.com/gocarina/gocsv v0.0.0-20211203214250-4735fba0c1d9 h1:ptTza/LLPmfRtmz77X+6J61Wyf5e1hz5xYMvRk/hkE4=
+github.com/gocarina/gocsv v0.0.0-20211203214250-4735fba0c1d9/go.mod h1:5YoVOkjYAQumqlV356Hj3xeYh4BdZuLE0/nRkf2NKkI=
 github.com/gorilla/schema v1.2.0 h1:YufUaxZYCKGFuAq3c96BOhjgd5nmXiOY9NGzF247Tsc=
 github.com/gorilla/schema v1.2.0/go.mod h1:kgLaKoK1FELgZqMAVxx/5cbj0kT+57qxUrAlIO2eleU=
 github.com/kr/fs v0.1.0 h1:Jskdu9ieNAYnjxsi0LbQp1ulIKZV1LAFgK1tWhpZgl8=
