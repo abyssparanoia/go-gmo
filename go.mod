@@ -6,7 +6,7 @@ require (
 	github.com/caarlos0/env/v6 v6.7.1
 	github.com/cenkalti/backoff v2.2.1+incompatible
 	github.com/davecgh/go-spew v1.1.1 // indirect
-	github.com/go-playground/validator/v10 v10.9.0
+	github.com/go-playground/validator/v10 v10.10.0
 	github.com/gocarina/gocsv v0.0.0-20211203214250-4735fba0c1d9
 	github.com/gorilla/schema v1.2.0
 	github.com/kr/text v0.2.0 // indirect
