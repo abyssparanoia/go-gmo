@@ -14,7 +14,7 @@ require (
 	github.com/pkg/sftp v1.13.4
 	github.com/stretchr/testify v1.7.0
 	golang.org/x/crypto v0.0.0-20211215153901-e495a2d5b3d3
-	golang.org/x/net v0.0.0-20220107192237-5cfca573fb4d
+	golang.org/x/net v0.0.0-20220111093109-d55c255bac03
 	golang.org/x/term v0.0.0-20210406210042-72f3dc4e9b72 // indirect
 	golang.org/x/text v0.3.7
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
