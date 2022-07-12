@@ -7,7 +7,7 @@ require (
 	github.com/cenkalti/backoff v2.2.1+incompatible
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/go-playground/validator/v10 v10.11.0
-	github.com/gocarina/gocsv v0.0.0-20220707092902-b9da1f06c77e
+	github.com/gocarina/gocsv v0.0.0-20220712153207-8b2118da4570
 	github.com/gorilla/schema v1.2.0
 	github.com/kr/text v0.2.0 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
