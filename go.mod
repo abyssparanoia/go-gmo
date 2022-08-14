@@ -11,7 +11,7 @@ require (
 	github.com/pkg/sftp v1.13.5
 	github.com/stretchr/testify v1.8.0
 	golang.org/x/crypto v0.0.0-20220722155217-630584e8d5aa
-	golang.org/x/net v0.0.0-20220811182439-13a9a731de15
+	golang.org/x/net v0.0.0-20220812174116-3211cb980234
 	golang.org/x/text v0.3.7
 	gopkg.in/go-playground/assert.v1 v1.2.1
 )
