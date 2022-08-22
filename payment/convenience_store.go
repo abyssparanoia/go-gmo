@@ -114,3 +114,38 @@ func (cli *Client) ConvenienceStoreExecTran(
 	}
 	return res, nil
 }
+
+// ConvenienceStoreCancelRequest ... convenience store cancel transaction request
+type ConvenienceStoreCancelRequest struct {
+	AccessID   string `schema:"AccessID" validate:"required"`
+	AccessPass string `schema:"AccessPass" validate:"required"`
+	OrderID    string `schema:"OrderID" validate:"required,max=27"`
+}
+
+// Validate ... validate
+func (r *ConvenienceStoreCancelRequest) Validate() error {
+	return validate.Struct(r)
+}
+
+// ConvenienceStoreCancelResponse ... convenience store cancel transaction response
+type ConvenienceStoreCancelResponse struct {
+	OrderID string `schema:"OrderID,omitempty"`
+	Status  string `schema:"Status,omitempty"`
+	ErrCode string `schema:"ErrCode,omitempty"`
+	ErrInfo string `schema:"ErrInfo,omitempty"`
+}
+
+// ConvenienceStoreCancel ... convenience store cancel transaction
+func (cli *Client) ConvenienceStoreCancel(
+	req *ConvenienceStoreCancelRequest,
+) (*ConvenienceStoreCancelResponse, error) {
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
+	res := &ConvenienceStoreCancelResponse{}
+	_, err := cli.do(convenienceStoreCancelPath, req, res)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
