@@ -22,6 +22,9 @@ const (
 	searchTradeMultiPath          = "payment/SearchTradeMulti.idPass"
 	payEasyEntryTranPath          = "payment/EntryTranPayEasy.idPass"
 	payEasyExecTranPath           = "payment/ExecTranPayEasy.idPass"
+	convenienceStoreEntryTranPath = "payment/EntryTranCvs.idPass"
+	convenienceStoreExecTranPath  = "payment/ExecTranCvs.idPass"
+	convenienceStoreCancelPath    = "payment/CvsCancel.idPass"
 )
 
 // ResultEntryBankAccountStatus ... entry bank account status
