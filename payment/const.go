@@ -97,4 +97,25 @@ type PayType string
 const (
 	// PayEasyPayType ... pay easy
 	PayEasyPayType PayType = "4"
+	// IDNetPayType ... iD net
+	IDNetPayType PayType = "6"
+)
+
+// WebhookResultResponseStatus ... webhook result response status
+type WebhookResultResponseStatus int
+
+const (
+	// WebhookResultResponseStatusOK ... ok
+	WebhookResultResponseStatusOK WebhookResultResponseStatus = iota
+	// WebhookResultResponseStatusFailed ... failed
+	WebhookResultResponseStatusFailed
+)
+
+type WebhookResultPaymentSlipStatus string
+
+const (
+	// WebhookResultPaymentSlipStatusPaysuccess ... success
+	WebhookResultPaymentSlipStatusPaysuccess WebhookResultPaymentSlipStatus = "PAYSUCCESS"
+	// WebhookResultPaymentSlipStatusCancel ... cancel
+	WebhookResultPaymentSlipStatusCancel WebhookResultPaymentSlipStatus = "CANCEL"
 )
