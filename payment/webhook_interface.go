@@ -23,7 +23,7 @@ type WebhookResultPaymentSlipRequest struct {
 	AccessPass  string                         `schema:"AccessPass"`
 	OrderID     string                         `schema:"OrderID"`
 	Status      WebhookResultPaymentSlipStatus `schema:"Status"`
-	JobCd       JobCD                          `schema:"JobCd"`
+	JobCD       JobCD                          `schema:"JobCd"`
 	Amount      int                            `schema:"Amount"`
 	Tax         int                            `schema:"Tax"`
 	Currency    string                         `schema:"Currency"`
