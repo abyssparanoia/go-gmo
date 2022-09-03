@@ -119,3 +119,15 @@ const (
 	// WebhookResultPaymentSlipStatusCancel ... cancel
 	WebhookResultPaymentSlipStatusCancel WebhookResultPaymentSlipStatus = "CANCEL"
 )
+
+// CreditCardTokenType ... credit card token type
+type CreditCardTokenType string
+
+const (
+	CreditCardTokenTypeDefault      CreditCardTokenType = "1"
+	CreditCardTokenTypeGooglePayAPI CreditCardTokenType = "2"
+)
+
+func (tt CreditCardTokenType) String() string {
+	return string(tt)
+}

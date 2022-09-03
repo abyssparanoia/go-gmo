@@ -43,16 +43,18 @@ func (cli *Client) EntryTran(
 
 // ExecTranRequest ... exec tran request
 type ExecTranRequest struct {
-	AccessID     string `schema:"AccessID" validate:"required"`
-	AccessPass   string `schema:"AccessPass" validate:"required"`
-	OrderID      string `schema:"OrderID" validate:"required,lte=27"`
-	Method       string `schema:"Method,omitempty"`
-	PayTimes     int    `schema:"PayTimes"`
-	MemberID     string `schema:"MemberID" validate:"required"`
-	SeqMode      string `schema:"SeqMode" validate:"required,len=1"`
-	CardSeq      int    `schema:"CardSeq" validate:"lte=9999"`
-	CardPass     string `schema:"CardPass"`
-	SecurityCode string `schema:"SecurityCode"`
+	AccessID     string              `schema:"AccessID" validate:"required"`
+	AccessPass   string              `schema:"AccessPass" validate:"required"`
+	OrderID      string              `schema:"OrderID" validate:"required,lte=27"`
+	Method       string              `schema:"Method,omitempty"`
+	PayTimes     int                 `schema:"PayTimes"`
+	MemberID     string              `schema:"MemberID" validate:"required"`
+	SeqMode      string              `schema:"SeqMode" validate:"required,len=1"`
+	CardSeq      int                 `schema:"CardSeq" validate:"lte=9999"`
+	CardPass     string              `schema:"CardPass"`
+	SecurityCode string              `schema:"SecurityCode"`
+	Token        string              `schema:"Token,omitempty" validate:"lte=64"`
+	TokenType    CreditCardTokenType `schema:"TokenType,omitempty" validate:"len=1"`
 }
 
 // Validate ... validate
