@@ -99,6 +99,8 @@ const (
 	PayEasyPayType PayType = "4"
 	// IDNetPayType ... iD net
 	IDNetPayType PayType = "6"
+	// GANBPayType ... GMO Aozora Net Bank
+	GANBPayType PayType = "36"
 )
 
 // WebhookResultResponseStatus ... webhook result response status
