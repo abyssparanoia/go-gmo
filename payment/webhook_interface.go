@@ -15,6 +15,41 @@ type WebhookResultEntryBankAccountRequest struct {
 	AccountIdentification string                       `schema:"AccountIdentification"`
 }
 
+// WebhookResultExecTranGANBRequest ... webhook request parameter
+type WebhookResultExecTranGANBRequest struct {
+	ShopID                     string                         `shema:"ShopID"`
+	ShopPass                   string                         `shema:"ShopPass"`
+	AccessID                   string                         `schema:"AccessID"`
+	AccessPass                 string                         `schema:"AccessPass"`
+	OrderID                    string                         `schema:"OrderID"`
+	Status                     WebhookResultPaymentSlipStatus `schema:"Status"`
+	Amount                     int                            `schema:"Amount"`
+	Tax                        int                            `schema:"Tax"`
+	TranDate                   string                         `schema:"TranDate"`
+	ErrCode                    string                         `schema:"ErrCode"`
+	ErrDetail                  string                         `schema:"ErrDetail"`
+	PayType                    PayType                        `schema:"PayType"`
+	GANBProcessType            string                         `schema:"GanbProcessType"`
+	GANBRequestAmount          string                         `schema:"GanbRequestAmount"`
+	GANBExpireDate             string                         `schema:"GanbExpireDate"`
+	GANBTradeReason            string                         `schema:"GanbTradeReason"`
+	GANBTradeClientName        string                         `schema:"GanbTradeClientName"`
+	GANBTradeClientMailAddress string                         `schema:"GanbTradeClientMailAddress"`
+	GANBBankCode               string                         `schema:"GanbBankCode"`
+	GANBBankName               string                         `schema:"GanbBankName"`
+	GANBBranchCode             string                         `schema:"GanbBranchCode"`
+	GANBBranchName             string                         `schema:"GanbBranchName"`
+	GANBAccountType            string                         `schema:"GanbAccountType"`
+	GANBAccountNumber          string                         `schema:"GanbAccountNumber"`
+	GANBAccountHolderName      string                         `schema:"GanbAccountHolderName"`
+	GANBSettlementDate         string                         `schema:"GanbSettlementDate"`
+	GANBInAmount               string                         `schema:"GanbInAmount"`
+	GANBInClientName           string                         `schema:"GanbInClientName"`
+	GANBInRemittingBranchName  string                         `schema:"GanbInRemittingBranchName"`
+	GANBTotalTransferAmount    string                         `schema:"GanbTotalTransferAmount"`
+	GANBTotalTransferCount     string                         `schema:"GanbTotalTransferCount"`
+}
+
 // WebhookResultPaymentSlipRequest ... webhook request parameter
 type WebhookResultPaymentSlipRequest struct {
 	ShopID      string                         `shema:"ShopID"`
