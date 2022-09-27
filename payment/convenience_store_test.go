@@ -65,7 +65,7 @@ func TestClient_ConvenienceStoreExecTran(t *testing.T) {
 		AccessID:     "accessID",
 		AccessPass:   "accessPass",
 		OrderID:      "orderID",
-		Convenience:  12345,
+		Convenience:  ConvenienceStoreCodeSevenEleven,
 		CustomerName: "田中太郎",
 		CustomerKana: "タナカタロウ",
 		TelNo:        "012345678910",
