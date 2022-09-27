@@ -121,3 +121,13 @@ const (
 	// WebhookResultPaymentSlipStatusCancel ... cancel
 	WebhookResultPaymentSlipStatusCancel WebhookResultPaymentSlipStatus = "CANCEL"
 )
+
+type ConvenienceStoreCode string
+
+const (
+	ConvenienceStoreCodeSevenEleven ConvenienceStoreCode = "00007"
+	ConvenienceStoreCodeLawson      ConvenienceStoreCode = "10001"
+	ConvenienceStoreCodeFamilyMart  ConvenienceStoreCode = "10002"
+	ConvenienceStoreCodeMiniStop    ConvenienceStoreCode = "10005"
+	ConvenienceStoreCodeSeikoMart   ConvenienceStoreCode = "10008"
+)
