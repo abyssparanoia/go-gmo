@@ -10,7 +10,7 @@ require (
 	github.com/gorilla/schema v1.2.0
 	github.com/pkg/sftp v1.13.5
 	github.com/stretchr/testify v1.8.0
-	golang.org/x/crypto v0.0.0-20220817201139-bc19a97f63c8
+	golang.org/x/crypto v0.0.0-20221012134737-56aed061732a
 	golang.org/x/net v0.0.0-20221014081412-f15817d10f9b
 	golang.org/x/text v0.3.7
 	gopkg.in/go-playground/assert.v1 v1.2.1
