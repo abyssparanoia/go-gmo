@@ -12,7 +12,7 @@ require (
 	github.com/stretchr/testify v1.8.0
 	golang.org/x/crypto v0.0.0-20220817201139-bc19a97f63c8
 	golang.org/x/net v0.0.0-20221014081412-f15817d10f9b
-	golang.org/x/text v0.3.7
+	golang.org/x/text v0.4.0
 	gopkg.in/go-playground/assert.v1 v1.2.1
 )
 
