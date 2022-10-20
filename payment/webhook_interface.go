@@ -50,6 +50,30 @@ type WebhookResultExecTranGANBRequest struct {
 	GANBTotalTransferCount     string           `schema:"GanbTotalTransferCount"`
 }
 
+type WebhookResultConvenienceStoreRequest struct {
+	ShopID       string               `shema:"ShopID"`
+	ShopPass     string               `shema:"ShopPass"`
+	AccessID     string               `schema:"AccessID"`
+	AccessPass   string               `schema:"AccessPass"`
+	OrderID      string               `schema:"OrderID"`
+	Status       TradeMultiStatus     `schema:"Status"`
+	JobCD        JobCD                `schema:"JobCd"`
+	Amount       int                  `schema:"Amount"`
+	Tax          int                  `schema:"Tax"`
+	Currency     string               `schema:"Currency"`
+	TranID       string               `schema:"TranID"`
+	TranDate     string               `schema:"TranDate"`
+	CvsCode      ConvenienceStoreCode `schema:"CvsCode"`
+	CvsConfNo    string               `schema:"CvsConfNo"`
+	CvsReceiptNo string               `schema:"CvsReceiptNo"`
+	PaymentTerm  string               `schema:"PaymentTerm"`
+	FinishDate   string               `schema:"FinishDate"`
+	ReceiptDate  string               `schema:"ReceiptDate"`
+	ErrCode      string               `schema:"ErrCode"`
+	ErrInfo      string               `schema:"ErrInfo"`
+	PayType      PayType              `schema:"PayType"`
+}
+
 // WebhookResultPaymentSlipRequest ... webhook request parameter
 type WebhookResultPaymentSlipRequest struct {
 	ShopID      string                         `shema:"ShopID"`

@@ -95,6 +95,8 @@ func (s TradeMultiStatus) String() string {
 type PayType string
 
 const (
+	// PayEasyPayType ... convenience store
+	CvsPayType PayType = "3"
 	// PayEasyPayType ... pay easy
 	PayEasyPayType PayType = "4"
 	// IDNetPayType ... iD net
