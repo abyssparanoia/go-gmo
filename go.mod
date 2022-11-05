@@ -6,7 +6,7 @@ require (
 	github.com/caarlos0/env/v6 v6.7.1
 	github.com/cenkalti/backoff v2.2.1+incompatible
 	github.com/go-playground/validator/v10 v10.11.1
-	github.com/gocarina/gocsv v0.0.0-20220927221512-ad3251f9fa25
+	github.com/gocarina/gocsv v0.0.0-20221105105431-c8ef78125b99
 	github.com/gorilla/schema v1.2.0
 	github.com/pkg/sftp v1.13.5
 	github.com/stretchr/testify v1.8.1
