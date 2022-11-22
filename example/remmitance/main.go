@@ -10,13 +10,13 @@ func main() {
 	cli := newClient()
 
 	res, err := cli.MailDepositRegistration(&remittance.MailDepositRegistrationRequest{
-		Method:                 "1",
+		Method:                 remittance.MethodRegister,
 		DepositID:              "testdeposit1",
 		Amount:                 1000000,
-		MailAddress:            "y.sugimoto.paranoia@gmail.com",
-		MailDepositAccountName: "ｽｷﾞﾓﾄﾕｳｽｹ",
+		MailAddress:            "test@dreizehn.com",
+		MailDepositAccountName: "ﾀﾅｶﾀﾛｳ",
 		Expire:                 "1",
-		RemitMethodBank:        "1",
+		RemitMethodBank:        remittance.SelectablePaymentMethodEnable,
 	})
 	if err != nil {
 		panic(err)
