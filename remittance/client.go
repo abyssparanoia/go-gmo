@@ -96,6 +96,16 @@ func (c *Client) do(
 		return nil, err
 	}
 
+	if contains := bytes.Contains(bodyBytes, []byte("ErrCode")); contains {
+		errResp := &ErrorResponse{}
+		if err := json.Unmarshal(bodyBytes, errResp); err != nil {
+			return nil, err
+		}
+		return nil, errResp
+	}
+
+	fmt.Println(string(bodyBytes))
+
 	if err := json.Unmarshal(bodyBytes, respBody); err != nil {
 		return nil, err
 	}
