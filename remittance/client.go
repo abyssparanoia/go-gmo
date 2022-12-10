@@ -104,8 +104,6 @@ func (c *Client) do(
 		return nil, errResp
 	}
 
-	fmt.Println(string(bodyBytes))
-
 	if err := json.Unmarshal(bodyBytes, respBody); err != nil {
 		return nil, err
 	}
