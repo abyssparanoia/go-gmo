@@ -10,10 +10,10 @@ import (
 	"gopkg.in/go-playground/assert.v1"
 )
 
-func TestTransferStatus(
+func TestGetTransferStatus(
 	t *testing.T,
 ) {
-	expected := &TransferStatusResponse{
+	expected := &GetTransferStatusResponse{
 		AcceptanceKeyClass: "1",
 		BaseDate:           "2018-08-10",
 		BaseTime:           "10:00:00+09:00",
@@ -35,12 +35,12 @@ func TestTransferStatus(
 
 	cli, _ := NewClient(false, "testAccessToken")
 	cli.APIHost = apiHostTest
-	req := &TransferStatusRequest{
+	req := &GetTransferStatusRequest{
 		AccountID:     "111111111111",
 		QueryKeyClass: "1",
 		ApplyNo:       "1111111111111111",
 	}
-	result, err := cli.TransferStatus(req)
+	result, err := cli.GetTransferStatus(req)
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, result)
 }

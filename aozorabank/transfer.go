@@ -9,13 +9,13 @@ type TransferDetails struct {
 	TransferStatus string `json:"transferStatus"`
 }
 
-type TransferStatusRequest struct {
+type GetTransferStatusRequest struct {
 	AccountID     string `json:"accountId" validate:"required,min=12,max=29"`
 	QueryKeyClass string `json:"queryKeyClass" validate:"required,len=1"`
 	ApplyNo       string `json:"applyNo" validate:"omitempty,len=16"`
 }
 
-type TransferStatusResponse struct {
+type GetTransferStatusResponse struct {
 	AcceptanceKeyClass string             `json:"acceptanceKeyClass"`
 	BaseDate           string             `json:"baseDate"`
 	BaseTime           string             `json:"baseTime"`
@@ -23,13 +23,13 @@ type TransferStatusResponse struct {
 	TransferDetails    []*TransferDetails `json:"transferDetails"`
 }
 
-func (r *TransferStatusRequest) Validate() error {
+func (r *GetTransferStatusRequest) Validate() error {
 	return validate.Struct(r)
 }
 
-func (cli *Client) TransferStatus(
-	req *TransferStatusRequest,
-) (*TransferStatusResponse, error) {
+func (cli *Client) GetTransferStatus(
+	req *GetTransferStatusRequest,
+) (*GetTransferStatusResponse, error) {
 	if err := req.Validate(); err != nil {
 		return nil, err
 	}
@@ -37,7 +37,7 @@ func (cli *Client) TransferStatus(
 	if err != nil {
 		return nil, err
 	}
-	res := &TransferStatusResponse{}
+	res := &GetTransferStatusResponse{}
 	if _, err := cli.doGet("transfer/status", reqMap, res); err != nil {
 		return nil, err
 	}
