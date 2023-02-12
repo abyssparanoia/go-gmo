@@ -8,7 +8,5 @@ type ErrorResponse struct {
 }
 
 func (errResp *ErrorResponse) Error() string {
-	msg := "Error:"
-	msg = fmt.Sprintf("%s [%s:%s]", msg, errResp.ErrCode, errResp.ErrMessage)
-	return msg
+	return fmt.Sprintf("Error: [%s:%s]", errResp.ErrCode, errResp.ErrMessage)
 }
