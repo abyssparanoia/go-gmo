@@ -2,13 +2,13 @@ package aozorabank
 
 import (
 	"encoding/json"
-	"github.com/bxcodec/faker"
+	"gopkg.in/go-playground/assert.v1"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
 	"testing"
 
-	"gopkg.in/go-playground/assert.v1"
+	"github.com/bxcodec/faker"
 )
 
 func TestGetTransferStatus(
