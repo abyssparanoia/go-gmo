@@ -18,6 +18,8 @@ github.com/gocarina/gocsv v0.0.0-20221105105431-c8ef78125b99 h1:qNAaZUnCulf2xIQc
 github.com/gocarina/gocsv v0.0.0-20221105105431-c8ef78125b99/go.mod h1:5YoVOkjYAQumqlV356Hj3xeYh4BdZuLE0/nRkf2NKkI=
 github.com/gocarina/gocsv v0.0.0-20221216233619-1fea7ae8d380 h1:JJq8YZiS07gFIMYZxkbbiMrXIglG3k5JPPtdvckcnfQ=
 github.com/gocarina/gocsv v0.0.0-20221216233619-1fea7ae8d380/go.mod h1:5YoVOkjYAQumqlV356Hj3xeYh4BdZuLE0/nRkf2NKkI=
+github.com/gocarina/gocsv v0.0.0-20230223115542-dc4ee9de5fe2 h1:7YY24YwanM5Fvt1/6LCZzWcjH5pL9w2MlUj/8a3GVUk=
+github.com/gocarina/gocsv v0.0.0-20230223115542-dc4ee9de5fe2/go.mod h1:5YoVOkjYAQumqlV356Hj3xeYh4BdZuLE0/nRkf2NKkI=
 github.com/gorilla/schema v1.2.0 h1:YufUaxZYCKGFuAq3c96BOhjgd5nmXiOY9NGzF247Tsc=
 github.com/gorilla/schema v1.2.0/go.mod h1:kgLaKoK1FELgZqMAVxx/5cbj0kT+57qxUrAlIO2eleU=
 github.com/imdario/mergo v0.3.13 h1:lFzP57bqS/wsqKssCGmtLAb8A0wKjLGrve2q3PPVcBk=
