@@ -46,11 +46,12 @@ func NewClient(
 }
 
 func (c *Client) doPost(
+	header http.Header,
 	path string,
 	body map[string]interface{},
 	respBody interface{},
 ) (*http.Response, error) {
-	return do(c.HTTPClient, c.accessToken, c.APIHost, path, http.MethodPost, body, respBody)
+	return do(c.HTTPClient, c.accessToken, c.APIHost, header, path, http.MethodPost, body, respBody)
 }
 
 func (c *Client) doGet(
@@ -63,13 +64,14 @@ func (c *Client) doGet(
 		values.Add(k, fmt.Sprintf("%s", v))
 	}
 
-	return do(c.HTTPClient, c.accessToken, c.APIHost, fmt.Sprintf("%s?%s", path, values.Encode()), http.MethodGet, body, respBody)
+	return do(c.HTTPClient, c.accessToken, c.APIHost, nil, fmt.Sprintf("%s?%s", path, values.Encode()), http.MethodGet, body, respBody)
 }
 
 func do(
 	cli *http.Client,
 	accessToken string,
 	apiHost string,
+	header http.Header,
 	path string,
 	method string,
 	body map[string]interface{},
@@ -97,6 +99,11 @@ func do(
 
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("x-access-token", accessToken)
+	for k, values := range header {
+		for _, v := range values {
+			req.Header.Add(k, v)
+		}
+	}
 	var resp *http.Response
 	backoffCfg := backoff.WithMaxRetries(backoff.NewExponentialBackOff(), 3)
 	err = backoff.Retry(func() (err error) {
