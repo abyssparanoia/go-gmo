@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/bxcodec/faker v2.0.1+incompatible
-	github.com/caarlos0/env/v6 v6.7.1
+	github.com/caarlos0/env/v6 v6.10.1
 	github.com/cenkalti/backoff v2.2.1+incompatible
 	github.com/go-playground/validator/v10 v10.11.1
 	github.com/gocarina/gocsv v0.0.0-20221216233619-1fea7ae8d380
