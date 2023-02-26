@@ -45,10 +45,7 @@ func TestGetTransferStatus(
 	}
 
 	for title, tc := range testcases {
-		tc := tc
 		t.Run(title, func(t *testing.T) {
-			t.Parallel()
-
 			expected := tc.expected
 			ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 				respBody, _ := json.Marshal(expected)
