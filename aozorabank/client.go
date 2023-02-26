@@ -78,6 +78,7 @@ func do(
 	respBody interface{},
 ) (*http.Response, error) {
 
+	fmt.Println("path: ", path)
 	requestBodyMap := map[string]interface{}{}
 	if err := mergo.Map(&requestBodyMap, &body); err != nil {
 		return nil, err

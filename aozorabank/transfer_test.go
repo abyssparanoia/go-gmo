@@ -1,6 +1,7 @@
 package aozorabank
 
 import (
+	"context"
 	"encoding/json"
 	"gopkg.in/go-playground/assert.v1"
 	"net/http"
@@ -15,8 +16,9 @@ func TestGetTransferStatus(
 	t *testing.T,
 ) {
 	testcases := map[string]struct {
-		request  *GetTransferStatusRequest
-		expected *GetTransferStatusResponse
+		request      *GetTransferStatusRequest
+		expectedPath string
+		expected     *GetTransferStatusResponse
 	}{
 		"ok": {
 			request: &GetTransferStatusRequest{
@@ -26,9 +28,17 @@ func TestGetTransferStatus(
 				DateFrom:                "2018-07-30",
 				DateTo:                  "2018-08-10",
 				NextItemKey:             "1234567890",
-				RequestTransferStatuses: []*requestTransferStatus{{RequestTransferStatusApplying}},
+				RequestTransferStatuses: []*RequestTransferStatus{{TransferStatusApplying}},
 				RequestTransferClass:    RequestTransferClassAll,
 				RequestTransferTerm:     RequestTransferTermTransferDesignatedDate,
+			},
+			expectedPath: "",
+			expected:     fakeData(GetTransferStatusResponse{}),
+		},
+		"ok (required only)": {
+			request: &GetTransferStatusRequest{
+				AccountID:     "111111111111",
+				QueryKeyClass: QueryKeyClassTransferApplies,
 			},
 			expected: fakeData(GetTransferStatusResponse{}),
 		},
@@ -54,7 +64,7 @@ func TestGetTransferStatus(
 
 			cli, _ := NewClient(false, "testAccessToken")
 			cli.APIHost = apiHostTest
-			result, err := cli.GetTransferStatus(tc.request)
+			result, err := cli.GetTransferStatus(context.TODO(), tc.request)
 			assert.Equal(t, nil, err)
 			assert.Equal(t, expected, result)
 		})
@@ -117,7 +127,7 @@ func TestTransferRequest(
 
 			cli, _ := NewClient(false, "testAccessToken")
 			cli.APIHost = apiHostTest
-			result, err := cli.TransferRequest(tc.request)
+			result, err := cli.TransferRequest(context.TODO(), tc.request)
 			assert.Equal(t, nil, err)
 			assert.Equal(t, expected, result)
 		})
@@ -160,7 +170,7 @@ func TestGetRequestResult(
 
 			cli, _ := NewClient(false, "testAccessToken")
 			cli.APIHost = apiHostTest
-			result, err := cli.GetRequestResult(tc.request)
+			result, err := cli.GetRequestResult(context.TODO(), tc.request)
 			assert.Equal(t, nil, err)
 			assert.Equal(t, expected, result)
 		})
