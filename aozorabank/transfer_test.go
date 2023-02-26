@@ -1,6 +1,7 @@
 package aozorabank
 
 import (
+	"context"
 	"encoding/json"
 	"gopkg.in/go-playground/assert.v1"
 	"net/http"
@@ -16,6 +17,7 @@ func TestGetTransferStatus(
 ) {
 	testcases := map[string]struct {
 		request  *GetTransferStatusRequest
+		rawQuery string
 		expected *GetTransferStatusResponse
 	}{
 		"ok": {
@@ -26,22 +28,30 @@ func TestGetTransferStatus(
 				DateFrom:                "2018-07-30",
 				DateTo:                  "2018-08-10",
 				NextItemKey:             "1234567890",
-				RequestTransferStatuses: []*requestTransferStatus{{RequestTransferStatusApplying}},
+				RequestTransferStatuses: []*RequestTransferStatus{{TransferStatusApplying}},
 				RequestTransferClass:    RequestTransferClassAll,
 				RequestTransferTerm:     RequestTransferTermTransferDesignatedDate,
 			},
+			rawQuery: "accountId=111111111111&applyNo=2018072902345678&dateFrom=2018-07-30&dateTo=2018-08-10&nextItemKey=1234567890&queryKeyClass=1&requestTransferClass=1&requestTransferStatus=%5Bmap%5BrequestTransferStatus%3A2%5D%5D&requestTransferTerm=2",
+			expected: fakeData(GetTransferStatusResponse{}),
+		},
+		"ok (required only)": {
+			request: &GetTransferStatusRequest{
+				AccountID:     "111111111111",
+				QueryKeyClass: QueryKeyClassTransferApplies,
+			},
+			rawQuery: "accountId=111111111111&queryKeyClass=1",
 			expected: fakeData(GetTransferStatusResponse{}),
 		},
 	}
 
 	for title, tc := range testcases {
-		tc := tc
 		t.Run(title, func(t *testing.T) {
-			t.Parallel()
 
 			expected := tc.expected
 			ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 				respBody, _ := json.Marshal(expected)
+				assert.Equal(t, tc.rawQuery, r.URL.RawQuery)
 				w.Header().Set("Content-Type", "application/json")
 				w.Write(respBody)
 			}))
@@ -54,7 +64,7 @@ func TestGetTransferStatus(
 
 			cli, _ := NewClient(false, "testAccessToken")
 			cli.APIHost = apiHostTest
-			result, err := cli.GetTransferStatus(tc.request)
+			result, err := cli.GetTransferStatus(context.TODO(), tc.request)
 			assert.Equal(t, nil, err)
 			assert.Equal(t, expected, result)
 		})
@@ -117,7 +127,7 @@ func TestTransferRequest(
 
 			cli, _ := NewClient(false, "testAccessToken")
 			cli.APIHost = apiHostTest
-			result, err := cli.TransferRequest(tc.request)
+			result, err := cli.TransferRequest(context.TODO(), tc.request)
 			assert.Equal(t, nil, err)
 			assert.Equal(t, expected, result)
 		})
@@ -160,7 +170,7 @@ func TestGetRequestResult(
 
 			cli, _ := NewClient(false, "testAccessToken")
 			cli.APIHost = apiHostTest
-			result, err := cli.GetRequestResult(tc.request)
+			result, err := cli.GetRequestResult(context.TODO(), tc.request)
 			assert.Equal(t, nil, err)
 			assert.Equal(t, expected, result)
 		})

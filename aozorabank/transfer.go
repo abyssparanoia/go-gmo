@@ -1,6 +1,7 @@
 package aozorabank
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/abyssparanoia/go-gmo/internal/pkg/converter"
@@ -10,18 +11,18 @@ import (
 type (
 	GetTransferStatusRequest struct {
 		AccountID               string                   `json:"accountId" validate:"required,min=12,max=29"`
-		QueryKeyClass           QueryKeyClass            `json:"queryKeyClass,string" validate:"required,oneof=0 1"`
-		ApplyNo                 string                   `json:"applyNo" validate:"omitempty,len=16"`
-		DateFrom                string                   `json:"dateFrom" validate:"omitempty,len=10"`
-		DateTo                  string                   `json:"dateTo" validate:"omitempty,len=10"`
-		NextItemKey             string                   `json:"nextItemKey" validate:"omitempty,min=1,max=24"`
-		RequestTransferStatuses []*requestTransferStatus `json:"requestTransferStatus" validate:"omitempty"`
-		RequestTransferClass    RequestTransferClass     `json:"requestTransferClass,string" validate:"omitempty,oneof=1 3"`
-		RequestTransferTerm     RequestTransferTerm      `json:"requestTransferTerm,string" validate:"omitempty,oneof=1 2"`
+		QueryKeyClass           QueryKeyClass            `json:"queryKeyClass,string" validate:"required,oneof=1 2"`
+		ApplyNo                 string                   `json:"applyNo,omitempty" validate:"omitempty,len=16"`
+		DateFrom                string                   `json:"dateFrom,omitempty" validate:"omitempty,len=10"`
+		DateTo                  string                   `json:"dateTo,omitempty" validate:"omitempty,len=10"`
+		NextItemKey             string                   `json:"nextItemKey,omitempty" validate:"omitempty,min=1,max=24"`
+		RequestTransferStatuses []*RequestTransferStatus `json:"requestTransferStatus,omitempty" validate:"omitempty"`
+		RequestTransferClass    RequestTransferClass     `json:"requestTransferClass,string,omitempty" validate:"omitempty,oneof=1 3"`
+		RequestTransferTerm     RequestTransferTerm      `json:"requestTransferTerm,string,omitempty" validate:"omitempty,oneof=1 2"`
 	}
 
-	requestTransferStatus struct {
-		Status RequestTransferStatus `json:"requestTransferStatus,string"`
+	RequestTransferStatus struct {
+		Status TransferStatus `json:"requestTransferStatus,string"`
 	}
 
 	GetTransferStatusResponse struct {
@@ -37,7 +38,7 @@ type (
 		DateFrom                string                   `json:"dateFrom"`
 		DateTo                  string                   `json:"dateTo"`
 		RequestNextItemKey      string                   `json:"requestNextItemKey"`
-		RequestTransferStatuses []*requestTransferStatus `json:"requestTransferStatuses,string"`
+		RequestTransferStatuses []*RequestTransferStatus `json:"requestTransferStatuses,string"`
 		RequestTransferClass    string                   `json:"requestTransferClass"`
 		RequestTransferTerm     string                   `json:"requestTransferTerm"`
 		HasNext                 bool                     `json:"hasNext"`
@@ -45,13 +46,13 @@ type (
 	}
 
 	transferDetail struct {
-		TransferStatus     string              `json:"transferStatus"`
+		TransferStatus     TransferStatus      `json:"transferStatus,string"`
 		TransferStatusName string              `json:"transferStatusName"`
 		TransferTypeName   string              `json:"transferTypeName"`
-		IsFeeFreeUse       bool                `json:"isFeeFreeUse"`
-		IsFeePointUse      bool                `json:"isFeePointUse"`
+		IsFeeFreeUse       bool                `json:"isFeeFreeUse,string"`
+		IsFeePointUse      bool                `json:"isFeePointUse,string"`
 		PointName          string              `json:"pointName"`
-		FeeLaterPaymentFlg bool                `json:"feeLaterPaymentFlg"`
+		FeeLaterPaymentFlg bool                `json:"feeLaterPaymentFlg,string"`
 		TransferDetailFee  string              `json:"transferDetailFee"`
 		TotalDebitAmount   string              `json:"totalDebitAmount"`
 		TransferApplies    []*transferApply    `json:"transferApplies"`
@@ -120,6 +121,7 @@ func (r *GetTransferStatusRequest) Validate() error {
 }
 
 func (cli *Client) GetTransferStatus(
+	ctx context.Context,
 	req *GetTransferStatusRequest,
 ) (*GetTransferStatusResponse, error) {
 	if err := req.Validate(); err != nil {
@@ -142,7 +144,7 @@ type (
 		AccountID               string                  `json:"accountId" validate:"required,min=12,max=29"`
 		RemitterName            string                  `json:"remitterName" validate:"omitempty,min=1,max=48"`
 		TransferDesignatedDate  string                  `json:"transferDesignatedDate" validate:"omitempty"`
-		TransferDateHolidayCode TransferDateHolidayCode `json:"transferDateHolidayCode" validate:"omitempty,len=1"`
+		TransferDateHolidayCode TransferDateHolidayCode `json:"transferDateHolidayCode,string" validate:"required,len=1"`
 		TotalCount              int                     `json:"totalCount,string" validate:"omitempty,min=1,max=999999"`
 		TotalAmount             int                     `json:"totalAmount,string" validate:"omitempty,min=1,max=999999999999"`
 		ApplyComment            string                  `json:"applyComment" validate:"omitempty,min=1,max=20"`
@@ -175,6 +177,7 @@ func (r *TransferRequestRequest) Validate() error {
 }
 
 func (cli *Client) TransferRequest(
+	ctx context.Context,
 	req *TransferRequestRequest,
 ) (*TransferRequestResponse, error) {
 	if err := req.Validate(); err != nil {
@@ -210,6 +213,7 @@ func (r *GetRequestResultRequest) Validate() error {
 }
 
 func (cli *Client) GetRequestResult(
+	ctx context.Context,
 	req *GetRequestResultRequest,
 ) (*GetRequestResultResponse, error) {
 	if err := req.Validate(); err != nil {

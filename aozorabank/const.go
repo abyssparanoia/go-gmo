@@ -17,23 +17,23 @@ const (
 	QueryKeyClassTransferQueryBulk QueryKeyClass = 2
 )
 
-type RequestTransferStatus int
+type TransferStatus int
 
 const (
-	RequestTransferStatusApplying                RequestTransferStatus = 2
-	RequestTransferStatusReturned                RequestTransferStatus = 3
-	RequestTransferStatusDismiss                 RequestTransferStatus = 4
-	RequestTransferStatusExpired                 RequestTransferStatus = 5
-	RequestTransferStatusApprovalCancelled       RequestTransferStatus = 8
-	RequestTransferStatusInReserve               RequestTransferStatus = 11
-	RequestTransferStatusInProgress              RequestTransferStatus = 12
-	RequestTransferStatusRetrying                RequestTransferStatus = 13
-	RequestTransferStatusCompleted               RequestTransferStatus = 20
-	RequestTransferStatusFundsReturned           RequestTransferStatus = 22
-	RequestTransferStatusTransferReturning       RequestTransferStatus = 24
-	RequestTransferStatusTransferReturnCompleted RequestTransferStatus = 25
-	RequestTransferStatusTransferReturnFailed    RequestTransferStatus = 26
-	RequestTransferStatusFailed                  RequestTransferStatus = 40
+	TransferStatusApplying                TransferStatus = 2
+	TransferStatusReturned                TransferStatus = 3
+	TransferStatusDismiss                 TransferStatus = 4
+	TransferStatusExpired                 TransferStatus = 5
+	TransferStatusApprovalCancelled       TransferStatus = 8
+	TransferStatusInReserve               TransferStatus = 11
+	TransferStatusInProgress              TransferStatus = 12
+	TransferStatusRetrying                TransferStatus = 13
+	TransferStatusCompleted               TransferStatus = 20
+	TransferStatusFundsReturned           TransferStatus = 22
+	TransferStatusTransferReturning       TransferStatus = 24
+	TransferStatusTransferReturnCompleted TransferStatus = 25
+	TransferStatusTransferReturnFailed    TransferStatus = 26
+	TransferStatusFailed                  TransferStatus = 40
 )
 
 type RequestTransferClass int
