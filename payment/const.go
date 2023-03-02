@@ -27,6 +27,7 @@ const (
 	convenienceStoreCancelPath    = "payment/CvsCancel.idPass"
 	payPayEntryTranPath           = "payment/EntryTranPaypay.idPass"
 	payPayExecTranPath            = "payment/ExecTranPaypay.idPass"
+	payPaySalesPath               = "payment/PaypaySales.idPass"
 )
 
 // ResultEntryBankAccountStatus ... entry bank account status
@@ -79,10 +80,28 @@ type TradeMultiStatus string
 const (
 	// TradeMultiStatusUnprocessed ... unprocessed
 	TradeMultiStatusUnprocessed TradeMultiStatus = "UNPROCESSED"
+	// TradeMultiStatusReqSuccess ... request success
+	TradeMultiStatusReqSuccess TradeMultiStatus = "REQSUCCESS"
+	// TradeMultiStatusAuthProcess ... auth process
+	TradeMultiStatusAuthProcess TradeMultiStatus = "AUTHPROCESS"
+	// TradeMultiStatusAuth ... auth
+	TradeMultiStatusAuth TradeMultiStatus = "AUTH"
 	// TradeMultiStatusTrading ... proccessing
 	TradeMultiStatusTrading TradeMultiStatus = "TRADING"
 	// TradeMultiStatusPaysuccess ... success
 	TradeMultiStatusPaysuccess TradeMultiStatus = "PAYSUCCESS"
+	// TradeMultiStatusReqSales ... request sales
+	TradeMultiStatusReqSales TradeMultiStatus = "REQSALES"
+	// TradeMultiStatusSales ... sales
+	TradeMultiStatusSales TradeMultiStatus = "SALES"
+	// TradeMultiStatusCapture ... capture
+	TradeMultiStatusCapture TradeMultiStatus = "CAPTURE"
+	// TradeMultiStatusCancel ... cancel
+	TradeMultiStatusCancel TradeMultiStatus = "CANCEL"
+	// TradeMultiStatusReturn ... return
+	TradeMultiStatusReturn TradeMultiStatus = "RETURN"
+	// TradeMultiStatusPayFail ... pay fail
+	TradeMultiStatusPayFail TradeMultiStatus = "PAYFAIL"
 	// TradeMultiStatusStop ... stop
 	TradeMultiStatusStop TradeMultiStatus = "STOP"
 	// TradeMultiStatusExpired ... expired
