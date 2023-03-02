@@ -122,3 +122,42 @@ func (cli *Client) PayPaySales(
 	}
 	return res, nil
 }
+
+// PayPayCancelReturnRequest ... paypay cancel return request
+type PayPayCancelReturnRequest struct {
+	AccessID     string `schema:"AccessID" validate:"required"`
+	AccessPass   string `schema:"AccessPass" validate:"required"`
+	OrderID      string `schema:"OrderID" validate:"required"`
+	CancelAmount int    `schema:"CancelAmount" validate:"required"`
+	CacnelTax    int    `schema:"CacnelTax,omitempty"`
+}
+
+// Validate ... validate
+func (r *PayPayCancelReturnRequest) Validate() error {
+	return validate.Struct(r)
+}
+
+// PayPaySalesResponse ... paypay sales response
+type PayPayCancelReturnResponse struct {
+	OrderID      string           `schema:"OrderID,omitempty"`
+	Status       TradeMultiStatus `schema:"Status,omitempty"`
+	CancelAmount int              `schema:"CancelAmount,omitempty"`
+	CacnelTax    int              `schema:"CacnelTax,omitempty"`
+	ErrCode      string           `schema:"ErrCode,omitempty"`
+	ErrInfo      string           `schema:"ErrInfo,omitempty"`
+}
+
+// PayPaySales ... paypay sales
+func (cli *Client) PayPayCancelReturn(
+	req *PayPayCancelReturnRequest,
+) (*PayPayCancelReturnResponse, error) {
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
+	res := &PayPayCancelReturnResponse{}
+	_, err := cli.do(payPaySalesPath, req, res)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
