@@ -26,6 +26,7 @@ const (
 	convenienceStoreExecTranPath  = "payment/ExecTranCvs.idPass"
 	convenienceStoreCancelPath    = "payment/CvsCancel.idPass"
 	payPayEntryTranPath           = "payment/EntryTranPaypay.idPass"
+	payPayExecTranPath            = "payment/ExecTranPaypay.idPass"
 )
 
 // ResultEntryBankAccountStatus ... entry bank account status
@@ -133,4 +134,11 @@ const (
 	ConvenienceStoreCodeFamilyMart  ConvenienceStoreCode = "10002"
 	ConvenienceStoreCodeMiniStop    ConvenienceStoreCode = "10005"
 	ConvenienceStoreCodeSeikoMart   ConvenienceStoreCode = "10008"
+)
+
+type PayPayTransitionType int
+
+const (
+	PayPayTransitionTypeWebLink  PayPayTransitionType = 1
+	PayPayTransitionTypeDeepLink PayPayTransitionType = 2
 )
