@@ -8,7 +8,7 @@ import (
 
 func main() {
 	cli := newClient()
-	orderID := "orderID2"
+	orderID := "orderID4"
 
 	// req1 := &payment.EntryTranGANBRequest{
 	// 	OrderID: orderID,
@@ -105,4 +105,14 @@ func main() {
 	}
 
 	fmt.Printf("%+v", payPayExecTranRes)
+
+	searchTradeMultiRes, err := cli.SearchTradeMulti(&payment.SearchTradeMultiRequest{
+		OrderID: orderID,
+		PayType: payment.PayPayPayType,
+	})
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("%+v", searchTradeMultiRes)
 }
