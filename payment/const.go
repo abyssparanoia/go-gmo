@@ -25,6 +25,10 @@ const (
 	convenienceStoreEntryTranPath = "payment/EntryTranCvs.idPass"
 	convenienceStoreExecTranPath  = "payment/ExecTranCvs.idPass"
 	convenienceStoreCancelPath    = "payment/CvsCancel.idPass"
+	payPayEntryTranPath           = "payment/EntryTranPaypay.idPass"
+	payPayExecTranPath            = "payment/ExecTranPaypay.idPass"
+	payPaySalesPath               = "payment/PaypaySales.idPass"
+	payPaySCancelReturnPath       = "payment/PaypayCancelReturn.idPass"
 )
 
 // ResultEntryBankAccountStatus ... entry bank account status
@@ -77,10 +81,28 @@ type TradeMultiStatus string
 const (
 	// TradeMultiStatusUnprocessed ... unprocessed
 	TradeMultiStatusUnprocessed TradeMultiStatus = "UNPROCESSED"
+	// TradeMultiStatusReqSuccess ... request success
+	TradeMultiStatusReqSuccess TradeMultiStatus = "REQSUCCESS"
+	// TradeMultiStatusAuthProcess ... auth process
+	TradeMultiStatusAuthProcess TradeMultiStatus = "AUTHPROCESS"
+	// TradeMultiStatusAuth ... auth
+	TradeMultiStatusAuth TradeMultiStatus = "AUTH"
 	// TradeMultiStatusTrading ... proccessing
 	TradeMultiStatusTrading TradeMultiStatus = "TRADING"
 	// TradeMultiStatusPaysuccess ... success
 	TradeMultiStatusPaysuccess TradeMultiStatus = "PAYSUCCESS"
+	// TradeMultiStatusReqSales ... request sales
+	TradeMultiStatusReqSales TradeMultiStatus = "REQSALES"
+	// TradeMultiStatusSales ... sales
+	TradeMultiStatusSales TradeMultiStatus = "SALES"
+	// TradeMultiStatusCapture ... capture
+	TradeMultiStatusCapture TradeMultiStatus = "CAPTURE"
+	// TradeMultiStatusCancel ... cancel
+	TradeMultiStatusCancel TradeMultiStatus = "CANCEL"
+	// TradeMultiStatusReturn ... return
+	TradeMultiStatusReturn TradeMultiStatus = "RETURN"
+	// TradeMultiStatusPayFail ... pay fail
+	TradeMultiStatusPayFail TradeMultiStatus = "PAYFAIL"
 	// TradeMultiStatusStop ... stop
 	TradeMultiStatusStop TradeMultiStatus = "STOP"
 	// TradeMultiStatusExpired ... expired
@@ -103,6 +125,8 @@ const (
 	IDNetPayType PayType = "6"
 	// GANBPayType ... GMO Aozora Net Bank
 	GANBPayType PayType = "36"
+	// PayPayPayType ... PayPay
+	PayPayPayType PayType = "45"
 )
 
 // WebhookResultResponseStatus ... webhook result response status
@@ -132,4 +156,11 @@ const (
 	ConvenienceStoreCodeFamilyMart  ConvenienceStoreCode = "10002"
 	ConvenienceStoreCodeMiniStop    ConvenienceStoreCode = "10005"
 	ConvenienceStoreCodeSeikoMart   ConvenienceStoreCode = "10008"
+)
+
+type PayPayTransitionType int
+
+const (
+	PayPayTransitionTypeWebLink  PayPayTransitionType = 1
+	PayPayTransitionTypeDeepLink PayPayTransitionType = 2
 )

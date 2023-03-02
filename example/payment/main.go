@@ -8,7 +8,7 @@ import (
 
 func main() {
 	cli := newClient()
-	// orderID := "orderID6"
+	orderID := "orderID4"
 
 	// req1 := &payment.EntryTranGANBRequest{
 	// 	OrderID: orderID,
@@ -45,41 +45,74 @@ func main() {
 	// fmt.Printf("%+v", result3)
 	// fmt.Println(result3.GanbBankName)
 
-	sameMemberReq := &payment.SaveMemberRequest{
-		MemberID:   "aadwaddwadwadwada2",
-		MemberName: "田中太郎",
-	}
+	// sameMemberReq := &payment.SaveMemberRequest{
+	// 	MemberID:   "aadwaddwadwadwada2",
+	// 	MemberName: "田中太郎",
+	// }
 
-	saveMemberRes, err := cli.SaveMember(sameMemberReq)
+	// saveMemberRes, err := cli.SaveMember(sameMemberReq)
+	// if err != nil {
+	// 	fmt.Printf("%+v", err)
+	// 	panic(err)
+	// }
+
+	// fmt.Printf("%+v", saveMemberRes)
+
+	// deleteMemberReq := &payment.DeleteMemberRequest{
+	// 	MemberID: sameMemberReq.MemberID,
+	// }
+
+	// deleteMemberRes, err := cli.DeleteMember(deleteMemberReq)
+	// if err != nil {
+	// 	fmt.Printf("%+v", err)
+	// 	panic(err)
+	// }
+
+	// fmt.Printf("%+v", deleteMemberRes)
+
+	// sameMemberReq2 := &payment.SaveMemberRequest{
+	// 	MemberID:   sameMemberReq.MemberID,
+	// 	MemberName: "田中太郎",
+	// }
+
+	// saveMemberRes2, err := cli.SaveMember(sameMemberReq2)
+	// if err != nil {
+	// 	fmt.Printf("%+v", err)
+	// 	panic(err)
+	// }
+
+	// fmt.Printf("%+v", saveMemberRes2)
+
+	paypayEntryTranRes, err := cli.PayPayEntryTran(&payment.PayPayEntryTranRequest{
+		OrderID: orderID,
+		Amount:  1,
+		JobCD:   payment.JobCDAuth,
+	})
 	if err != nil {
-		fmt.Printf("%+v", err)
 		panic(err)
 	}
 
-	fmt.Printf("%+v", saveMemberRes)
+	fmt.Printf("%+v", paypayEntryTranRes)
 
-	deleteMemberReq := &payment.DeleteMemberRequest{
-		MemberID: sameMemberReq.MemberID,
-	}
-
-	deleteMemberRes, err := cli.DeleteMember(deleteMemberReq)
+	payPayExecTranRes, err := cli.PayPayExecTran(&payment.PayPayExecTranRequest{
+		AccessID:   paypayEntryTranRes.AccessID,
+		AccessPass: paypayEntryTranRes.AccessPass,
+		OrderID:    orderID,
+		RetURL:     "http://localhost:8000/paypay/callback",
+	})
 	if err != nil {
-		fmt.Printf("%+v", err)
 		panic(err)
 	}
 
-	fmt.Printf("%+v", deleteMemberRes)
+	fmt.Printf("%+v", payPayExecTranRes)
 
-	sameMemberReq2 := &payment.SaveMemberRequest{
-		MemberID:   sameMemberReq.MemberID,
-		MemberName: "田中太郎",
-	}
-
-	saveMemberRes2, err := cli.SaveMember(sameMemberReq2)
+	searchTradeMultiRes, err := cli.SearchTradeMulti(&payment.SearchTradeMultiRequest{
+		OrderID: orderID,
+		PayType: payment.PayPayPayType,
+	})
 	if err != nil {
-		fmt.Printf("%+v", err)
 		panic(err)
 	}
 
-	fmt.Printf("%+v", saveMemberRes2)
+	fmt.Printf("%+v", searchTradeMultiRes)
 }

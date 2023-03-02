@@ -41,6 +41,11 @@ type SearchTradeMultiResponse struct {
 	GanbLatestTransferAmount int              `schema:"GanbLatestTransferCount,omitempty"`
 	ErrCode                  string           `schema:"ErrCode,omitempty"`
 	ErrInfo                  string           `schema:"ErrInfo,omitempty"`
+	PayPayCancelAmount       int              `schema:"PayPayCancelAmount,omitempty"`
+	PayPayCacnelTax          int              `schema:"PayPayCacnelTax,omitempty"`
+	PayPayTrackingID         string           `schema:"PayPayTrackingID,omitempty"`
+	PayPayAcceptCode         string           `schema:"PayPayAcceptCode,omitempty"`
+	PayPayOrderID            string           `schema:"PayPayOrderID,omitempty"`
 }
 
 // SearchTradeMulti ... search trade multi
