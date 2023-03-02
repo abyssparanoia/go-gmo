@@ -83,3 +83,42 @@ func (cli *Client) PayPayExecTran(
 	}
 	return res, nil
 }
+
+// PayPaySalesRequest ... paypay sales request
+type PayPaySalesRequest struct {
+	AccessID   string `schema:"AccessID" validate:"required"`
+	AccessPass string `schema:"AccessPass" validate:"required"`
+	OrderID    string `schema:"OrderID" validate:"required"`
+	Amount     int    `schema:"Amount" validate:"required"`
+	Tax        int    `schema:"Tax,omitempty"`
+}
+
+// Validate ... validate
+func (r *PayPaySalesRequest) Validate() error {
+	return validate.Struct(r)
+}
+
+// PayPaySalesResponse ... paypay sales response
+type PayPaySalesResponse struct {
+	OrderID string           `schema:"OrderID,omitempty"`
+	Amount  int              `schema:"Amount,omitempty"`
+	Tax     int              `schema:"Tax,omitempty"`
+	Status  TradeMultiStatus `schema:"Status,omitempty"`
+	ErrCode string           `schema:"ErrCode,omitempty"`
+	ErrInfo string           `schema:"ErrInfo,omitempty"`
+}
+
+// PayPaySales ... paypay sales
+func (cli *Client) PayPaySales(
+	req *PayPaySalesRequest,
+) (*PayPaySalesResponse, error) {
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
+	res := &PayPaySalesResponse{}
+	_, err := cli.do(payPaySalesPath, req, res)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
