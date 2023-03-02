@@ -25,6 +25,7 @@ const (
 	convenienceStoreEntryTranPath = "payment/EntryTranCvs.idPass"
 	convenienceStoreExecTranPath  = "payment/ExecTranCvs.idPass"
 	convenienceStoreCancelPath    = "payment/CvsCancel.idPass"
+	payPayEntryTranPath           = "payment/EntryTranPaypay.idPass"
 )
 
 // ResultEntryBankAccountStatus ... entry bank account status
