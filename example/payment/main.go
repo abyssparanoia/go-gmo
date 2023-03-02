@@ -8,7 +8,7 @@ import (
 
 func main() {
 	cli := newClient()
-	orderID := "orderID"
+	orderID := "orderID2"
 
 	// req1 := &payment.EntryTranGANBRequest{
 	// 	OrderID: orderID,
@@ -93,4 +93,16 @@ func main() {
 	}
 
 	fmt.Printf("%+v", paypayEntryTranRes)
+
+	payPayExecTranRes, err := cli.PayPayExecTran(&payment.PayPayExecTranRequest{
+		AccessID:   paypayEntryTranRes.AccessID,
+		AccessPass: paypayEntryTranRes.AccessPass,
+		OrderID:    orderID,
+		RetURL:     "http://localhost:8000/paypay/callback",
+	})
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("%+v", payPayExecTranRes)
 }
