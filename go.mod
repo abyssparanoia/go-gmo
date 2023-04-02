@@ -9,7 +9,7 @@ require (
 	github.com/go-playground/validator/v10 v10.12.0
 	github.com/gocarina/gocsv v0.0.0-20230226133904-70c27cb2918a
 	github.com/gorilla/schema v1.2.0
-	github.com/imdario/mergo v0.3.14
+	github.com/imdario/mergo v0.3.15
 	github.com/pkg/sftp v1.13.5
 	github.com/stretchr/testify v1.8.2
 	golang.org/x/crypto v0.7.0
