@@ -93,7 +93,7 @@ func (cli *Client) CreateToken(
 		}
 		auth := fmt.Sprintf("%s:%s", req.ClientID, req.ClientSecret)
 		encoded := base64.StdEncoding.EncodeToString([]byte(auth))
-		header.Set("Authorization", encoded)
+		header.Add("Authorization", encoded)
 	}
 	res := &AuthorizationResponse{}
 	if _, err := cli.doPost(header, fmt.Sprintf("%s/token", authPathV1), reqMap, res); err != nil {
@@ -143,7 +143,7 @@ func (cli *Client) RefreshToken(
 		}
 		auth := fmt.Sprintf("%s:%s", req.ClientID, req.ClientSecret)
 		encoded := base64.StdEncoding.EncodeToString([]byte(auth))
-		header.Set("Authorization", encoded)
+		header.Add("Authorization", encoded)
 	}
 	res := &AuthorizationResponse{}
 	if _, err := cli.doPost(header, fmt.Sprintf("%s/token", authPathV1), reqMap, res); err != nil {

@@ -22,26 +22,25 @@ type Client struct {
 
 // NewClient ... new client
 func NewClient(
-	sandBox bool,
-	accessToken string,
+	apiHostType ApiHostType,
 ) (*Client, error) {
-	if accessToken == "" || len(accessToken) > 128 {
-		return nil, fmt.Errorf("invalid access token, accessToken=%s", accessToken)
-	}
-
 	var apiHost string
-	if sandBox {
+	switch apiHostType {
+	case ApiHostTypeSandbox:
 		apiHost = apiHostSandbox
-	} else {
+	case ApiHostTypeStaging:
+		apiHost = apiHostStaging
+	case ApiHostTypeProduction:
 		apiHost = apiHostProduction
+	default:
+		return nil, fmt.Errorf("invalid api host type, apiHostType=%d", apiHostType)
 	}
 
 	return &Client{
 		cli: &http.Client{
 			Timeout: time.Second * 30,
 		},
-		apiHost:     apiHost,
-		accessToken: accessToken,
+		apiHost: apiHost,
 	}, nil
 }
 
