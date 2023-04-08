@@ -15,6 +15,8 @@ import (
 func TestGetTransferStatus(
 	t *testing.T,
 ) {
+	t.Parallel()
+
 	testcases := map[string]struct {
 		request  *GetTransferStatusRequest
 		rawQuery string
@@ -46,7 +48,9 @@ func TestGetTransferStatus(
 	}
 
 	for title, tc := range testcases {
+		tc := tc
 		t.Run(title, func(t *testing.T) {
+			t.Parallel()
 
 			expected := tc.expected
 			ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -74,6 +78,8 @@ func TestGetTransferStatus(
 func TestTransferRequest(
 	t *testing.T,
 ) {
+	t.Parallel()
+
 	testcases := map[string]struct {
 		request  *TransferRequestRequest
 		expected *TransferRequestResponse
@@ -137,6 +143,8 @@ func TestTransferRequest(
 func TestGetRequestResult(
 	t *testing.T,
 ) {
+	t.Parallel()
+
 	testcases := map[string]struct {
 		request  *GetRequestResultRequest
 		expected *GetRequestResultResponse

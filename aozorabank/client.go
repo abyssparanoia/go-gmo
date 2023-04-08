@@ -15,8 +15,8 @@ import (
 
 // Client ... gmo pg remittance API client
 type Client struct {
-	HTTPClient  *http.Client
-	APIHost     string
+	cli         *http.Client
+	apiHost     string
 	accessToken string
 }
 
@@ -37,10 +37,10 @@ func NewClient(
 	}
 
 	return &Client{
-		HTTPClient: &http.Client{
+		cli: &http.Client{
 			Timeout: time.Second * 30,
 		},
-		APIHost:     apiHost,
+		apiHost:     apiHost,
 		accessToken: accessToken,
 	}, nil
 }
@@ -51,10 +51,11 @@ func (c *Client) doPost(
 	body map[string]interface{},
 	respBody interface{},
 ) (*http.Response, error) {
-	return do(c.HTTPClient, c.accessToken, c.APIHost, header, path, http.MethodPost, body, respBody)
+	return do(c.cli, c.accessToken, c.apiHost, header, path, http.MethodPost, body, respBody)
 }
 
 func (c *Client) doGet(
+	header http.Header,
 	path string,
 	body map[string]interface{},
 	respBody interface{},
@@ -64,7 +65,7 @@ func (c *Client) doGet(
 		values.Add(k, fmt.Sprintf("%s", v))
 	}
 
-	return do(c.HTTPClient, c.accessToken, c.APIHost, nil, fmt.Sprintf("%s?%s", path, values.Encode()), http.MethodGet, body, respBody)
+	return do(c.cli, c.accessToken, c.apiHost, header, fmt.Sprintf("%s?%s", path, values.Encode()), http.MethodGet, body, respBody)
 }
 
 func do(
@@ -97,13 +98,7 @@ func do(
 		return nil, err
 	}
 
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("x-access-token", accessToken)
-	for k, values := range header {
-		for _, v := range values {
-			req.Header.Add(k, v)
-		}
-	}
+	req.Header = header
 	var resp *http.Response
 	backoffCfg := backoff.WithMaxRetries(backoff.NewExponentialBackOff(), 3)
 	err = backoff.Retry(func() (err error) {

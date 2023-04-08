@@ -41,11 +41,8 @@ func (cli *Client) EntryTran(
 	return res, nil
 }
 
-// ExecTranRequest ... exec tran request with member id
-type ExecTranRequest = ExecTranRequestWithMemberID
-
-// ExecTranRequestWithMemberID ... exec tran request with member ID
-type ExecTranRequestWithMemberID struct {
+// ExecTranRequest ... exec tran request
+type ExecTranRequest struct {
 	AccessID     string `schema:"AccessID" validate:"required"`
 	AccessPass   string `schema:"AccessPass" validate:"required"`
 	OrderID      string `schema:"OrderID" validate:"required,lte=27"`
@@ -60,21 +57,6 @@ type ExecTranRequestWithMemberID struct {
 
 // Validate ... validate
 func (r *ExecTranRequest) Validate() error {
-	return validate.Struct(r)
-}
-
-// ExecTranRequestWithMemberID ... exec tran request with token
-type ExecTranRequestWithToken struct {
-	AccessID   string `schema:"AccessID" validate:"required"`
-	AccessPass string `schema:"AccessPass" validate:"required"`
-	OrderID    string `schema:"OrderID" validate:"required,lte=27"`
-	Method     string `schema:"Method,omitempty"`
-	TokenType  string `schema:"TokenType,omitempty"`
-	Token      string `schema:"Token" validate:"required"`
-}
-
-// Validate ... validate
-func (r *ExecTranRequestWithToken) Validate() error {
 	return validate.Struct(r)
 }
 
@@ -96,24 +78,9 @@ type ExecTranResponse struct {
 	ErrInfo     string `schema:"ErrInfo,omitempty"`
 }
 
-// ExecTran ... exec tran with member id
+// ExecTran ... exec tran
 func (cli *Client) ExecTran(
 	req *ExecTranRequest,
-) (*ExecTranResponse, error) {
-	if err := req.Validate(); err != nil {
-		return nil, err
-	}
-	res := &ExecTranResponse{}
-	_, err := cli.do(execTranPath, req, res)
-	if err != nil {
-		return nil, err
-	}
-	return res, nil
-}
-
-// ExecTranWithToken exec tran with token
-func (cli *Client) ExecTranWithToken(
-	req *ExecTranRequestWithToken,
 ) (*ExecTranResponse, error) {
 	if err := req.Validate(); err != nil {
 		return nil, err

@@ -2,14 +2,20 @@ package aozorabank
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 
 	"github.com/abyssparanoia/go-gmo/internal/pkg/converter"
 	"github.com/abyssparanoia/go-gmo/internal/pkg/validate"
 )
 
+const (
+	corporationPathV1 = "corporation/v1"
+)
+
 type (
 	GetTransferStatusRequest struct {
+		AccessToken             string                   `json:"-" validate:"required,min=1,max=128"`
 		AccountID               string                   `json:"accountId" validate:"required,min=12,max=29"`
 		QueryKeyClass           QueryKeyClass            `json:"queryKeyClass,string" validate:"required,oneof=1 2"`
 		ApplyNo                 string                   `json:"applyNo,omitempty" validate:"omitempty,len=16"`
@@ -132,7 +138,7 @@ func (cli *Client) GetTransferStatus(
 		return nil, err
 	}
 	res := &GetTransferStatusResponse{}
-	if _, err := cli.doGet("transfer/status", reqMap, res); err != nil {
+	if _, err := cli.doGet(getTransferHeader(req.AccessToken), fmt.Sprintf("%s/transfer/status", corporationPathV1), reqMap, res); err != nil {
 		return nil, err
 	}
 	return res, nil
@@ -140,6 +146,7 @@ func (cli *Client) GetTransferStatus(
 
 type (
 	TransferRequestRequest struct {
+		AccessToken             string                  `json:"-" validate:"required,min=1,max=128"`
 		IdempotencyKey          string                  `json:"-" validate:"omitempty,min=1,max=128"`
 		AccountID               string                  `json:"accountId" validate:"required,min=12,max=29"`
 		RemitterName            string                  `json:"remitterName" validate:"omitempty,min=1,max=48"`
@@ -187,18 +194,19 @@ func (cli *Client) TransferRequest(
 	if err != nil {
 		return nil, err
 	}
-	header := http.Header{}
+	header := getTransferHeader(req.AccessToken)
 	header.Set(IdempotencyKeyHeaderKey, req.AccountID)
 	res := &TransferRequestResponse{}
-	if _, err := cli.doPost(header, "transfer/request", reqMap, res); err != nil {
+	if _, err := cli.doPost(header, fmt.Sprintf("%s/transfer/request", corporationPathV1), reqMap, res); err != nil {
 		return nil, err
 	}
 	return res, nil
 }
 
 type GetRequestResultRequest struct {
-	AccountID string `json:"accountId" validate:"required,min=12,max=29"`
-	ApplyNo   string `json:"applyNo" validate:"omitempty,len=16"`
+	AccessToken string `json:"-" validate:"required,min=1,max=128"`
+	AccountID   string `json:"accountId" validate:"required,min=12,max=29"`
+	ApplyNo     string `json:"applyNo" validate:"omitempty,len=16"`
 }
 
 type GetRequestResultResponse struct {
@@ -224,8 +232,17 @@ func (cli *Client) GetRequestResult(
 		return nil, err
 	}
 	res := &GetRequestResultResponse{}
-	if _, err := cli.doGet("transfer/request-result", reqMap, res); err != nil {
+	if _, err := cli.doGet(getTransferHeader(req.AccessToken), fmt.Sprintf("%s/transfer/request-result", corporationPathV1), reqMap, res); err != nil {
 		return nil, err
 	}
 	return res, nil
+}
+
+func getTransferHeader(
+	accessToken string,
+) http.Header {
+	return http.Header{
+		"Content-Type":   []string{"application/json"},
+		"x-access-token": []string{accessToken},
+	}
 }
