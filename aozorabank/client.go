@@ -99,8 +99,6 @@ func do(
 
 	req.Header = header
 
-	fmt.Println("req.Header: ", req.Header)
-
 	var resp *http.Response
 	backoffCfg := backoff.WithMaxRetries(backoff.NewExponentialBackOff(), 3)
 	err = backoff.Retry(func() (err error) {
@@ -122,13 +120,13 @@ func do(
 
 	if contains := bytes.Contains(bodyBytes, []byte("errorCode")); contains {
 		errResp := &ErrorResponse{}
-		fmt.Println("bodyBytes: ", string(bodyBytes))
 		if err := json.Unmarshal(bodyBytes, errResp); err != nil {
 			return nil, fmt.Errorf("failed to unmarshal error response, err=%w", err)
 		}
 		return nil, errResp
 	}
 
+	fmt.Println("bodyBytes: ", string(bodyBytes))
 	if err := json.Unmarshal(bodyBytes, respBody); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal response, err=%w", err)
 	}
