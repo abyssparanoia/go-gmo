@@ -122,6 +122,7 @@ func do(
 
 	if contains := bytes.Contains(bodyBytes, []byte("errorCode")); contains {
 		errResp := &ErrorResponse{}
+		fmt.Println("bodyBytes: ", string(bodyBytes))
 		if err := json.Unmarshal(bodyBytes, errResp); err != nil {
 			return nil, err
 		}
