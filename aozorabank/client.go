@@ -126,7 +126,6 @@ func do(
 		return nil, errResp
 	}
 
-	fmt.Println("bodyBytes: ", string(bodyBytes))
 	if err := json.Unmarshal(bodyBytes, respBody); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal response, err=%w", err)
 	}
