@@ -98,6 +98,9 @@ func do(
 	}
 
 	req.Header = header
+
+	fmt.Println("req.Header: ", req.Header)
+
 	var resp *http.Response
 	backoffCfg := backoff.WithMaxRetries(backoff.NewExponentialBackOff(), 3)
 	err = backoff.Retry(func() (err error) {
