@@ -175,7 +175,7 @@ func (cli *Client) GetUserInfo(
 		return nil, err
 	}
 	header := http.Header{
-		"Authorization": []string{req.AccessToken},
+		"Authorization": []string{fmt.Sprintf("Bearer %s", req.AccessToken)},
 	}
 	res := &GetUserInfoResponse{}
 	if _, err := cli.doGet(header, fmt.Sprintf("%s/userinfo", authPathV1), nil, res); err != nil {
