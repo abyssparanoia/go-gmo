@@ -118,10 +118,10 @@ func do(
 		return nil, err
 	}
 
-	if contains := bytes.Contains(bodyBytes, []byte("errorCode")); contains {
+	if isError(resp.StatusCode) {
 		errResp := &ErrorResponse{}
 		if err := json.Unmarshal(bodyBytes, errResp); err != nil {
-			return nil, fmt.Errorf("failed to unmarshal error response, err=%w", err)
+			return nil, fmt.Errorf("failed to unmarshal error response, bodyBytes=%s,  err=%w", string(bodyBytes), err)
 		}
 		return nil, errResp
 	}
@@ -132,4 +132,13 @@ func do(
 	}
 
 	return resp, nil
+}
+
+func isError(code int) bool {
+	if code >= http.StatusBadRequest || code <= http.StatusUnavailableForLegalReasons {
+		return true
+	} else if code >= http.StatusInternalServerError || code <= http.StatusNetworkAuthenticationRequired {
+		return true
+	}
+	return false
 }
