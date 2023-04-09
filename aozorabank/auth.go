@@ -74,7 +74,7 @@ func (r *CreateTokenRequest) Validate() error {
 func (cli *Client) CreateToken(
 	ctx context.Context,
 	req *CreateTokenRequest,
-) (*AuthorizationResponse, error) {
+) (*CreateTokenResponse, error) {
 	if err := req.Validate(); err != nil {
 		return nil, err
 	}
@@ -95,7 +95,7 @@ func (cli *Client) CreateToken(
 		encoded := base64.StdEncoding.EncodeToString([]byte(auth))
 		header.Add("Authorization", encoded)
 	}
-	res := &AuthorizationResponse{}
+	res := &CreateTokenResponse{}
 	if _, err := cli.doPost(header, fmt.Sprintf("%s/token", authPathV1), reqMap, res); err != nil {
 		return nil, err
 	}
@@ -125,7 +125,7 @@ func (r *RefreshTokenRequest) Validate() error {
 func (cli *Client) RefreshToken(
 	ctx context.Context,
 	req *RefreshTokenRequest,
-) (*AuthorizationResponse, error) {
+) (*RefreshTokenResponse, error) {
 	if err := req.Validate(); err != nil {
 		return nil, err
 	}
@@ -145,7 +145,7 @@ func (cli *Client) RefreshToken(
 		encoded := base64.StdEncoding.EncodeToString([]byte(auth))
 		header.Add("Authorization", encoded)
 	}
-	res := &AuthorizationResponse{}
+	res := &RefreshTokenResponse{}
 	if _, err := cli.doPost(header, fmt.Sprintf("%s/token", authPathV1), reqMap, res); err != nil {
 		return nil, err
 	}
