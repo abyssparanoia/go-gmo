@@ -85,7 +85,7 @@ func do(
 
 	requestBodyBytes, err := json.Marshal(requestBodyMap)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to marshal request body, err=%w", err)
 	}
 
 	req, err := http.NewRequest(
@@ -94,7 +94,7 @@ func do(
 		bytes.NewBuffer(requestBodyBytes),
 	)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to new request, err=%w", err)
 	}
 
 	req.Header = header
@@ -124,13 +124,13 @@ func do(
 		errResp := &ErrorResponse{}
 		fmt.Println("bodyBytes: ", string(bodyBytes))
 		if err := json.Unmarshal(bodyBytes, errResp); err != nil {
-			return nil, err
+			return nil, fmt.Errorf("failed to unmarshal error response, err=%w", err)
 		}
 		return nil, errResp
 	}
 
 	if err := json.Unmarshal(bodyBytes, respBody); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to unmarshal response, err=%w", err)
 	}
 
 	return resp, nil
