@@ -3,10 +3,15 @@ package aozorabank
 import (
 	"context"
 	"encoding/base64"
+	"encoding/json"
 	"fmt"
+	"io"
+	"net/http"
+	"net/url"
+	"strings"
+
 	"github.com/abyssparanoia/go-gmo/internal/pkg/converter"
 	"github.com/abyssparanoia/go-gmo/internal/pkg/validate"
-	"net/http"
 )
 
 const (
@@ -65,6 +70,11 @@ type (
 		TokenType    string `json:"token_type"`
 		ExpiresIn    int    `json:"expires_in"`
 	}
+	CreateTokenErrResponse struct {
+		Error            string `json:"error"`
+		ErrorDescription string `json:"error_description"`
+		ErrorURI         string `json:"error_uri"`
+	}
 )
 
 func (r *CreateTokenRequest) Validate() error {
@@ -73,31 +83,60 @@ func (r *CreateTokenRequest) Validate() error {
 
 func (cli *Client) CreateToken(
 	ctx context.Context,
-	req *CreateTokenRequest,
+	args *CreateTokenRequest,
 ) (*CreateTokenResponse, error) {
-	if err := req.Validate(); err != nil {
+	if err := args.Validate(); err != nil {
 		return nil, err
 	}
-	reqMap, err := converter.StructToJsonTagMap(req)
-	reqMap[grantTypeName] = grantTypeAuthorizationCode
+
+	data := url.Values{}
+	data.Set("client_id", args.ClientID)
+	data.Set("client_secret", args.ClientSecret)
+	data.Set("grant_type", grantTypeAuthorizationCode)
+	data.Set("code", args.Code)
+	data.Set("redirect_uri", args.RedirectURI)
+
+	request, err := http.NewRequest(
+		http.MethodPost,
+		fmt.Sprintf("%s/%s", cli.apiHost, fmt.Sprintf("%s/token", authPathV1)),
+		strings.NewReader(data.Encode()),
+	)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to new request, err=%w", err)
 	}
 
 	header := http.Header{
 		"Content-Type": []string{"application/x-www-form-urlencoded"},
 	}
-	if req.ClientSecretType == ClientSecretTypeBasic {
-		if req.ClientID == "" || req.ClientSecret == "" {
-			return nil, fmt.Errorf("invalid client id or client secret, clientID=%s, clientSecret=%s", req.ClientID, req.ClientSecret)
-		}
-		auth := fmt.Sprintf("%s:%s", req.ClientID, req.ClientSecret)
-		encoded := base64.StdEncoding.EncodeToString([]byte(auth))
-		header.Add("Authorization", encoded)
-	}
-	res := &CreateTokenResponse{}
-	if _, err := cli.doPost(header, fmt.Sprintf("%s/token", authPathV1), reqMap, res); err != nil {
+	request.Header = header
+
+	client := &http.Client{}
+	response, err := client.Do(request)
+	if err != nil {
 		return nil, err
+	}
+	defer response.Body.Close()
+
+	bodyBytes, err := io.ReadAll(response.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	if isError(response.StatusCode) {
+		errResp := &CreateTokenErrResponse{}
+		if err := json.Unmarshal(bodyBytes, errResp); err != nil {
+			return nil, fmt.Errorf("failed to unmarshal error response, bodyBytes=%s,  err=%w", string(bodyBytes), err)
+		}
+		return nil, fmt.Errorf("failed to create token, err=%s, description=%s, uri=%s",
+			errResp.Error,
+			errResp.ErrorDescription,
+			errResp.ErrorURI,
+		)
+	}
+
+	res := &CreateTokenResponse{}
+	if err := json.Unmarshal(bodyBytes, res); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal response, err=%w", err)
 	}
 	return res, nil
 }

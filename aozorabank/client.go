@@ -134,10 +134,5 @@ func do(
 }
 
 func isError(code int) bool {
-	if code >= http.StatusBadRequest || code <= http.StatusUnavailableForLegalReasons {
-		return true
-	} else if code >= http.StatusInternalServerError || code <= http.StatusNetworkAuthenticationRequired {
-		return true
-	}
-	return false
+	return code >= 400 && code <= 599
 }
