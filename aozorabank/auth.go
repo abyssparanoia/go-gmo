@@ -83,18 +83,18 @@ func (r *CreateTokenRequest) Validate() error {
 
 func (cli *Client) CreateToken(
 	ctx context.Context,
-	args *CreateTokenRequest,
+	req *CreateTokenRequest,
 ) (*CreateTokenResponse, error) {
-	if err := args.Validate(); err != nil {
+	if err := req.Validate(); err != nil {
 		return nil, err
 	}
 
 	data := url.Values{}
-	data.Set("client_id", args.ClientID)
-	data.Set("client_secret", args.ClientSecret)
+	data.Set("client_id", req.ClientID)
+	data.Set("client_secret", req.ClientSecret)
 	data.Set("grant_type", grantTypeAuthorizationCode)
-	data.Set("code", args.Code)
-	data.Set("redirect_uri", args.RedirectURI)
+	data.Set("code", req.Code)
+	data.Set("redirect_uri", req.RedirectURI)
 
 	request, err := http.NewRequest(
 		http.MethodPost,

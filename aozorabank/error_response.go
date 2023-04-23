@@ -20,5 +20,5 @@ type TransferErrorDetail struct {
 }
 
 func (errResp *ErrorResponse) Error() string {
-	return fmt.Sprintf("Error: [%s:%s], ErrorDetails: %#v, TransferErrorDetails: %#v", errResp.ErrCode, errResp.ErrMessage, errResp.ErrorDetails, errResp.TransferErrorDetails)
+	return fmt.Sprintf("Error: [%s:%s], ErrorDetails: %v, TransferErrorDetails: %v", errResp.ErrCode, errResp.ErrMessage, errResp.ErrorDetails, errResp.TransferErrorDetails)
 }
