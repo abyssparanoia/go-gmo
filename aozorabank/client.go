@@ -32,6 +32,8 @@ func NewClient(
 		apiHost = apiHostStaging
 	case ApiHostTypeProduction:
 		apiHost = apiHostProduction
+	case ApiHostTypeTest:
+		apiHost = apiHostTest
 	default:
 		return nil, fmt.Errorf("invalid api host type, apiHostType=%d", apiHostType)
 	}
@@ -83,7 +85,7 @@ func do(
 		return nil, err
 	}
 
-	requestBodyBytes, err := json.Marshal(requestBodyMap)
+	requestBodyBytes, err := json.Marshal(body)
 	if err != nil {
 		return nil, fmt.Errorf("failed to marshal request body, err=%w", err)
 	}

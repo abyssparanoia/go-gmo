@@ -13,6 +13,7 @@ const (
 	ApiHostTypeSandbox    ApiHostType = 1
 	ApiHostTypeStaging    ApiHostType = 2
 	ApiHostTypeProduction ApiHostType = 3
+	ApiHostTypeTest       ApiHostType = 4
 )
 
 const (
