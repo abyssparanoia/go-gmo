@@ -71,6 +71,9 @@ func (c *AuthClient) doPost(
 		values.Add(k, fmt.Sprintf("%s", v))
 	}
 
+	values.Add("client_id", c.clientID)
+	values.Add("client_secret", c.clientSecret)
+
 	req, err := http.NewRequest(
 		http.MethodPost,
 		fmt.Sprintf("%s/%s", c.apiHost, path),
