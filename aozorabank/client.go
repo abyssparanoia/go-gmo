@@ -66,7 +66,7 @@ func (c *Client) doGet(
 		values.Add(k, fmt.Sprintf("%s", v))
 	}
 
-	return do(c.cli, c.accessToken, c.apiHost, header, fmt.Sprintf("%s?%s", path, values.Encode()), http.MethodGet, body, respBody)
+	return do(c.cli, c.accessToken, c.apiHost, header, fmt.Sprintf("%s?%s", path, values.Encode()), http.MethodGet, nil, respBody)
 }
 
 func do(
@@ -85,15 +85,19 @@ func do(
 		return nil, err
 	}
 
-	requestBodyBytes, err := json.Marshal(body)
-	if err != nil {
-		return nil, fmt.Errorf("failed to marshal request body, err=%w", err)
+	var requestBody io.Reader
+	if body != nil {
+		requestBodyBytes, err := json.Marshal(body)
+		if err != nil {
+			return nil, fmt.Errorf("failed to marshal request body, err=%w", err)
+		}
+		requestBody = bytes.NewBuffer(requestBodyBytes)
 	}
 
 	req, err := http.NewRequest(
 		method,
 		fmt.Sprintf("%s/%s", apiHost, path),
-		bytes.NewBuffer(requestBodyBytes),
+		requestBody,
 	)
 	if err != nil {
 		return nil, fmt.Errorf("failed to new request, err=%w", err)
