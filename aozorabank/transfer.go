@@ -44,7 +44,7 @@ type (
 		DateFrom                string                   `json:"dateFrom"`
 		DateTo                  string                   `json:"dateTo"`
 		RequestNextItemKey      string                   `json:"requestNextItemKey"`
-		RequestTransferStatuses []*RequestTransferStatus `json:"requestTransferStatuses,string"`
+		RequestTransferStatuses []*RequestTransferStatus `json:"requestTransferStatuses"`
 		RequestTransferClass    string                   `json:"requestTransferClass"`
 		RequestTransferTerm     string                   `json:"requestTransferTerm"`
 		HasNext                 bool                     `json:"hasNext"`
@@ -55,15 +55,15 @@ type (
 		TransferStatus     TransferStatus      `json:"transferStatus,string"`
 		TransferStatusName string              `json:"transferStatusName"`
 		TransferTypeName   string              `json:"transferTypeName"`
-		IsFeeFreeUse       bool                `json:"isFeeFreeUse,string"`
-		IsFeePointUse      bool                `json:"isFeePointUse,string"`
+		IsFeeFreeUse       bool                `json:"isFeeFreeUse"`
+		IsFeePointUse      bool                `json:"isFeePointUse"`
 		PointName          string              `json:"pointName"`
-		FeeLaterPaymentFlg bool                `json:"feeLaterPaymentFlg,string"`
+		FeeLaterPaymentFlg bool                `json:"feeLaterPaymentFlg"`
 		TransferDetailFee  string              `json:"transferDetailFee"`
 		TotalDebitAmount   string              `json:"totalDebitAmount"`
 		TransferApplies    []*transferApply    `json:"transferApplies"`
 		TransferAccepts    []*transferAccept   `json:"transferAccepts"`
-		transferResponses  []*transferResponse `json:"transferResponses"`
+		TransferResponses  []*transferResponse `json:"transferResponses"`
 	}
 
 	transferApply struct {
@@ -195,7 +195,7 @@ func (cli *Client) TransferRequest(
 		return nil, err
 	}
 	header := getTransferHeader(req.AccessToken)
-	header.Set(IdempotencyKeyHeaderKey, req.AccountID)
+	header.Set(IdempotencyKeyHeaderKey, req.IdempotencyKey)
 	res := &TransferRequestResponse{}
 	if _, err := cli.doPost(header, fmt.Sprintf("%s/transfer/request", corporationPathV1), reqMap, res); err != nil {
 		return nil, err

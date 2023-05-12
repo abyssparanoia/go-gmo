@@ -8,6 +8,7 @@ require (
 	github.com/cenkalti/backoff v2.2.1+incompatible
 	github.com/go-playground/validator/v10 v10.12.0
 	github.com/gocarina/gocsv v0.0.0-20230226133904-70c27cb2918a
+	github.com/google/uuid v1.3.0
 	github.com/gorilla/schema v1.2.0
 	github.com/imdario/mergo v0.3.15
 	github.com/pkg/sftp v1.13.5
@@ -25,6 +26,5 @@ require (
 	github.com/leodido/go-urn v1.2.2 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	golang.org/x/sys v0.6.0 // indirect
-	golang.org/x/term v0.6.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
