@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/google/uuid"
-
 	"github.com/abyssparanoia/go-gmo/internal/pkg/converter"
 	"github.com/abyssparanoia/go-gmo/internal/pkg/validate"
 )
@@ -197,7 +195,7 @@ func (cli *Client) TransferRequest(
 		return nil, err
 	}
 	header := getTransferHeader(req.AccessToken)
-	header.Set(IdempotencyKeyHeaderKey, uuid.NewString())
+	header.Set(IdempotencyKeyHeaderKey, req.IdempotencyKey)
 	res := &TransferRequestResponse{}
 	if _, err := cli.doPost(header, fmt.Sprintf("%s/transfer/request", corporationPathV1), reqMap, res); err != nil {
 		return nil, err
