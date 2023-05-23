@@ -110,7 +110,7 @@ type (
 		BeneficiaryBankNameKanji   string `json:"beneficiaryBankNameKanji"`
 		BeneficiaryBranchNameKanji string `json:"beneficiaryBranchNameKanji"`
 		UsedPoint                  string `json:"usedPoint"`
-		IsFeeFreeUsed              string `json:"isFeeFreeUsed"`
+		IsFeeFreeUsed              bool   `json:"isFeeFreeUsed"`
 		TransferFee                string `json:"applyNo"`
 	}
 
