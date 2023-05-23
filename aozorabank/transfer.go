@@ -117,7 +117,7 @@ type (
 	unableDetailInfo struct {
 		TransferDetailStatus string `json:"transferDetailStatus"`
 		RefundStatus         string `json:"refundStatus"`
-		IsRepayment          string `json:"isRepayment"`
+		IsRepayment          bool   `json:"isRepayment"`
 		RepaymentDate        string `json:"repaymentDate"`
 	}
 )
