@@ -15,33 +15,34 @@ import (
 
 // Client ... gmo pg remittance API client
 type Client struct {
-	HTTPClient  *http.Client
-	APIHost     string
+	cli         *http.Client
+	apiHost     string
 	accessToken string
 }
 
 // NewClient ... new client
 func NewClient(
-	sandBox bool,
-	accessToken string,
+	apiHostType ApiHostType,
 ) (*Client, error) {
-	if accessToken == "" || len(accessToken) > 128 {
-		return nil, fmt.Errorf("invalid access token, accessToken=%s", accessToken)
-	}
-
 	var apiHost string
-	if sandBox {
+	switch apiHostType {
+	case ApiHostTypeSandbox:
 		apiHost = apiHostSandbox
-	} else {
+	case ApiHostTypeStaging:
+		apiHost = apiHostStaging
+	case ApiHostTypeProduction:
 		apiHost = apiHostProduction
+	case ApiHostTypeTest:
+		apiHost = apiHostTest
+	default:
+		return nil, fmt.Errorf("invalid api host type, apiHostType=%d", apiHostType)
 	}
 
 	return &Client{
-		HTTPClient: &http.Client{
+		cli: &http.Client{
 			Timeout: time.Second * 30,
 		},
-		APIHost:     apiHost,
-		accessToken: accessToken,
+		apiHost: apiHost,
 	}, nil
 }
 
@@ -51,10 +52,11 @@ func (c *Client) doPost(
 	body map[string]interface{},
 	respBody interface{},
 ) (*http.Response, error) {
-	return do(c.HTTPClient, c.accessToken, c.APIHost, header, path, http.MethodPost, body, respBody)
+	return do(c.cli, c.accessToken, c.apiHost, header, path, http.MethodPost, body, respBody)
 }
 
 func (c *Client) doGet(
+	header http.Header,
 	path string,
 	body map[string]interface{},
 	respBody interface{},
@@ -64,7 +66,7 @@ func (c *Client) doGet(
 		values.Add(k, fmt.Sprintf("%s", v))
 	}
 
-	return do(c.HTTPClient, c.accessToken, c.APIHost, nil, fmt.Sprintf("%s?%s", path, values.Encode()), http.MethodGet, body, respBody)
+	return do(c.cli, c.accessToken, c.apiHost, header, fmt.Sprintf("%s?%s", path, values.Encode()), http.MethodGet, nil, respBody)
 }
 
 func do(
@@ -83,27 +85,26 @@ func do(
 		return nil, err
 	}
 
-	requestBodyBytes, err := json.Marshal(requestBodyMap)
-	if err != nil {
-		return nil, err
+	var requestBody io.Reader
+	if body != nil {
+		requestBodyBytes, err := json.Marshal(body)
+		if err != nil {
+			return nil, fmt.Errorf("failed to marshal request body, err=%w", err)
+		}
+		requestBody = bytes.NewBuffer(requestBodyBytes)
 	}
 
 	req, err := http.NewRequest(
 		method,
 		fmt.Sprintf("%s/%s", apiHost, path),
-		bytes.NewBuffer(requestBodyBytes),
+		requestBody,
 	)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to new request, err=%w", err)
 	}
 
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("x-access-token", accessToken)
-	for k, values := range header {
-		for _, v := range values {
-			req.Header.Add(k, v)
-		}
-	}
+	req.Header = header
+
 	var resp *http.Response
 	backoffCfg := backoff.WithMaxRetries(backoff.NewExponentialBackOff(), 3)
 	err = backoff.Retry(func() (err error) {
@@ -123,17 +124,26 @@ func do(
 		return nil, err
 	}
 
-	if contains := bytes.Contains(bodyBytes, []byte("errorCode")); contains {
+	if isError(resp.StatusCode) {
 		errResp := &ErrorResponse{}
 		if err := json.Unmarshal(bodyBytes, errResp); err != nil {
-			return nil, err
+			return nil, fmt.Errorf("failed to unmarshal error response, bodyBytes=%s,  err=%w", string(bodyBytes), err)
 		}
 		return nil, errResp
 	}
 
 	if err := json.Unmarshal(bodyBytes, respBody); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to unmarshal response, err=%w", err)
 	}
 
 	return resp, nil
+}
+
+func isError(code int) bool {
+	if code >= http.StatusBadRequest && code <= http.StatusUnavailableForLegalReasons {
+		return true
+	} else if code >= http.StatusInternalServerError && code <= http.StatusNetworkAuthenticationRequired {
+		return true
+	}
+	return false
 }
