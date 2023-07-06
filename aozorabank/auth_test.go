@@ -4,11 +4,12 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"gopkg.in/go-playground/assert.v1"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
 	"testing"
+
+	"gopkg.in/go-playground/assert.v1"
 )
 
 func TestCreateToken(t *testing.T) {
