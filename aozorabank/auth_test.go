@@ -13,8 +13,6 @@ import (
 )
 
 func TestCreateToken(t *testing.T) {
-	t.Parallel()
-
 	testcases := map[string]struct {
 		request  *CreateTokenRequest
 		host     string
@@ -97,8 +95,6 @@ func TestCreateToken(t *testing.T) {
 }
 
 func TestRefreshToken(t *testing.T) {
-	t.Parallel()
-
 	testcases := map[string]struct {
 		request  *RefreshTokenRequest
 		host     string
@@ -179,8 +175,6 @@ func TestRefreshToken(t *testing.T) {
 }
 
 func TestGetUserInfo(t *testing.T) {
-	t.Parallel()
-
 	testcases := map[string]struct {
 		request  *GetUserInfoRequest
 		host     string

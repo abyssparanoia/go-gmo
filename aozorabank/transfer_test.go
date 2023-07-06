@@ -16,8 +16,6 @@ import (
 func TestGetTransferStatus(
 	t *testing.T,
 ) {
-	t.Parallel()
-
 	testcases := map[string]struct {
 		request  *GetTransferStatusRequest
 		rawQuery string
@@ -25,6 +23,7 @@ func TestGetTransferStatus(
 	}{
 		"ok": {
 			request: &GetTransferStatusRequest{
+				AccessToken:             "access_token",
 				AccountID:               "111111111111",
 				QueryKeyClass:           QueryKeyClassTransferApplies,
 				ApplyNo:                 "2018072902345678",
@@ -40,6 +39,7 @@ func TestGetTransferStatus(
 		},
 		"ok (required only)": {
 			request: &GetTransferStatusRequest{
+				AccessToken:   "access_token",
 				AccountID:     "111111111111",
 				QueryKeyClass: QueryKeyClassTransferApplies,
 			},
@@ -49,10 +49,7 @@ func TestGetTransferStatus(
 	}
 
 	for title, tc := range testcases {
-		tc := tc
 		t.Run(title, func(t *testing.T) {
-			t.Parallel()
-
 			expected := tc.expected
 			ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 				respBody, _ := json.Marshal(expected)
@@ -67,7 +64,7 @@ func TestGetTransferStatus(
 			}
 			defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-			cli, _ := NewClient(ApiHostTypeProduction)
+			cli, _ := NewClient(ApiHostTypeTest)
 			result, err := cli.GetTransferStatus(context.TODO(), tc.request)
 			assert.Equal(t, nil, err)
 			assert.Equal(t, expected, result)
@@ -86,6 +83,7 @@ func TestTransferRequest(
 	}{
 		"ok": {
 			request: &TransferRequestRequest{
+				AccessToken:             "access_token",
 				IdempotencyKey:          "111111111111",
 				AccountID:               "101011234567",
 				RemitterName:            "ｼﾞ-ｴﾑｵ-ｼｮｳｼﾞ(ｶ",
@@ -131,7 +129,7 @@ func TestTransferRequest(
 			}
 			defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-			cli, _ := NewClient(ApiHostTypeProduction)
+			cli, _ := NewClient(ApiHostTypeTest)
 			result, err := cli.TransferRequest(context.TODO(), tc.request)
 			assert.Equal(t, nil, err)
 			assert.Equal(t, expected, result)
@@ -150,8 +148,9 @@ func TestGetRequestResult(
 	}{
 		"ok": {
 			request: &GetRequestResultRequest{
-				AccountID: "111111111111",
-				ApplyNo:   "2018072902345678",
+				AccessToken: "xxxxxxxxxxxx",
+				AccountID:   "111111111111",
+				ApplyNo:     "2018072902345678",
 			},
 			expected: fakeData(GetRequestResultResponse{}),
 		},
@@ -175,7 +174,7 @@ func TestGetRequestResult(
 			}
 			defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-			cli, _ := NewClient(ApiHostTypeProduction)
+			cli, _ := NewClient(ApiHostTypeTest)
 			result, err := cli.GetRequestResult(context.TODO(), tc.request)
 			assert.Equal(t, nil, err)
 			assert.Equal(t, expected, result)
