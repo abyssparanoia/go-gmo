@@ -10,7 +10,7 @@ require (
 	github.com/gocarina/gocsv v0.0.0-20230616125104-99d496ca653d
 	github.com/gorilla/schema v1.2.0
 	github.com/imdario/mergo v0.3.16
-	github.com/pkg/sftp v1.13.5
+	github.com/pkg/sftp v1.13.6
 	github.com/stretchr/testify v1.8.4
 	golang.org/x/crypto v0.12.0
 	golang.org/x/text v0.12.0
