@@ -109,11 +109,7 @@ func (c *AuthClient) doPost(
 	}
 
 	if isError(resp.StatusCode) {
-		errResp := &AuthErrorResponse{}
-		if err := json.Unmarshal(bodyBytes, errResp); err != nil {
-			return nil, fmt.Errorf("failed to unmarshal error response, bodyBytes=%s,  err=%w", string(bodyBytes), err)
-		}
-		return nil, errResp
+		return nil, c.unmarshalError(bodyBytes)
 	}
 
 	if err := json.Unmarshal(bodyBytes, respBody); err != nil {
@@ -169,11 +165,7 @@ func (c *AuthClient) doGet(
 	}
 
 	if isError(resp.StatusCode) {
-		errResp := &AuthErrorResponse{}
-		if err := json.Unmarshal(bodyBytes, errResp); err != nil {
-			return nil, fmt.Errorf("failed to unmarshal error response, bodyBytes=%s,  err=%w", string(bodyBytes), err)
-		}
-		return nil, errResp
+		return nil, c.unmarshalError(bodyBytes)
 	}
 
 	if err := json.Unmarshal(bodyBytes, respBody); err != nil {
@@ -181,4 +173,15 @@ func (c *AuthClient) doGet(
 	}
 
 	return resp, nil
+}
+
+func (c *AuthClient) unmarshalError(bodyBytes []byte) error {
+	errResp := &AuthErrorResponse{}
+	if err := json.Unmarshal(bodyBytes, errResp); err != nil {
+		return fmt.Errorf("failed to unmarshal error response, bodyBytes=%s,  err=%w", string(bodyBytes), err)
+	}
+	if errResp.ErrCode == "" {
+		return fmt.Errorf("failed to unmarshal error response, bodyBytes=%s", string(bodyBytes))
+	}
+	return errResp
 }

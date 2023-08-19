@@ -1,6 +1,8 @@
 package aozorabank
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type ErrorResponse struct {
 	ErrCode              string                `json:"errorCode"`
