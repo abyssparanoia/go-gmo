@@ -16,7 +16,6 @@ import (
 func TestGetTransferStatus(
 	t *testing.T,
 ) {
-	t.Skip() //FIXME: Skip as it takes a lot of time. I'll fix it later.
 
 	testcases := map[string]struct {
 		request  *GetTransferStatusRequest
@@ -37,7 +36,11 @@ func TestGetTransferStatus(
 				RequestTransferTerm:     RequestTransferTermTransferDesignatedDate,
 			},
 			rawQuery: "accountId=111111111111&applyNo=2018072902345678&dateFrom=2018-07-30&dateTo=2018-08-10&nextItemKey=1234567890&queryKeyClass=1&requestTransferClass=1&requestTransferStatus=%5Bmap%5BrequestTransferStatus%3A2%5D%5D&requestTransferTerm=2",
-			expected: fakeData(GetTransferStatusResponse{}),
+			expected: &GetTransferStatusResponse{
+				AcceptanceKeyClass: "acceptance_key_class",
+				BaseDate:           "2023-08-01",
+				BaseTime:           "00:00:01",
+			},
 		},
 		"ok (required only)": {
 			request: &GetTransferStatusRequest{
@@ -46,7 +49,11 @@ func TestGetTransferStatus(
 				QueryKeyClass: QueryKeyClassTransferApplies,
 			},
 			rawQuery: "accountId=111111111111&queryKeyClass=1",
-			expected: fakeData(GetTransferStatusResponse{}),
+			expected: &GetTransferStatusResponse{
+				AcceptanceKeyClass: "acceptance_key_class",
+				BaseDate:           "2023-08-01",
+				BaseTime:           "00:00:02",
+			},
 		},
 	}
 
@@ -107,7 +114,7 @@ func TestTransferRequest(
 					},
 				},
 			},
-			expected: fakeData(TransferRequestResponse{}),
+			expected: fakeData[TransferRequestResponse](),
 		},
 	}
 
@@ -149,7 +156,7 @@ func TestGetRequestResult(
 				AccountID:   "111111111111",
 				ApplyNo:     "2018072902345678",
 			},
-			expected: fakeData(GetRequestResultResponse{}),
+			expected: fakeData[GetRequestResultResponse](),
 		},
 	}
 
@@ -179,7 +186,7 @@ func TestGetRequestResult(
 	}
 }
 
-func fakeData[T any](t T) *T {
+func fakeData[T any]() *T {
 	ret := new(T)
 	if err := faker.FakeData(ret); err != nil {
 		panic(err)
