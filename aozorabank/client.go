@@ -15,9 +15,8 @@ import (
 
 // Client ... gmo pg remittance API client
 type Client struct {
-	cli         *http.Client
-	apiHost     string
-	accessToken string
+	cli     *http.Client
+	apiHost string
 }
 
 // NewClient ... new client
@@ -52,7 +51,7 @@ func (c *Client) doPost(
 	body map[string]interface{},
 	respBody interface{},
 ) (*http.Response, error) {
-	return do(c.cli, c.accessToken, c.apiHost, header, path, http.MethodPost, body, respBody)
+	return do(c.cli, c.apiHost, header, path, http.MethodPost, body, respBody)
 }
 
 func (c *Client) doGet(
@@ -66,12 +65,11 @@ func (c *Client) doGet(
 		values.Add(k, fmt.Sprintf("%s", v))
 	}
 
-	return do(c.cli, c.accessToken, c.apiHost, header, fmt.Sprintf("%s?%s", path, values.Encode()), http.MethodGet, nil, respBody)
+	return do(c.cli, c.apiHost, header, fmt.Sprintf("%s?%s", path, values.Encode()), http.MethodGet, nil, respBody)
 }
 
 func do(
 	cli *http.Client,
-	accessToken string,
 	apiHost string,
 	header http.Header,
 	path string,
@@ -128,6 +126,9 @@ func do(
 		errResp := &ErrorResponse{}
 		if err := json.Unmarshal(bodyBytes, errResp); err != nil {
 			return nil, fmt.Errorf("failed to unmarshal error response, bodyBytes=%s,  err=%w", string(bodyBytes), err)
+		}
+		if errResp.ErrCode == "" {
+			return nil, fmt.Errorf("failed to unmarshal error response, bodyBytes=%s", string(bodyBytes))
 		}
 		return nil, errResp
 	}
