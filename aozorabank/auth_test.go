@@ -79,7 +79,7 @@ func TestCreateToken(t *testing.T) {
 			}
 			defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-			cli, _ := NewAuthClient("client_id", "client_secret", ApiHostTypeTest)
+			cli, _ := NewAuthClient("client_id", "client_secret", APIHostTypeTest)
 			result, err := cli.CreateToken(context.TODO(), tc.request)
 			if tc.wantErr != nil {
 				s := err.Error()
@@ -159,7 +159,7 @@ func TestRefreshToken(t *testing.T) {
 			}
 			defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-			cli, _ := NewAuthClient("client_id", "client_secret", ApiHostTypeTest)
+			cli, _ := NewAuthClient("client_id", "client_secret", APIHostTypeTest)
 			result, err := cli.RefreshToken(context.TODO(), tc.request)
 			if tc.wantErr != nil {
 				s := err.Error()
@@ -219,7 +219,7 @@ func TestGetUserInfo(t *testing.T) {
 			}
 			defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-			cli, _ := NewAuthClient("client_id", "client_secret", ApiHostTypeTest)
+			cli, _ := NewAuthClient("client_id", "client_secret", APIHostTypeTest)
 			result, err := cli.GetUserInfo(context.TODO(), tc.request)
 			if tc.wantErr != nil {
 				s := err.Error()

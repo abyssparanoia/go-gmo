@@ -30,7 +30,7 @@ const (
 func NewAuthClient(
 	clientID string,
 	clientSecret string,
-	apiHostType ApiHostType,
+	apiHostType APIHostType,
 ) (*AuthClient, error) {
 	if clientID == "" || clientSecret == "" {
 		return nil, fmt.Errorf("invalid client id or client secret, clientID=%s, clientSecret=%s", clientID, clientSecret)
@@ -38,13 +38,13 @@ func NewAuthClient(
 
 	var apiHost string
 	switch apiHostType {
-	case ApiHostTypeSandbox:
+	case APIHostTypeSandbox:
 		apiHost = apiHostSandbox
-	case ApiHostTypeStaging:
+	case APIHostTypeStaging:
 		apiHost = apiHostStaging
-	case ApiHostTypeProduction:
+	case APIHostTypeProduction:
 		apiHost = apiHostProduction
-	case ApiHostTypeTest:
+	case APIHostTypeTest:
 		apiHost = apiHostTest
 	default:
 		return nil, fmt.Errorf("invalid api host type, apiHostType=%d", apiHostType)
@@ -176,12 +176,19 @@ func (c *AuthClient) doGet(
 }
 
 func (c *AuthClient) unmarshalError(bodyBytes []byte) error {
-	errResp := &AuthErrorResponse{}
-	if err := json.Unmarshal(bodyBytes, errResp); err != nil {
-		return fmt.Errorf("failed to unmarshal error response, bodyBytes=%s,  err=%w", string(bodyBytes), err)
+	authErrResp := &AuthErrorResponse{}
+	if err := json.Unmarshal(bodyBytes, authErrResp); err != nil {
+		return fmt.Errorf("failed to unmarshal auth error response, bodyBytes=%s,  err=%w", string(bodyBytes), err)
 	}
-	if errResp.ErrCode == "" {
-		return fmt.Errorf("failed to unmarshal error response, bodyBytes=%s", string(bodyBytes))
+	if authErrResp.ErrorCode == "" {
+		errResp := &ErrorResponse{}
+		if err := json.Unmarshal(bodyBytes, errResp); err != nil {
+			return fmt.Errorf("failed to unmarshal error response, bodyBytes=%s,  err=%w", string(bodyBytes), err)
+		}
+		if errResp.ErrorCode != "" {
+			return fmt.Errorf("failed to unmarshal error response, bodyBytes=%s", string(bodyBytes))
+		}
+		return errResp
 	}
-	return errResp
+	return authErrResp
 }

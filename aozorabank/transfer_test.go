@@ -73,7 +73,7 @@ func TestGetTransferStatus(
 			}
 			defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-			cli, _ := NewClient(ApiHostTypeTest)
+			cli, _ := NewClient(APIHostTypeTest)
 			result, err := cli.GetTransferStatus(context.TODO(), tc.request)
 			assert.Equal(t, nil, err)
 			assert.Equal(t, expected, result)
@@ -133,7 +133,7 @@ func TestTransferRequest(
 			}
 			defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-			cli, _ := NewClient(ApiHostTypeTest)
+			cli, _ := NewClient(APIHostTypeTest)
 			result, err := cli.TransferRequest(context.TODO(), tc.request)
 			assert.Equal(t, nil, err)
 			assert.Equal(t, expected, result)
@@ -178,7 +178,7 @@ func TestGetRequestResult(
 			}
 			defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-			cli, _ := NewClient(ApiHostTypeTest)
+			cli, _ := NewClient(APIHostTypeTest)
 			result, err := cli.GetRequestResult(context.TODO(), tc.request)
 			assert.Equal(t, nil, err)
 			assert.Equal(t, expected, result)

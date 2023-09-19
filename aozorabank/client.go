@@ -21,17 +21,17 @@ type Client struct {
 
 // NewClient ... new client
 func NewClient(
-	apiHostType ApiHostType,
+	apiHostType APIHostType,
 ) (*Client, error) {
 	var apiHost string
 	switch apiHostType {
-	case ApiHostTypeSandbox:
+	case APIHostTypeSandbox:
 		apiHost = apiHostSandbox
-	case ApiHostTypeStaging:
+	case APIHostTypeStaging:
 		apiHost = apiHostStaging
-	case ApiHostTypeProduction:
+	case APIHostTypeProduction:
 		apiHost = apiHostProduction
-	case ApiHostTypeTest:
+	case APIHostTypeTest:
 		apiHost = apiHostTest
 	default:
 		return nil, fmt.Errorf("invalid api host type, apiHostType=%d", apiHostType)
@@ -127,7 +127,7 @@ func do(
 		if err := json.Unmarshal(bodyBytes, errResp); err != nil {
 			return nil, fmt.Errorf("failed to unmarshal error response, bodyBytes=%s,  err=%w", string(bodyBytes), err)
 		}
-		if errResp.ErrCode == "" {
+		if errResp.ErrorCode == "" {
 			return nil, fmt.Errorf("failed to unmarshal error response, bodyBytes=%s", string(bodyBytes))
 		}
 		return nil, errResp
