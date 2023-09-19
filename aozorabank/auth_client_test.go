@@ -3,11 +3,12 @@ package aozorabank
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func Test_AuthClient_doPost(t *testing.T) {
@@ -16,7 +17,7 @@ func Test_AuthClient_doPost(t *testing.T) {
 	client, _ := NewAuthClient(
 		clientID,
 		clientSecret,
-		ApiHostTypeTest,
+		APIHostTypeTest,
 	)
 
 	testCases := map[string]struct {
@@ -38,11 +39,11 @@ func Test_AuthClient_doPost(t *testing.T) {
 			},
 		},
 		"ng": {
-			respErr: &AuthErrorResponse{ErrCode: "code", ErrorDescription: "description", ErrorURI: "uri"},
-			wantErr: &AuthErrorResponse{ErrCode: "code", ErrorDescription: "description", ErrorURI: "uri"},
+			respErr: &AuthErrorResponse{ErrorCode: "code", ErrorDescription: "description", ErrorURI: "uri"},
+			wantErr: &AuthErrorResponse{ErrorCode: "code", ErrorDescription: "description", ErrorURI: "uri"},
 		},
 		"ng: failed to unmarshal error response": {
-			respErr: &ErrorResponse{ErrCode: "code", ErrMessage: "message"},
+			respErr: &ErrorResponse{ErrorCode: "code", ErrorMessage: "message"},
 			wantErr: fmt.Errorf("failed to unmarshal error response, bodyBytes={\"errorCode\":\"code\",\"errorMessage\":\"message\",\"errorDetails\":null,\"transferErrorDetails\":null}\n"),
 		},
 	}
@@ -85,7 +86,7 @@ func Test_AuthClient_doGet(t *testing.T) {
 	client, _ := NewAuthClient(
 		clientID,
 		clientSecret,
-		ApiHostTypeTest,
+		APIHostTypeTest,
 	)
 
 	testCases := map[string]struct {
@@ -107,11 +108,11 @@ func Test_AuthClient_doGet(t *testing.T) {
 			},
 		},
 		"ng": {
-			respErr: &AuthErrorResponse{ErrCode: "code", ErrorDescription: "description", ErrorURI: "uri"},
-			wantErr: &AuthErrorResponse{ErrCode: "code", ErrorDescription: "description", ErrorURI: "uri"},
+			respErr: &AuthErrorResponse{ErrorCode: "code", ErrorDescription: "description", ErrorURI: "uri"},
+			wantErr: &AuthErrorResponse{ErrorCode: "code", ErrorDescription: "description", ErrorURI: "uri"},
 		},
 		"ng: failed to unmarshal error response": {
-			respErr: &ErrorResponse{ErrCode: "code", ErrMessage: "message"},
+			respErr: &ErrorResponse{ErrorCode: "code", ErrorMessage: "message"},
 			wantErr: fmt.Errorf("failed to unmarshal error response, bodyBytes={\"errorCode\":\"code\",\"errorMessage\":\"message\",\"errorDetails\":null,\"transferErrorDetails\":null}\n"),
 		},
 	}

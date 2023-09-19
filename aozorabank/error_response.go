@@ -5,8 +5,8 @@ import (
 )
 
 type ErrorResponse struct {
-	ErrCode              string                `json:"errorCode"`
-	ErrMessage           string                `json:"errorMessage"`
+	ErrorCode            string                `json:"errorCode"`
+	ErrorMessage         string                `json:"errorMessage"`
 	ErrorDetails         []ErrorDetail         `json:"errorDetails"`
 	TransferErrorDetails []TransferErrorDetail `json:"transferErrorDetails"`
 }
@@ -22,15 +22,25 @@ type TransferErrorDetail struct {
 }
 
 func (errResp *ErrorResponse) Error() string {
-	return fmt.Sprintf("Error: [%s:%s], ErrorDetails: %v, TransferErrorDetails: %v", errResp.ErrCode, errResp.ErrMessage, errResp.ErrorDetails, errResp.TransferErrorDetails)
+	return fmt.Sprintf("Error: [%s:%s], ErrorDetails: %v, TransferErrorDetails: %v", errResp.ErrorCode, errResp.ErrorMessage, errResp.ErrorDetails, errResp.TransferErrorDetails)
 }
 
 type AuthErrorResponse struct {
-	ErrCode          string `json:"error"`
+	ErrorCode        string `json:"error"`
 	ErrorDescription string `json:"error_description"`
 	ErrorURI         string `json:"error_uri"`
 }
 
 func (errResp *AuthErrorResponse) Error() string {
-	return fmt.Sprintf("Error: [%s:%s],  ErrorURI: %s", errResp.ErrCode, errResp.ErrorDescription, errResp.ErrorURI)
+	return fmt.Sprintf("Error: [%s:%s],  ErrorURI: %s", errResp.ErrorCode, errResp.ErrorDescription, errResp.ErrorURI)
+}
+
+type ErrorCode string
+
+const (
+	ErrorCodeUnderMaintenance ErrorCode = "WG_ERR_300"
+)
+
+func (e ErrorCode) String() string {
+	return string(e)
 }

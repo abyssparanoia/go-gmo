@@ -7,13 +7,13 @@ const (
 	apiHostTest       = "http://api.gmo-aozora.com/ganb/api"
 )
 
-type ApiHostType int
+type APIHostType int
 
 const (
-	ApiHostTypeSandbox    ApiHostType = 1
-	ApiHostTypeStaging    ApiHostType = 2
-	ApiHostTypeProduction ApiHostType = 3
-	ApiHostTypeTest       ApiHostType = 4
+	APIHostTypeSandbox    APIHostType = 1
+	APIHostTypeStaging    APIHostType = 2
+	APIHostTypeProduction APIHostType = 3
+	APIHostTypeTest       APIHostType = 4
 )
 
 const (
