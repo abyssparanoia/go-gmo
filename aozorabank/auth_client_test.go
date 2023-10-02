@@ -42,9 +42,13 @@ func Test_AuthClient_doPost(t *testing.T) {
 			respErr: &AuthErrorResponse{ErrorCode: "code", ErrorDescription: "description", ErrorURI: "uri"},
 			wantErr: &AuthErrorResponse{ErrorCode: "code", ErrorDescription: "description", ErrorURI: "uri"},
 		},
-		"ng: failed to unmarshal error response": {
+		"ng: error response": {
 			respErr: &ErrorResponse{ErrorCode: "code", ErrorMessage: "message"},
-			wantErr: fmt.Errorf("failed to unmarshal error response, bodyBytes={\"errorCode\":\"code\",\"errorMessage\":\"message\",\"errorDetails\":null,\"transferErrorDetails\":null}\n"),
+			wantErr: &ErrorResponse{ErrorCode: "code", ErrorMessage: "message"},
+		},
+		"ng: failed to unmarshal error response": {
+			respErr: fmt.Errorf("outher error"),
+			wantErr: fmt.Errorf("failed to unmarshal error response, bodyBytes={}\n"),
 		},
 	}
 
@@ -110,9 +114,13 @@ func Test_AuthClient_doGet(t *testing.T) {
 			respErr: &AuthErrorResponse{ErrorCode: "code", ErrorDescription: "description", ErrorURI: "uri"},
 			wantErr: &AuthErrorResponse{ErrorCode: "code", ErrorDescription: "description", ErrorURI: "uri"},
 		},
-		"ng: failed to unmarshal error response": {
+		"ng: error response": {
 			respErr: &ErrorResponse{ErrorCode: "code", ErrorMessage: "message"},
-			wantErr: fmt.Errorf("failed to unmarshal error response, bodyBytes={\"errorCode\":\"code\",\"errorMessage\":\"message\",\"errorDetails\":null,\"transferErrorDetails\":null}\n"),
+			wantErr: &ErrorResponse{ErrorCode: "code", ErrorMessage: "message"},
+		},
+		"ng: failed to unmarshal error response": {
+			respErr: fmt.Errorf("outher error"),
+			wantErr: fmt.Errorf("failed to unmarshal error response, bodyBytes={}\n"),
 		},
 	}
 
