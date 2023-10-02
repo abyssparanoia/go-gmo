@@ -76,7 +76,6 @@ func Test_AuthClient_doPost(t *testing.T) {
 			assert.Equal(t, tc.expected, actual)
 		})
 	}
-
 }
 
 func Test_AuthClient_doGet(t *testing.T) {
@@ -146,4 +145,35 @@ func Test_AuthClient_doGet(t *testing.T) {
 		})
 	}
 
+}
+
+func Test_unmarshalError(t *testing.T) {
+
+	clientID := "client_id"
+	clientSecret := "client_secret"
+	client, _ := NewAuthClient(
+		clientID,
+		clientSecret,
+		APIHostTypeTest,
+	)
+
+	testCases := map[string]struct {
+		errBytes []byte
+		want     error
+	}{
+		"ok: ErrorResponse": {
+			errBytes: []byte(`{"errorCode":"WG_ERR_300","errorMessage":"under maintenance"}`),
+			want: &ErrorResponse{
+				ErrorCode:    "WG_ERR_300",
+				ErrorMessage: "under maintenance",
+			},
+		},
+	}
+
+	for name, tc := range testCases {
+		t.Run(name, func(t *testing.T) {
+			got := client.unmarshalError(tc.errBytes)
+			assert.Equal(t, tc.want.Error(), got.Error())
+		})
+	}
 }
