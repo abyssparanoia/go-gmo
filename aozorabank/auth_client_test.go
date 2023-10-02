@@ -42,9 +42,13 @@ func Test_AuthClient_doPost(t *testing.T) {
 			respErr: &AuthErrorResponse{ErrorCode: "code", ErrorDescription: "description", ErrorURI: "uri"},
 			wantErr: &AuthErrorResponse{ErrorCode: "code", ErrorDescription: "description", ErrorURI: "uri"},
 		},
-		"ng: failed to unmarshal error response": {
+		"ng: error response": {
 			respErr: &ErrorResponse{ErrorCode: "code", ErrorMessage: "message"},
-			wantErr: fmt.Errorf("failed to unmarshal error response, bodyBytes={\"errorCode\":\"code\",\"errorMessage\":\"message\",\"errorDetails\":null,\"transferErrorDetails\":null}\n"),
+			wantErr: &ErrorResponse{ErrorCode: "code", ErrorMessage: "message"},
+		},
+		"ng: failed to unmarshal error response": {
+			respErr: fmt.Errorf("outher error"),
+			wantErr: fmt.Errorf("failed to unmarshal error response, bodyBytes={}\n"),
 		},
 	}
 
@@ -76,7 +80,6 @@ func Test_AuthClient_doPost(t *testing.T) {
 			assert.Equal(t, tc.expected, actual)
 		})
 	}
-
 }
 
 func Test_AuthClient_doGet(t *testing.T) {
@@ -111,9 +114,13 @@ func Test_AuthClient_doGet(t *testing.T) {
 			respErr: &AuthErrorResponse{ErrorCode: "code", ErrorDescription: "description", ErrorURI: "uri"},
 			wantErr: &AuthErrorResponse{ErrorCode: "code", ErrorDescription: "description", ErrorURI: "uri"},
 		},
-		"ng: failed to unmarshal error response": {
+		"ng: error response": {
 			respErr: &ErrorResponse{ErrorCode: "code", ErrorMessage: "message"},
-			wantErr: fmt.Errorf("failed to unmarshal error response, bodyBytes={\"errorCode\":\"code\",\"errorMessage\":\"message\",\"errorDetails\":null,\"transferErrorDetails\":null}\n"),
+			wantErr: &ErrorResponse{ErrorCode: "code", ErrorMessage: "message"},
+		},
+		"ng: failed to unmarshal error response": {
+			respErr: fmt.Errorf("outher error"),
+			wantErr: fmt.Errorf("failed to unmarshal error response, bodyBytes={}\n"),
 		},
 	}
 
@@ -146,4 +153,35 @@ func Test_AuthClient_doGet(t *testing.T) {
 		})
 	}
 
+}
+
+func Test_unmarshalError(t *testing.T) {
+
+	clientID := "client_id"
+	clientSecret := "client_secret"
+	client, _ := NewAuthClient(
+		clientID,
+		clientSecret,
+		APIHostTypeTest,
+	)
+
+	testCases := map[string]struct {
+		errBytes []byte
+		want     error
+	}{
+		"ok: ErrorResponse": {
+			errBytes: []byte(`{"errorCode":"WG_ERR_300","errorMessage":"under maintenance"}`),
+			want: &ErrorResponse{
+				ErrorCode:    "WG_ERR_300",
+				ErrorMessage: "under maintenance",
+			},
+		},
+	}
+
+	for name, tc := range testCases {
+		t.Run(name, func(t *testing.T) {
+			got := client.unmarshalError(tc.errBytes)
+			assert.Equal(t, tc.want.Error(), got.Error())
+		})
+	}
 }

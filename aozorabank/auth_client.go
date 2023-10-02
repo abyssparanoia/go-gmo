@@ -185,7 +185,7 @@ func (c *AuthClient) unmarshalError(bodyBytes []byte) error {
 		if err := json.Unmarshal(bodyBytes, errResp); err != nil {
 			return fmt.Errorf("failed to unmarshal error response, bodyBytes=%s,  err=%w", string(bodyBytes), err)
 		}
-		if errResp.ErrorCode != "" {
+		if errResp.ErrorCode == "" {
 			return fmt.Errorf("failed to unmarshal error response, bodyBytes=%s", string(bodyBytes))
 		}
 		return errResp
