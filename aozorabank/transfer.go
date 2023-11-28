@@ -220,7 +220,7 @@ func (r *GetRequestResultRequest) Validate() error {
 	return validate.Struct(r)
 }
 
-func (cli *Client) GetRequestResult(
+func (cli *Client) GetTransferRequestResult(
 	ctx context.Context,
 	req *GetRequestResultRequest,
 ) (*GetRequestResultResponse, error) {
@@ -238,13 +238,14 @@ func (cli *Client) GetRequestResult(
 	return res, nil
 }
 
-func getTransferHeader(
-	accessToken string,
-) http.Header {
-	return http.Header{
-		"Content-Type":   []string{"application/json"},
-		"x-access-token": []string{accessToken},
-	}
+// GetRequestResult is deprecated because it is not a suitable naming convention.
+// Please use GetTransferRequestResult.
+// Deprecated: use GetTransferRequestResult
+func (cli *Client) GetRequestResult(
+	ctx context.Context,
+	req *GetRequestResultRequest,
+) (*GetRequestResultResponse, error) {
+	return cli.GetTransferRequestResult(ctx, req)
 }
 
 type (
@@ -300,7 +301,7 @@ func (r *GetBulkTransferStatusRequest) Validate() error {
 	return validate.Struct(r)
 }
 
-func (cli *Client) GetBulkTransferRequestRequest(
+func (cli *Client) GetBulkTransferStatus(
 	ctx context.Context,
 	req *GetBulkTransferStatusRequest,
 ) (*GetBulkTransferStatusResponse, error) {
@@ -376,4 +377,48 @@ func (cli *Client) BulkTransferRequest(
 		return nil, err
 	}
 	return res, nil
+}
+
+type GetBulkRequestResultRequest struct {
+	AccessToken string `json:"-" validate:"required,min=1,max=128"`
+	AccountID   string `json:"accountId" validate:"required,min=12,max=29"`
+	ApplyNo     string `json:"applyNo" validate:"omitempty,len=16"`
+}
+
+type GetBulkRequestResultResponse struct {
+	AccountID        string     `json:"accountId"`
+	ResultCode       ResultCode `json:"resultCode,string"`
+	ApplyNo          string     `json:"applyNo"`
+	ApplyEndDatetime string     `json:"applyEndDatetime"`
+}
+
+func (r *GetBulkRequestResultRequest) Validate() error {
+	return validate.Struct(r)
+}
+
+func (cli *Client) GetBulkTransferRequestResult(
+	ctx context.Context,
+	req *GetBulkRequestResultRequest,
+) (*GetBulkRequestResultResponse, error) {
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
+	reqMap, err := converter.StructToJsonTagMap(req)
+	if err != nil {
+		return nil, err
+	}
+	res := &GetBulkRequestResultResponse{}
+	if _, err := cli.doGet(getTransferHeader(req.AccessToken), fmt.Sprintf("%s/bulktransfer/request-result", corporationPathV1), reqMap, res); err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+
+func getTransferHeader(
+	accessToken string,
+) http.Header {
+	return http.Header{
+		"Content-Type":   []string{"application/json"},
+		"x-access-token": []string{accessToken},
+	}
 }

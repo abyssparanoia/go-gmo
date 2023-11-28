@@ -155,7 +155,7 @@ func TestTransferRequest(
 	}
 }
 
-func TestGetRequestResult(
+func TestGetTransferRequestResult(
 	t *testing.T,
 ) {
 	t.Parallel()
@@ -193,7 +193,7 @@ func TestGetRequestResult(
 			defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
 			cli, _ := NewClient(APIHostTypeTest)
-			result, err := cli.GetRequestResult(context.TODO(), tc.request)
+			result, err := cli.GetTransferRequestResult(context.TODO(), tc.request)
 			assert.Equal(t, nil, err)
 			assert.Equal(t, expected, result)
 		})
@@ -276,7 +276,7 @@ func TestBulkTransferStatus(
 			defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
 			cli, _ := NewClient(APIHostTypeTest)
-			result, err := cli.GetBulkTransferRequestRequest(context.TODO(), tc.request)
+			result, err := cli.GetBulkTransferStatus(context.TODO(), tc.request)
 			assert.Equal(t, nil, err)
 			assert.Equal(t, expected, result)
 		})
@@ -337,6 +337,51 @@ func TestBulkTransferRequest(
 
 			cli, _ := NewClient(APIHostTypeTest)
 			result, err := cli.BulkTransferRequest(context.TODO(), tc.request)
+			assert.Equal(t, nil, err)
+			assert.Equal(t, expected, result)
+		})
+	}
+}
+
+func TestGetBulkTransferRequestResult(
+	t *testing.T,
+) {
+	t.Parallel()
+
+	testcases := map[string]struct {
+		request  *GetBulkRequestResultRequest
+		expected *GetBulkRequestResultResponse
+	}{
+		"ok": {
+			request: &GetBulkRequestResultRequest{
+				AccessToken: "xxxxxxxxxxxx",
+				AccountID:   "111111111111",
+				ApplyNo:     "2018072902345678",
+			},
+			expected: fakeData[GetBulkRequestResultResponse](),
+		},
+	}
+
+	for title, tc := range testcases {
+		tc := tc
+		t.Run(title, func(t *testing.T) {
+			t.Parallel()
+
+			expected := tc.expected
+			ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				respBody, _ := json.Marshal(expected)
+				w.Header().Set("Content-Type", "application/json")
+				w.Write(respBody)
+			}))
+			defer ts.Close()
+			defaultProxy := http.DefaultTransport.(*http.Transport).Proxy
+			http.DefaultTransport.(*http.Transport).Proxy = func(req *http.Request) (*url.URL, error) {
+				return url.Parse(ts.URL)
+			}
+			defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
+
+			cli, _ := NewClient(APIHostTypeTest)
+			result, err := cli.GetBulkTransferRequestResult(context.TODO(), tc.request)
 			assert.Equal(t, nil, err)
 			assert.Equal(t, expected, result)
 		})
