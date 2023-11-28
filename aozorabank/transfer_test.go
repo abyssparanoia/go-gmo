@@ -40,6 +40,13 @@ func TestGetTransferStatus(
 				AcceptanceKeyClass: "acceptance_key_class",
 				BaseDate:           "2023-08-01",
 				BaseTime:           "00:00:01",
+				Count:              1,
+				TransferQueryBulkResponses: []*transferQueryBulkResponse{
+					fakeData[transferQueryBulkResponse](),
+				},
+				TransferDetails: []*transferDetail{
+					fakeData[transferDetail](),
+				},
 			},
 		},
 		"ok (required only)": {
@@ -53,6 +60,13 @@ func TestGetTransferStatus(
 				AcceptanceKeyClass: "acceptance_key_class",
 				BaseDate:           "2023-08-01",
 				BaseTime:           "00:00:02",
+				Count:              1,
+				TransferQueryBulkResponses: []*transferQueryBulkResponse{
+					fakeData[transferQueryBulkResponse](),
+				},
+				TransferDetails: []*transferDetail{
+					fakeData[transferDetail](),
+				},
 			},
 		},
 	}
@@ -180,6 +194,149 @@ func TestGetRequestResult(
 
 			cli, _ := NewClient(APIHostTypeTest)
 			result, err := cli.GetRequestResult(context.TODO(), tc.request)
+			assert.Equal(t, nil, err)
+			assert.Equal(t, expected, result)
+		})
+	}
+}
+
+func TestBulkTransferStatus(
+	t *testing.T,
+) {
+	t.Parallel()
+
+	testcases := map[string]struct {
+		request  *GetBulkTransferStatusRequest
+		rawQuery string
+		expected *GetBulkTransferStatusResponse
+	}{
+		"ok": {
+			request: &GetBulkTransferStatusRequest{
+				AccessToken:             "access_token",
+				AccountID:               "111111111111",
+				QueryKeyClass:           QueryKeyClassTransferApplies,
+				ApplyNo:                 "2018072902345678",
+				DateFrom:                "2018-07-30",
+				DateTo:                  "2018-08-10",
+				NextItemKey:             "1234567890",
+				RequestTransferStatuses: []*RequestTransferStatus{{TransferStatusApplying}},
+				RequestTransferClass:    RequestTransferClassAll,
+				RequestTransferTerm:     RequestTransferTermTransferDesignatedDate,
+			},
+			rawQuery: "accountId=111111111111&applyNo=2018072902345678&dateFrom=2018-07-30&dateTo=2018-08-10&nextItemKey=1234567890&queryKeyClass=1&requestTransferClass=1&requestTransferStatus=%5Bmap%5BrequestTransferStatus%3A2%5D%5D&requestTransferTerm=2",
+			expected: &GetBulkTransferStatusResponse{
+				AcceptanceKeyClass: "acceptance_key_class",
+				BaseDate:           "2023-08-01",
+				BaseTime:           "00:00:01",
+				Count:              1,
+				TransferQueryBulkResponses: []*transferQueryBulkResponse{
+					fakeData[transferQueryBulkResponse](),
+				},
+				BulkTransferDetails: []*bulkTransferDetail{
+					fakeData[bulkTransferDetail](),
+				},
+			},
+		},
+		"ok (required only)": {
+			request: &GetBulkTransferStatusRequest{
+				AccessToken:   "access_token",
+				AccountID:     "111111111111",
+				QueryKeyClass: QueryKeyClassTransferApplies,
+			},
+			rawQuery: "accountId=111111111111&queryKeyClass=1",
+			expected: &GetBulkTransferStatusResponse{
+				AcceptanceKeyClass: "acceptance_key_class",
+				BaseDate:           "2023-08-01",
+				BaseTime:           "00:00:02",
+				Count:              1,
+				TransferQueryBulkResponses: []*transferQueryBulkResponse{
+					fakeData[transferQueryBulkResponse](),
+				},
+				BulkTransferDetails: []*bulkTransferDetail{
+					fakeData[bulkTransferDetail](),
+				},
+			},
+		},
+	}
+
+	for title, tc := range testcases {
+		t.Run(title, func(t *testing.T) {
+			expected := tc.expected
+			ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				respBody, _ := json.Marshal(expected)
+				assert.Equal(t, tc.rawQuery, r.URL.RawQuery)
+				w.Header().Set("Content-Type", "application/json")
+				w.Write(respBody)
+			}))
+			defer ts.Close()
+			defaultProxy := http.DefaultTransport.(*http.Transport).Proxy
+			http.DefaultTransport.(*http.Transport).Proxy = func(req *http.Request) (*url.URL, error) {
+				return url.Parse(ts.URL)
+			}
+			defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
+
+			cli, _ := NewClient(APIHostTypeTest)
+			result, err := cli.GetBulkTransferRequestRequest(context.TODO(), tc.request)
+			assert.Equal(t, nil, err)
+			assert.Equal(t, expected, result)
+		})
+	}
+}
+
+func TestBulkTransferRequest(
+	t *testing.T,
+) {
+	testcases := map[string]struct {
+		request  *BulkTransferRequestRequest
+		expected *BulkTransferRequestResponse
+	}{
+		"ok": {
+			request: &BulkTransferRequestRequest{
+				AccessToken:             "access_token",
+				IdempotencyKey:          "111111111111",
+				AccountID:               "101011234567",
+				RemitterName:            "ｼﾞ-ｴﾑｵ-ｼｮｳｼﾞ(ｶ",
+				TransferDesignatedDate:  "2018-07-30",
+				TransferDateHolidayCode: TransferDateHolidayCodeNextBusinessDay,
+				TotalCount:              0,
+				TotalAmount:             1000,
+				ApplyComment:            "緊急で承認をお願いします",
+				BulkTransfers: []*BulkTransfer{
+					{
+						ItemID:                "1",
+						TransferAmount:        100,
+						EDIInfo:               "ｾｲｷﾕｳｼﾖﾊﾞﾝｺﾞｳ1234",
+						BeneficiaryBankCode:   "0398",
+						BeneficiaryBankName:   "ｱｵｿﾞﾗ",
+						BeneficiaryBranchCode: "111",
+						BeneficiaryBranchName: "ﾎﾝﾃﾝ",
+						AccountTypeCode:       AccountTypeCodeOrdinary,
+						AccountNumber:         "1234567",
+						BeneficiaryName:       "ｶ)ｱｵｿﾞﾗｻﾝｷﾞｮｳ",
+					},
+				},
+			},
+			expected: fakeData[BulkTransferRequestResponse](),
+		},
+	}
+
+	for title, tc := range testcases {
+		t.Run(title, func(t *testing.T) {
+			expected := tc.expected
+			ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				respBody, _ := json.Marshal(expected)
+				w.Header().Set("Content-Type", "application/json")
+				w.Write(respBody)
+			}))
+			defer ts.Close()
+			defaultProxy := http.DefaultTransport.(*http.Transport).Proxy
+			http.DefaultTransport.(*http.Transport).Proxy = func(req *http.Request) (*url.URL, error) {
+				return url.Parse(ts.URL)
+			}
+			defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
+
+			cli, _ := NewClient(APIHostTypeTest)
+			result, err := cli.BulkTransferRequest(context.TODO(), tc.request)
 			assert.Equal(t, nil, err)
 			assert.Equal(t, expected, result)
 		})
