@@ -220,7 +220,7 @@ func (r *GetRequestResultRequest) Validate() error {
 	return validate.Struct(r)
 }
 
-func (cli *Client) GetTransferRequestResult(
+func (cli *Client) GetRequestResult(
 	ctx context.Context,
 	req *GetRequestResultRequest,
 ) (*GetRequestResultResponse, error) {
@@ -236,16 +236,6 @@ func (cli *Client) GetTransferRequestResult(
 		return nil, err
 	}
 	return res, nil
-}
-
-// GetRequestResult is deprecated because it is not a suitable naming convention.
-// Please use GetTransferRequestResult.
-// Deprecated: use GetTransferRequestResult
-func (cli *Client) GetRequestResult(
-	ctx context.Context,
-	req *GetRequestResultRequest,
-) (*GetRequestResultResponse, error) {
-	return cli.GetTransferRequestResult(ctx, req)
 }
 
 type (
@@ -379,27 +369,27 @@ func (cli *Client) BulkTransferRequest(
 	return res, nil
 }
 
-type GetBulkRequestResultRequest struct {
+type GetBulkTransferRequestResultRequest struct {
 	AccessToken string `json:"-" validate:"required,min=1,max=128"`
 	AccountID   string `json:"accountId" validate:"required,min=12,max=29"`
 	ApplyNo     string `json:"applyNo" validate:"omitempty,len=16"`
 }
 
-type GetBulkRequestResultResponse struct {
+type GetBulkTransferRequestResultResponse struct {
 	AccountID        string     `json:"accountId"`
 	ResultCode       ResultCode `json:"resultCode,string"`
 	ApplyNo          string     `json:"applyNo"`
 	ApplyEndDatetime string     `json:"applyEndDatetime"`
 }
 
-func (r *GetBulkRequestResultRequest) Validate() error {
+func (r *GetBulkTransferRequestResultRequest) Validate() error {
 	return validate.Struct(r)
 }
 
 func (cli *Client) GetBulkTransferRequestResult(
 	ctx context.Context,
-	req *GetBulkRequestResultRequest,
-) (*GetBulkRequestResultResponse, error) {
+	req *GetBulkTransferRequestResultRequest,
+) (*GetBulkTransferRequestResultResponse, error) {
 	if err := req.Validate(); err != nil {
 		return nil, err
 	}
@@ -407,7 +397,7 @@ func (cli *Client) GetBulkTransferRequestResult(
 	if err != nil {
 		return nil, err
 	}
-	res := &GetBulkRequestResultResponse{}
+	res := &GetBulkTransferRequestResultResponse{}
 	if _, err := cli.doGet(getTransferHeader(req.AccessToken), fmt.Sprintf("%s/bulktransfer/request-result", corporationPathV1), reqMap, res); err != nil {
 		return nil, err
 	}

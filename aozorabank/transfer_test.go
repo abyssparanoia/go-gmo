@@ -155,7 +155,7 @@ func TestTransferRequest(
 	}
 }
 
-func TestGetTransferRequestResult(
+func TestGetRequestResult(
 	t *testing.T,
 ) {
 	t.Parallel()
@@ -193,7 +193,7 @@ func TestGetTransferRequestResult(
 			defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
 			cli, _ := NewClient(APIHostTypeTest)
-			result, err := cli.GetTransferRequestResult(context.TODO(), tc.request)
+			result, err := cli.GetRequestResult(context.TODO(), tc.request)
 			assert.Equal(t, nil, err)
 			assert.Equal(t, expected, result)
 		})
@@ -349,16 +349,16 @@ func TestGetBulkTransferRequestResult(
 	t.Parallel()
 
 	testcases := map[string]struct {
-		request  *GetBulkRequestResultRequest
-		expected *GetBulkRequestResultResponse
+		request  *GetBulkTransferRequestResultRequest
+		expected *GetBulkTransferRequestResultResponse
 	}{
 		"ok": {
-			request: &GetBulkRequestResultRequest{
+			request: &GetBulkTransferRequestResultRequest{
 				AccessToken: "xxxxxxxxxxxx",
 				AccountID:   "111111111111",
 				ApplyNo:     "2018072902345678",
 			},
-			expected: fakeData[GetBulkRequestResultResponse](),
+			expected: fakeData[GetBulkTransferRequestResultResponse](),
 		},
 	}
 
