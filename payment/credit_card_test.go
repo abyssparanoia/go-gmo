@@ -42,6 +42,35 @@ func TestSaveCard(t *testing.T) {
 	assert.Equal(t, expected, result)
 }
 
+func TestTradedCard(t *testing.T) {
+
+	expected := &TradedCardResponse{
+		CardSeq: "0001",
+	}
+
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		form := url.Values{}
+		_ = parser.Encoder().Encode(expected, form)
+		w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
+		w.Write([]byte(form.Encode()))
+	}))
+	defer ts.Close()
+	defaultProxy := http.DefaultTransport.(*http.Transport).Proxy
+	http.DefaultTransport.(*http.Transport).Proxy = func(req *http.Request) (*url.URL, error) {
+		return url.Parse(ts.URL)
+	}
+	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
+
+	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
+	cli.APIHost = apiHostTest
+	req := &TradedCardRequest{
+		OrderID:  "orderID",
+		MemberID: "memberID",
+	}
+	result, _ := cli.TradedCard(req)
+	assert.Equal(t, expected, result)
+}
+
 func TestDeleteCard(t *testing.T) {
 
 	expected := &DeleteCardResponse{
