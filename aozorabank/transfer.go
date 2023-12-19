@@ -93,6 +93,7 @@ type (
 	}
 
 	transferInfo struct {
+		ItemID                  string                    `json:"itemId"`
 		TransferAmount          string                    `json:"transferAmount"`
 		EdiInfo                 string                    `json:"ediInfo"`
 		BeneficiaryBankCode     string                    `json:"beneficiaryBankCode"`
@@ -115,10 +116,10 @@ type (
 	}
 
 	unableDetailInfo struct {
-		TransferDetailStatus string `json:"transferDetailStatus"`
-		RefundStatus         string `json:"refundStatus"`
-		IsRepayment          bool   `json:"isRepayment"`
-		RepaymentDate        string `json:"repaymentDate"`
+		TransferDetailStatus BulkTransferItemStatus `json:"transferDetailStatus"`
+		RefundStatus         string                 `json:"refundStatus"`
+		IsRepayment          bool                   `json:"isRepayment"`
+		RepaymentDate        string                 `json:"repaymentDate"`
 	}
 )
 
@@ -262,7 +263,7 @@ type (
 	}
 
 	bulkTransferDetail struct {
-		TransferStatus     TransferStatus          `json:"transferStatus,string"`
+		TransferStatus     BulkTransferStatus      `json:"transferStatus,string"`
 		TransferStatusName string                  `json:"transferStatusName"`
 		TransferTypeName   string                  `json:"transferTypeName"`
 		IsFeeFreeUse       bool                    `json:"isFeeFreeUse"`
@@ -281,7 +282,7 @@ type (
 		AccountID              string          `json:"accountID"`
 		RemitterName           string          `json:"remitterName"`
 		TransferDesignatedDate string          `json:"transferDesignatedDate"`
-		TotalCount             string          `json:"totalCount,string"`
+		TotalCount             string          `json:"totalCount"`
 		TotalAmount            string          `json:"totalAmount"`
 		TransferInfos          []*transferInfo `json:"bulkTransferInfos"`
 	}

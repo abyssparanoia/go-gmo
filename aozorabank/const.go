@@ -46,6 +46,29 @@ const (
 	TransferStatusFailed                  TransferStatus = 40
 )
 
+type BulkTransferStatus int
+
+const (
+	BulkTransferStatusApplying             BulkTransferStatus = 2
+	BulkTransferStatusReturned             BulkTransferStatus = 3
+	BulkTransferStatusDismiss              BulkTransferStatus = 4
+	BulkTransferStatusExpired              BulkTransferStatus = 5
+	BulkTransferStatusApprovalCancelled    BulkTransferStatus = 8
+	BulkTransferStatusInReserve            BulkTransferStatus = 11
+	BulkTransferStatusInProgress           BulkTransferStatus = 12
+	BulkTransferStatusRetrying             BulkTransferStatus = 13
+	BulkTransferStatusCompleted            BulkTransferStatus = 20
+	BulkTransferStatusPartiallyUnavailable BulkTransferStatus = 30
+	BulkTransferStatusFailed               BulkTransferStatus = 40
+)
+
+type BulkTransferItemStatus int
+
+const (
+	BulkTransferItemStatusSuccess BulkTransferItemStatus = 1
+	BulkTransferItemStatusFailure BulkTransferItemStatus = 2
+)
+
 type RequestTransferClass int
 
 const (
