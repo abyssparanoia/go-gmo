@@ -56,6 +56,49 @@ func (cli *Client) SaveCard(
 	return res, nil
 }
 
+// TradedCardResponse
+type TradedCardResponse struct {
+	CardSeq string `schema:"CardSeq,omitempty"`
+	CardNo  string `schema:"CardNo,omitempty"`
+	Forward string `schema:"Forward,omitempty"`
+	ErrCode string `schema:"ErrCode,omitempty"`
+	ErrInfo string `schema:"ErrInfo,omitempty"`
+}
+
+// TradedCardRequest ... traded card request
+type TradedCardRequest struct {
+	OrderID          string `schema:"OrderID" validate:"required,max=27"`
+	MemberID         string `schema:"MemberID" validate:"required,max=60"`
+	SeqMode          string `schema:"SeqMode,omitempty"`
+	DefaultFlag      string `schema:"DefaultFlag,omitempty"`
+	CardSeq          string `schema:"CardSeq,omitempty"`
+	HolderName       string `schema:"HolderName,omitempty"`
+	CardName         string `schema:"CardName,omitempty"`
+	CardPass         string `schema:"CardPass,omitempty"`
+	UseSiteMaskLevel string `schema:"UseSiteMaskLevel,omitempty"`
+}
+
+// Validate ... validate
+func (r *TradedCardRequest) Validate() error {
+	return validate.Struct(r)
+}
+
+// TradedCard ... traded card
+func (cli *Client) TradedCard(
+	req *TradedCardRequest,
+) (*TradedCardResponse, error) {
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
+	res := &TradedCardResponse{}
+	_, err := cli.do(tradedCardPath, req, res)
+	if err != nil {
+		print(err)
+		return nil, err
+	}
+	return res, nil
+}
+
 // DeleteCardRequest ... delete card request
 type DeleteCardRequest struct {
 	MemberID string `schema:"MemberID" validate:"required,max=60"`

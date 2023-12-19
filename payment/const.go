@@ -15,6 +15,7 @@ const (
 	deleteMemberPath              = "payment/DeleteMember.idPass"
 	searchMemberPath              = "payment/SearchMember.idPass"
 	saveCardPath                  = "payment/SaveCard.idPass"
+	tradedCardPath                = "payment/TradedCard.idPass"
 	deleteCardPath                = "payment/DeleteCard.idPass"
 	searchCardPath                = "payment/SearchCard.idPass"
 	entryTranGANBPath             = "payment/EntryTranGANB.idPass"
