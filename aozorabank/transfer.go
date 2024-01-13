@@ -344,6 +344,19 @@ type (
 		ApplyNo          string     `json:"applyNo"`
 		ApplyEndDatetime string     `json:"applyEndDatetime"`
 	}
+
+	GetBulkTransferFeeResponse struct {
+		AccountID         string               `json:"accountId"`
+		BaseDate          string               `json:"baseDate"`
+		BaseTime          string               `json:"baseTime"`
+		TotalFee          string               `json:"totalFee"`
+		TransferFeeDetail []*TransferFeeDetail `json:"transferFeeDetails" validate:"required"`
+	}
+
+	TransferFeeDetail struct {
+		ItemID      string `json:"itemId"`
+		TransferFee string `json:"transferFee"`
+	}
 )
 
 func (r *BulkTransferRequestRequest) Validate() error {
@@ -365,6 +378,27 @@ func (cli *Client) BulkTransferRequest(
 	header.Set(IdempotencyKeyHeaderKey, req.IdempotencyKey)
 	res := &BulkTransferRequestResponse{}
 	if _, err := cli.doPost(header, fmt.Sprintf("%s/bulktransfer/request", corporationPathV1), reqMap, res); err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+
+func (cli *Client) GetBulkTransferFee(
+	ctx context.Context,
+	req *BulkTransferRequestRequest,
+) (*GetBulkTransferFeeResponse, error) {
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
+	reqMap, err := converter.StructToJsonTagMap(req)
+	if err != nil {
+		return nil, err
+	}
+	header := getTransferHeader(req.AccessToken)
+	header.Set(IdempotencyKeyHeaderKey, req.IdempotencyKey)
+	res := &GetBulkTransferFeeResponse{}
+	_, err = cli.doPost(header, fmt.Sprintf("%s/bulktransfer/transferfee", corporationPathV1), reqMap, res)
+	if err != nil {
 		return nil, err
 	}
 	return res, nil
