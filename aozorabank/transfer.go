@@ -325,6 +325,18 @@ type (
 		BulkTransfers           []*BulkTransfer         `json:"bulkTransfers" validate:"required"`
 	}
 
+	GetBulkTransferFeeRequest struct {
+		AccessToken             string                  `json:"-" validate:"required,min=1,max=128"`
+		AccountID               string                  `json:"accountId" validate:"required,min=12,max=29"`
+		RemitterName            string                  `json:"remitterName" validate:"omitempty,min=1,max=48"`
+		TransferDesignatedDate  string                  `json:"transferDesignatedDate" validate:"omitempty"`
+		TransferDateHolidayCode TransferDateHolidayCode `json:"transferDateHolidayCode,string" validate:"required,len=1"`
+		TotalCount              int                     `json:"totalCount,string" validate:"omitempty,min=1,max=999999"`
+		TotalAmount             int                     `json:"totalAmount,string" validate:"omitempty,min=1,max=999999999999"`
+		ApplyComment            string                  `json:"applyComment" validate:"omitempty,min=1,max=20"`
+		BulkTransfers           []*BulkTransfer         `json:"bulkTransfers" validate:"required"`
+	}
+
 	BulkTransfer struct {
 		ItemID                string          `json:"itemId" validate:"omitempty,min=1,max=6"`
 		TransferAmount        int             `json:"transferAmount,string" validate:"required,min=1,max=20"`
@@ -344,9 +356,26 @@ type (
 		ApplyNo          string     `json:"applyNo"`
 		ApplyEndDatetime string     `json:"applyEndDatetime"`
 	}
+
+	GetBulkTransferFeeResponse struct {
+		AccountID         string               `json:"accountId"`
+		BaseDate          string               `json:"baseDate"`
+		BaseTime          string               `json:"baseTime"`
+		TotalFee          string               `json:"totalFee"`
+		TransferFeeDetail []*TransferFeeDetail `json:"transferFeeDetails" validate:"required"`
+	}
+
+	TransferFeeDetail struct {
+		ItemID      string `json:"itemId"`
+		TransferFee string `json:"transferFee"`
+	}
 )
 
 func (r *BulkTransferRequestRequest) Validate() error {
+	return validate.Struct(r)
+}
+
+func (r *GetBulkTransferFeeRequest) Validate() error {
 	return validate.Struct(r)
 }
 
@@ -365,6 +394,26 @@ func (cli *Client) BulkTransferRequest(
 	header.Set(IdempotencyKeyHeaderKey, req.IdempotencyKey)
 	res := &BulkTransferRequestResponse{}
 	if _, err := cli.doPost(header, fmt.Sprintf("%s/bulktransfer/request", corporationPathV1), reqMap, res); err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+
+func (cli *Client) GetBulkTransferFee(
+	ctx context.Context,
+	req *GetBulkTransferFeeRequest,
+) (*GetBulkTransferFeeResponse, error) {
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
+	reqMap, err := converter.StructToJsonTagMap(req)
+	if err != nil {
+		return nil, err
+	}
+	header := getTransferHeader(req.AccessToken)
+	res := &GetBulkTransferFeeResponse{}
+	_, err = cli.doPost(header, fmt.Sprintf("%s/bulktransfer/transferfee", corporationPathV1), reqMap, res)
+	if err != nil {
 		return nil, err
 	}
 	return res, nil
