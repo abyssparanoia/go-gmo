@@ -3,6 +3,7 @@ test.csv
 *.tar.gz
 *.txt
 **/.vscode/**
+.env
 
 # Created by https://www.gitignore.io/api/go
 # Edit at https://www.gitignore.io/?templates=go
