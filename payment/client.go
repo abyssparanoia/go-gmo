@@ -50,6 +50,10 @@ func NewClient(
 	}, nil
 }
 
+func (c *Client) SetHTTPClient(httpClient *http.Client) {
+	c.HTTPClient = httpClient
+}
+
 type baseRequestBody struct {
 	SiteID   string `schema:"SiteID,omitempty"`
 	SitePass string `schema:"SitePass,omitempty"`
