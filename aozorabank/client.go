@@ -45,6 +45,10 @@ func NewClient(
 	}, nil
 }
 
+func (c *Client) SetHTTPClient(httpClient *http.Client) {
+	c.cli = httpClient
+}
+
 func (c *Client) doPost(
 	header http.Header,
 	path string,
