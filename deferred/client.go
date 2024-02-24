@@ -48,6 +48,10 @@ func NewClient(
 	}, nil
 }
 
+func (c *Client) SetHTTPClient(httpClient *http.Client) {
+	c.HTTPClient = httpClient
+}
+
 type baseRequestBody struct {
 	AuthenticationID string `xml:"authenticationId"`
 	ShopCode         string `xml:"shopCode"`
