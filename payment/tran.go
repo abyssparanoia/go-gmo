@@ -56,6 +56,9 @@ type ExecTranRequestWithMemberID struct {
 	CardSeq      int    `schema:"CardSeq" validate:"lte=9999"`
 	CardPass     string `schema:"CardPass"`
 	SecurityCode string `schema:"SecurityCode"`
+	ClientField1 string `schema:"ClientField1,omitempty"`
+	ClientField2 string `schema:"ClientField2,omitempty"`
+	ClientField3 string `schema:"ClientField3,omitempty"`
 }
 
 // Validate ... validate
