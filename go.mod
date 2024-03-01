@@ -11,7 +11,7 @@ require (
 	github.com/gorilla/schema v1.2.1
 	github.com/imdario/mergo v0.3.16
 	github.com/pkg/sftp v1.13.6
-	github.com/stretchr/testify v1.8.4
+	github.com/stretchr/testify v1.9.0
 	golang.org/x/crypto v0.20.0
 	golang.org/x/text v0.14.0
 	gopkg.in/go-playground/assert.v1 v1.2.1
