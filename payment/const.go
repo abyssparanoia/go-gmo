@@ -30,6 +30,8 @@ const (
 	payPayExecTranPath            = "payment/ExecTranPaypay.idPass"
 	payPaySalesPath               = "payment/PaypaySales.idPass"
 	payPaySCancelReturnPath       = "payment/PaypayCancelReturn.idPass"
+	postpayEntryTranPath          = "payment/EntryTranPostpay.idPass"
+	postpayExecTranPath           = "payment/ExecTranPostpay.idPass"
 )
 
 // ResultEntryBankAccountStatus ... entry bank account status
