@@ -167,3 +167,18 @@ const (
 	PayPayTransitionTypeWebLink  PayPayTransitionType = 1
 	PayPayTransitionTypeDeepLink PayPayTransitionType = 2
 )
+
+type PostpayCustomerPaymentType int
+
+const (
+	PostpayCustomerPaymentTypeInvoiceSentSeparately PostpayCustomerPaymentType = 2
+	PostpayCustomerPaymentTypeInvoiceIncluded       PostpayCustomerPaymentType = 3
+)
+
+type PostpayCustomerSex int
+
+const (
+	PostpayCustomerSexUnknown PostpayCustomerSex = 0
+	PostpayCustomerSexMale    PostpayCustomerSex = 1
+	PostpayCustomerSexFemale  PostpayCustomerSex = 2
+)
