@@ -125,3 +125,36 @@ func (cli *Client) PostpayExecTran(
 	}
 	return res, nil
 }
+
+type PostpayShippedTranRequest struct {
+	AccessID      string               `schema:"AccessID" validate:"required"`
+	AccessPass    string               `schema:"AccessPass" validate:"required"`
+	OrderID       string               `schema:"OrderID" validate:"required"`
+	PDCompanyCode PostpayPDCompanyCode `schema:"PdCompanyCode" validate:"required"`
+	SlipNo        string               `schema:"SlipNo" validate:"required"`
+}
+
+func (r *PostpayShippedTranRequest) Validate() error {
+	return validate.Struct(r)
+}
+
+type PostpayShippedTranResponse struct {
+	OrderID string           `schema:"OrderID,omitempty"`
+	Status  TradeMultiStatus `schema:"Status,omitempty"`
+	ErrCode string           `schema:"ErrCode,omitempty"`
+	ErrInfo string           `schema:"ErrInfo,omitempty"`
+}
+
+func (cli *Client) PostpayShippedTran(
+	req *PostpayShippedTranRequest,
+) (*PostpayShippedTranResponse, error) {
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
+	res := &PostpayShippedTranResponse{}
+	_, err := cli.do(postpayShippedTranPath, req, res)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
