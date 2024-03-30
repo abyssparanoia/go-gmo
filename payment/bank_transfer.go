@@ -44,14 +44,14 @@ type ExecTranGANBRequest struct {
 	AccessID                  string `schema:"AccessID" validate:"required"`
 	AccessPass                string `schema:"AccessPass" validate:"required"`
 	OrderID                   string `schema:"OrderID" validate:"required"`
-	ClientField1              string `schema:"ClientField1"`
-	ClientField2              string `schema:"ClientField2"`
-	ClientField3              string `schema:"ClientField3"`
-	AccountHolderOptionalName string `schema:"AccountHolderOptionalName"`
-	TradeDays                 int    `schema:"TradeDays"`
-	TradeReason               string `schema:"TradeReason"`
-	TradeClientName           string `schema:"TradeClientName"`
-	TradeClientMailaddress    string `schema:"TradeClientMailaddress"`
+	ClientField1              string `schema:"ClientField1,omitempty"`
+	ClientField2              string `schema:"ClientField2,omitempty"`
+	ClientField3              string `schema:"ClientField3,omitempty"`
+	AccountHolderOptionalName string `schema:"AccountHolderOptionalName,omitempty"`
+	TradeDays                 int    `schema:"TradeDays,omitempty"`
+	TradeReason               string `schema:"TradeReason,omitempty"`
+	TradeClientName           string `schema:"TradeClientName,omitempty"`
+	TradeClientMailaddress    string `schema:"TradeClientMailaddress,omitempty"`
 }
 
 // Validate ... validate
