@@ -30,6 +30,9 @@ const (
 	payPayExecTranPath            = "payment/ExecTranPaypay.idPass"
 	payPaySalesPath               = "payment/PaypaySales.idPass"
 	payPaySCancelReturnPath       = "payment/PaypayCancelReturn.idPass"
+	postpayEntryTranPath          = "payment/EntryTranPostpay.idPass"
+	postpayExecTranPath           = "payment/ExecTranPostpay.idPass"
+	postpayShippedTranPath        = "payment/PostpayShipping.idPass"
 )
 
 // ResultEntryBankAccountStatus ... entry bank account status
@@ -108,6 +111,12 @@ const (
 	TradeMultiStatusStop TradeMultiStatus = "STOP"
 	// TradeMultiStatusExpired ... expired
 	TradeMultiStatusExpired TradeMultiStatus = "EXPIRED"
+	// TradeMultiStatusShipped ... shipped
+	TradeMultiStatusShipped TradeMultiStatus = "SHIPPED"
+	// TradeMultiStatusInvoice ... invoice
+	TradeMultiStatusInvoice TradeMultiStatus = "INVOICE"
+	// TradeMultiStatusForceCancel ... force cancel
+	TradeMultiStatusForceCancel TradeMultiStatus = "FORCECANCEL"
 )
 
 func (s TradeMultiStatus) String() string {
@@ -126,6 +135,8 @@ const (
 	IDNetPayType PayType = "6"
 	// GANBPayType ... GMO Aozora Net Bank
 	GANBPayType PayType = "36"
+	// PayPayPayType ... PayPay
+	PostpayPayType PayType = "44"
 	// PayPayPayType ... PayPay
 	PayPayPayType PayType = "45"
 )
@@ -164,4 +175,33 @@ type PayPayTransitionType int
 const (
 	PayPayTransitionTypeWebLink  PayPayTransitionType = 1
 	PayPayTransitionTypeDeepLink PayPayTransitionType = 2
+)
+
+type PostpayCustomerPaymentType int
+
+const (
+	PostpayCustomerPaymentTypeInvoiceSentSeparately PostpayCustomerPaymentType = 2
+	PostpayCustomerPaymentTypeInvoiceIncluded       PostpayCustomerPaymentType = 3
+)
+
+type PostpayCustomerSex int
+
+const (
+	PostpayCustomerSexUnknown PostpayCustomerSex = 0
+	PostpayCustomerSexMale    PostpayCustomerSex = 1
+	PostpayCustomerSexFemale  PostpayCustomerSex = 2
+)
+
+type PostpayPDCompanyCode int
+
+const (
+	PostpayPDCompanyCodeUnknown    PostpayPDCompanyCode = 0
+	PostpayPDCompanyCodeSagawa     PostpayPDCompanyCode = 11
+	PostpayPDCompanyCodeYamato     PostpayPDCompanyCode = 12
+	PostpayPDCompanyCodeNishina    PostpayPDCompanyCode = 14
+	PostpayPDCompanyCodeKakitome   PostpayPDCompanyCode = 15
+	PostpayPDCompanyCodeYuPack     PostpayPDCompanyCode = 16
+	PostpayPDCompanyCodeFukuyama   PostpayPDCompanyCode = 17
+	PostpayPDCompanyCodeEcoHai     PostpayPDCompanyCode = 27
+	PostpayPDCompanyCodeLetterPack PostpayPDCompanyCode = 28
 )
