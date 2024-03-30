@@ -32,6 +32,7 @@ const (
 	payPaySCancelReturnPath       = "payment/PaypayCancelReturn.idPass"
 	postpayEntryTranPath          = "payment/EntryTranPostpay.idPass"
 	postpayExecTranPath           = "payment/ExecTranPostpay.idPass"
+	postpayShippedTranPath        = "payment/PostpayShipping.idPass"
 )
 
 // ResultEntryBankAccountStatus ... entry bank account status
@@ -110,6 +111,10 @@ const (
 	TradeMultiStatusStop TradeMultiStatus = "STOP"
 	// TradeMultiStatusExpired ... expired
 	TradeMultiStatusExpired TradeMultiStatus = "EXPIRED"
+	// TradeMultiStatusShipped ... shipped
+	TradeMultiStatusShipped TradeMultiStatus = "SHIPPED"
+	// TradeMultiStatusInvoice ... invoice
+	TradeMultiStatusInvoice TradeMultiStatus = "INVOICE"
 )
 
 func (s TradeMultiStatus) String() string {
@@ -181,4 +186,18 @@ const (
 	PostpayCustomerSexUnknown PostpayCustomerSex = 0
 	PostpayCustomerSexMale    PostpayCustomerSex = 1
 	PostpayCustomerSexFemale  PostpayCustomerSex = 2
+)
+
+type PostpayPDCompanyCode int
+
+const (
+	PostpayPDCompanyCodeUnknown    PostpayPDCompanyCode = 0
+	PostpayPDCompanyCodeSagawa     PostpayPDCompanyCode = 11
+	PostpayPDCompanyCodeYamato     PostpayPDCompanyCode = 12
+	PostpayPDCompanyCodeNishina    PostpayPDCompanyCode = 14
+	PostpayPDCompanyCodeKakitome   PostpayPDCompanyCode = 15
+	PostpayPDCompanyCodeYuPack     PostpayPDCompanyCode = 16
+	PostpayPDCompanyCodeFukuyama   PostpayPDCompanyCode = 17
+	PostpayPDCompanyCodeEcoHai     PostpayPDCompanyCode = 27
+	PostpayPDCompanyCodeLetterPack PostpayPDCompanyCode = 28
 )
