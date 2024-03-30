@@ -115,6 +115,8 @@ const (
 	TradeMultiStatusShipped TradeMultiStatus = "SHIPPED"
 	// TradeMultiStatusInvoice ... invoice
 	TradeMultiStatusInvoice TradeMultiStatus = "INVOICE"
+	// TradeMultiStatusForceCancel ... force cancel
+	TradeMultiStatusForceCancel TradeMultiStatus = "FORCECANCEL"
 )
 
 func (s TradeMultiStatus) String() string {
@@ -133,6 +135,8 @@ const (
 	IDNetPayType PayType = "6"
 	// GANBPayType ... GMO Aozora Net Bank
 	GANBPayType PayType = "36"
+	// PayPayPayType ... PayPay
+	PostpayPayType PayType = "44"
 	// PayPayPayType ... PayPay
 	PayPayPayType PayType = "45"
 )
