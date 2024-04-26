@@ -205,3 +205,56 @@ const (
 	PostpayPDCompanyCodeEcoHai     PostpayPDCompanyCode = 27
 	PostpayPDCompanyCodeLetterPack PostpayPDCompanyCode = 28
 )
+
+type LinkPlusPayMethod string
+
+const (
+	LinkPlusPayMethodCredit         LinkPlusPayMethod = "credit"
+	LinkPlusPayMethodCvs            LinkPlusPayMethod = "cvs"
+	LinkPlusPayMethodPayEasy        LinkPlusPayMethod = "payeasy"
+	LinkPlusPayMethodDocomo         LinkPlusPayMethod = "docomo"
+	LinkPlusPayMethodAu             LinkPlusPayMethod = "au"
+	LinkPlusPayMethodSb             LinkPlusPayMethod = "sb"
+	LinkPlusPayMethodEpos           LinkPlusPayMethod = "epospay"
+	LinkPlusPayMethodDcc            LinkPlusPayMethod = "dcc"
+	LinkPlusPayMethodLinePay        LinkPlusPayMethod = "linepay"
+	LinkPlusPayMethodFamiPay        LinkPlusPayMethod = "famipay"
+	LinkPlusPayMethodMerPay         LinkPlusPayMethod = "merpay"
+	LinkPlusPayMethodRakutenID      LinkPlusPayMethod = "rakutenid"
+	LinkPlusPayMethodRakutenPayV2   LinkPlusPayMethod = "rakutenpayv2"
+	LinkPlusPayMethodPaypay         LinkPlusPayMethod = "paypay"
+	LinkPlusPayMethodVirtualAccount LinkPlusPayMethod = "virtualaccount"
+	LinkPlusPayMethodAuPay          LinkPlusPayMethod = "aupay"
+	LinkPlusPayMethodGanb           LinkPlusPayMethod = "ganb"
+	LinkPlusPayMethodUnionPay       LinkPlusPayMethod = "unionpay"
+)
+
+type LinkPlusTemplateID string
+
+const (
+	LinkPlusTemplateIDDesignA LinkPlusTemplateID = "designA"
+	LinkPlusTemplateIDDesignB LinkPlusTemplateID = "designB"
+	LinkPlusTemplateIDDesignC LinkPlusTemplateID = "designC"
+	LinkPlusTemplateIDDesignD LinkPlusTemplateID = "designD"
+)
+
+type LinkPlusColorPattern string
+
+const (
+	LinkPlusColorPatternBlue      LinkPlusColorPattern = "blue_01"
+	LinkPlusColorPatternBlueGray  LinkPlusColorPattern = "bluegray_01"
+	LinkPlusColorPatternSkyBlue   LinkPlusColorPattern = "skyblue_01"
+	LinkPlusColorPatternGreen     LinkPlusColorPattern = "pink_01"
+	LinkPlusColorPatternYellow    LinkPlusColorPattern = "yellow_01"
+	LinkPlusColorPatternBlack     LinkPlusColorPattern = "black_01"
+	LinkPlusColorPatternNature    LinkPlusColorPattern = "nature_01"
+	LinkPlusColorPatternGreenGray LinkPlusColorPattern = "greengray_01"
+)
+
+type LinkPlusLang string
+
+const (
+	LinkPlusLangJP LinkPlusLang = "ja"
+	LinkPlusLangEN LinkPlusLang = "en"
+	LinkPlusLangZH LinkPlusLang = "zh"
+)
