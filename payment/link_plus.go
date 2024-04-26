@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 
 	"github.com/abyssparanoia/go-gmo/internal/pkg/validate"
@@ -282,7 +283,7 @@ func (cli *Client) GetLinkPlusURL(req *GetLinkPlusURLRequest) (*GetLinkPlusURLRe
 
 	httpReq, err := http.NewRequest(
 		http.MethodPost,
-		fmt.Sprintf("%s/%s", cli.APIHost, "GetLinkplusUrlPayment.json"),
+		fmt.Sprintf("%s/%s", cli.APIHost, linkPlusGetUrlPaymentPath),
 		bytes.NewBuffer(jsonReqBytes),
 	)
 	if err != nil {
@@ -296,8 +297,13 @@ func (cli *Client) GetLinkPlusURL(req *GetLinkPlusURLRequest) (*GetLinkPlusURLRe
 	}
 	defer httpRes.Body.Close()
 
+	bodyBytes, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, err
+	}
+
 	jsonRes := &getLinkPlusURLResponseJSON{}
-	if err := json.NewDecoder(httpRes.Body).Decode(jsonRes); err != nil {
+	if err := json.Unmarshal(bodyBytes, jsonRes); err != nil {
 		return nil, err
 	}
 
