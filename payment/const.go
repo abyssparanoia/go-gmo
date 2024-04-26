@@ -33,6 +33,7 @@ const (
 	postpayEntryTranPath          = "payment/EntryTranPostpay.idPass"
 	postpayExecTranPath           = "payment/ExecTranPostpay.idPass"
 	postpayShippedTranPath        = "payment/PostpayShipping.idPass"
+	linkPlusGetUrlPaymentPath     = "payment/GetLinkplusUrlPayment.json"
 )
 
 // ResultEntryBankAccountStatus ... entry bank account status
@@ -127,6 +128,7 @@ func (s TradeMultiStatus) String() string {
 type PayType string
 
 const (
+	CreditCardPayType PayType = "0"
 	// PayEasyPayType ... convenience store
 	CvsPayType PayType = "3"
 	// PayEasyPayType ... pay easy
