@@ -136,9 +136,9 @@ type getLinkPlusURLRequestJSONTransaction struct {
 	Overview           string              `json:"Overview,omitempty"`
 	Detail             string              `json:"Detail,omitempty"`
 	PayMethods         []LinkPlusPayMethod `json:"PayMethods,omitempty"`
-	RetURL             string              `json:"RetURL,omitempty"`
-	CompleteURL        string              `json:"CompleteURL,omitempty"`
-	CancelURL          string              `json:"CancelURL,omitempty"`
+	RetURL             string              `json:"RetUrl,omitempty"`
+	CompleteURL        string              `json:"CompleteUrl,omitempty"`
+	CancelURL          string              `json:"CancelUrl,omitempty"`
 	NotifyMailAddress  string              `json:"NotifyMailAddress,omitempty"`
 	RetryMax           int                 `json:"RetryMax,omitempty"`
 	ExpireDays         int                 `json:"ExpireDays,omitempty"`
