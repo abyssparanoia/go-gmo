@@ -14,7 +14,7 @@ require (
 	github.com/pkg/sftp v1.13.6
 	github.com/stretchr/testify v1.9.0
 	golang.org/x/crypto v0.22.0
-	golang.org/x/text v0.14.0
+	golang.org/x/text v0.15.0
 	gopkg.in/go-playground/assert.v1 v1.2.1
 )
 
