@@ -13,7 +13,7 @@ require (
 	github.com/imdario/mergo v0.3.16
 	github.com/pkg/sftp v1.13.6
 	github.com/stretchr/testify v1.9.0
-	golang.org/x/crypto v0.22.0
+	golang.org/x/crypto v0.23.0
 	golang.org/x/text v0.15.0
 	gopkg.in/go-playground/assert.v1 v1.2.1
 )
@@ -27,6 +27,6 @@ require (
 	github.com/leodido/go-urn v1.4.0 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	golang.org/x/net v0.21.0 // indirect
-	golang.org/x/sys v0.19.0 // indirect
+	golang.org/x/sys v0.20.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
