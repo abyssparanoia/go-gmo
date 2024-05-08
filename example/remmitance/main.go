@@ -10,7 +10,7 @@ func main() {
 	cli := newClient()
 
 	res, err := cli.MailDepositRegistration(&remittance.MailDepositRegistrationRequest{
-		Method:                 remittance.MethodRegister,
+		Method:                 remittance.MailDepositMethodRegister,
 		DepositID:              "testdeposit1",
 		Amount:                 1000000,
 		MailAddress:            "test@dreizehn.com",

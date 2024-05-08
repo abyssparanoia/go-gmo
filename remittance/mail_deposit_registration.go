@@ -6,7 +6,7 @@ import (
 )
 
 type MailDepositRegistrationRequest struct {
-	Method                 Method                  `json:"Method" validate:"required"`
+	Method                 MailDepositMethod       `json:"Method" validate:"required"`
 	DepositID              string                  `json:"Deposit_ID" validate:"required,max=27"`
 	Amount                 int                     `json:"Amount" validate:"required"`
 	MailAddress            string                  `json:"Mail_Address" validate:"required,email,max=200"`
