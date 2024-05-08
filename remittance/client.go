@@ -71,6 +71,8 @@ func (c *Client) do(
 		return nil, err
 	}
 
+	fmt.Println(string(requestBodyBytes))
+
 	req, err := http.NewRequest(
 		"POST",
 		fmt.Sprintf("%s/%s", c.APIHost, path),
