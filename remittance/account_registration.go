@@ -25,6 +25,8 @@ func (r *AccountRegistrationRequest) Validate() error {
 		branchCodeJPBank := r.BranchCode
 		r.BranchCode = ""
 		r.BranchCodeJPBank = branchCodeJPBank
+	} else {
+		r.BranchCodeJPBank = ""
 	}
 	return nil
 }
