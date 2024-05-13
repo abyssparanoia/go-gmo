@@ -46,6 +46,9 @@ type SearchTradeMultiResponse struct {
 	PayPayTrackingID         string           `schema:"PayPayTrackingID,omitempty"`
 	PayPayAcceptCode         string           `schema:"PayPayAcceptCode,omitempty"`
 	PayPayOrderID            string           `schema:"PayPayOrderID,omitempty"`
+	MemmberID                string           `schema:"MemmberID,omitempty"`
+	CardNo                   string           `schema:"CardNo,omitempty"`
+	Expire                   string           `schema:"Expire,omitempty"`
 }
 
 // SearchTradeMulti ... search trade multi
