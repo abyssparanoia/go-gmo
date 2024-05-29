@@ -2,7 +2,7 @@ package payment
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
@@ -10,7 +10,6 @@ import (
 
 	"github.com/abyssparanoia/go-gmo/internal/pkg/parser"
 	"github.com/abyssparanoia/go-gmo/internal/pkg/shiftjis_transformer"
-	"github.com/cenkalti/backoff"
 )
 
 // Client ... gmo pg payment API client
@@ -99,21 +98,13 @@ func (c *Client) do(
 	}
 
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	var resp *http.Response
-	backoffCfg := backoff.WithMaxRetries(backoff.NewExponentialBackOff(), 4)
-	err = backoff.Retry(func() (err error) {
-		resp, err = c.HTTPClient.Do(req)
-		if err != nil {
-			return err
-		}
-		return nil
-	}, backoffCfg)
+	resp, err := c.HTTPClient.Do(req)
 	if err != nil {
 		return nil, err
 	}
 	defer resp.Body.Close()
 
-	bodyBytes, err := ioutil.ReadAll(resp.Body)
+	bodyBytes, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}
