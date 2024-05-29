@@ -1,10 +1,9 @@
 module github.com/abyssparanoia/go-gmo
 
-go 1.19
+go 1.22.3
 
 require (
 	github.com/bxcodec/faker v2.0.1+incompatible
-	github.com/caarlos0/env/v10 v10.0.0
 	github.com/caarlos0/env/v6 v6.10.1
 	github.com/cenkalti/backoff v2.2.1+incompatible
 	github.com/go-playground/validator/v10 v10.20.0
