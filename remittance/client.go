@@ -4,11 +4,10 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"time"
 
-	"github.com/cenkalti/backoff"
 	"github.com/imdario/mergo"
 )
 
@@ -81,21 +80,13 @@ func (c *Client) do(
 	}
 
 	req.Header.Set("Content-Type", "application/json")
-	var resp *http.Response
-	backoffCfg := backoff.WithMaxRetries(backoff.NewExponentialBackOff(), 4)
-	err = backoff.Retry(func() (err error) {
-		resp, err = c.HTTPClient.Do(req)
-		if err != nil {
-			return err
-		}
-		return nil
-	}, backoffCfg)
+	resp, err := c.HTTPClient.Do(req)
 	if err != nil {
 		return nil, err
 	}
 	defer resp.Body.Close()
 
-	bodyBytes, err := ioutil.ReadAll(resp.Body)
+	bodyBytes, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}
