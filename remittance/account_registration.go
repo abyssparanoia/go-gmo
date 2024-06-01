@@ -14,7 +14,7 @@ type AccountRegistrationRequest struct {
 	AccountNumber       string                        `json:"Account_Number,omitempty"`
 	AccountName         string                        `json:"Account_Name,omitempty"`
 	BranchCodeJPBank    string                        `json:"Branch_Code_Jpbank,omitempty"`
-	AccountNumberJPbank string                        `json:"Account_Number_Jpbank,omitempty"`
+	AccountNumberJPBank string                        `json:"Account_Number_Jpbank,omitempty"`
 	Free                string                        `json:"Free,omitempty"`
 }
 
@@ -27,11 +27,11 @@ func (r *AccountRegistrationRequest) Validate() error {
 		BranchCodeJPbank := r.BranchCode
 		r.AccountNumber = ""
 		r.BranchCode = ""
-		r.AccountNumberJPbank = AccountNumberJPbank
+		r.AccountNumberJPBank = AccountNumberJPbank
 		r.BranchCodeJPBank = BranchCodeJPbank
 	} else {
 		r.BranchCodeJPBank = ""
-		r.AccountNumberJPbank = ""
+		r.AccountNumberJPBank = ""
 	}
 	return nil
 }
