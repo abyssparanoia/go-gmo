@@ -6,15 +6,16 @@ import (
 )
 
 type AccountRegistrationRequest struct {
-	Method           BankAccountRegistrationMethod `json:"Method" validate:"required"`
-	BankID           string                        `json:"Bank_ID" validate:"required"`
-	BankCode         string                        `json:"Bank_Code,omitempty"`
-	BranchCode       string                        `json:"Branch_Code,omitempty"`
-	AccountType      string                        `json:"Account_Type,omitempty"` // 1 - Normal, 2 - Current, 4 - Savings
-	AccountNumber    string                        `json:"Account_Number,omitempty"`
-	AccountName      string                        `json:"Account_Name,omitempty"`
-	BranchCodeJPBank string                        `json:"Branch_Code_Jpbank,omitempty"`
-	Free             string                        `json:"Free,omitempty"`
+	Method              BankAccountRegistrationMethod `json:"Method" validate:"required"`
+	BankID              string                        `json:"Bank_ID" validate:"required"`
+	BankCode            string                        `json:"Bank_Code,omitempty"`
+	BranchCode          string                        `json:"Branch_Code,omitempty"`
+	AccountType         string                        `json:"Account_Type,omitempty"` // 1 - Normal, 2 - Current, 4 - Savings
+	AccountNumber       string                        `json:"Account_Number,omitempty"`
+	AccountName         string                        `json:"Account_Name,omitempty"`
+	BranchCodeJPBank    string                        `json:"Branch_Code_Jpbank,omitempty"`
+	AccountNumberJPBank string                        `json:"Account_Number_Jpbank,omitempty"`
+	Free                string                        `json:"Free,omitempty"`
 }
 
 func (r *AccountRegistrationRequest) Validate() error {
@@ -22,11 +23,15 @@ func (r *AccountRegistrationRequest) Validate() error {
 		return err
 	}
 	if r.BankCode == "9900" {
-		branchCodeJPBank := r.BranchCode
+		accountNumberJPbank := r.AccountNumber
+		branchCodeJPbank := r.BranchCode
+		r.AccountNumber = ""
 		r.BranchCode = ""
-		r.BranchCodeJPBank = branchCodeJPBank
+		r.AccountNumberJPBank = accountNumberJPbank
+		r.BranchCodeJPBank = branchCodeJPbank
 	} else {
 		r.BranchCodeJPBank = ""
+		r.AccountNumberJPBank = ""
 	}
 	return nil
 }
