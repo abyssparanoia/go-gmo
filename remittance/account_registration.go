@@ -23,12 +23,12 @@ func (r *AccountRegistrationRequest) Validate() error {
 		return err
 	}
 	if r.BankCode == "9900" {
-		AccountNumberJPbank := r.AccountNumber
-		BranchCodeJPbank := r.BranchCode
+		accountNumberJPbank := r.AccountNumber
+		branchCodeJPbank := r.BranchCode
 		r.AccountNumber = ""
 		r.BranchCode = ""
-		r.AccountNumberJPBank = AccountNumberJPbank
-		r.BranchCodeJPBank = BranchCodeJPbank
+		r.AccountNumberJPBank = accountNumberJPbank
+		r.BranchCodeJPBank = branchCodeJPbank
 	} else {
 		r.BranchCodeJPBank = ""
 		r.AccountNumberJPBank = ""
