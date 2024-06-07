@@ -7,7 +7,7 @@ import (
 
 type AccountRegistrationRequest struct {
 	Method              BankAccountRegistrationMethod `json:"Method" validate:"required"`
-	BankID              string                        `json:"Bank_ID" validate:"required"`
+	BankID              string                        `json:"Bank_ID" validate:"required,max=60"`
 	BankCode            string                        `json:"Bank_Code,omitempty"`
 	BranchCode          string                        `json:"Branch_Code,omitempty"`
 	AccountType         string                        `json:"Account_Type,omitempty"` // 1 - Normal, 2 - Current, 4 - Savings
