@@ -27,8 +27,7 @@ func TestSearchTradeMulti(t *testing.T) {
 	}
 	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
-	cli.APIHost = apiHostTest
+	cli := newTestClient()
 	req := &SearchTradeMultiRequest{
 		OrderID: "orderID",
 		PayType: PayEasyPayType,
