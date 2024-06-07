@@ -29,8 +29,7 @@ func TestSaveMember(t *testing.T) {
 	}
 	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
-	cli.APIHost = apiHostTest
+	cli := newTestClient()
 	req := &SaveMemberRequest{
 		MemberID:   "memberID",
 		MemberName: "memberName",
@@ -58,8 +57,7 @@ func TestUpdateMember(t *testing.T) {
 	}
 	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
-	cli.APIHost = apiHostTest
+	cli := newTestClient()
 	req := &UpdateMemberRequest{
 		MemberID:   "memberID",
 		MemberName: "memberName",
@@ -87,8 +85,7 @@ func TestDeleteMember(t *testing.T) {
 	}
 	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
-	cli.APIHost = apiHostTest
+	cli := newTestClient()
 	req := &DeleteMemberRequest{
 		MemberID: "memberID",
 	}
@@ -117,8 +114,7 @@ func TestSearchMember(t *testing.T) {
 	}
 	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
-	cli.APIHost = apiHostTest
+	cli := newTestClient()
 	req := &SearchMemberRequest{
 		MemberID: "memberID",
 	}
