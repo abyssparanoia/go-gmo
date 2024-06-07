@@ -31,8 +31,7 @@ func TestEntryBancAccount(t *testing.T) {
 	}
 	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
-	cli.APIHost = apiHostTest
+	cli := newTestClient()
 	req := &EntryBankAccountRequest{
 		MemberID:         "memberID",
 		MemberName:       "member name",
@@ -79,8 +78,7 @@ func TestGetResultEntryBankAccount(t *testing.T) {
 	}
 	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
-	cli.APIHost = apiHostTest
+	cli := newTestClient()
 	req := &GetResultEntryBankAccountRequest{
 		TranID: "tranID",
 	}
