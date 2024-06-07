@@ -31,6 +31,7 @@ func TestAccountRegistration(t *testing.T) {
 
 	cli, _ := NewClient("shopID", "shopPass", false)
 	cli.APIHost = apiHostTest
+	cli.SetHTTPClient(http.DefaultClient)
 	req := &AccountRegistrationRequest{
 		Method:        BankAccountRegistrationMethodRegister,
 		BankID:        "bankID",
