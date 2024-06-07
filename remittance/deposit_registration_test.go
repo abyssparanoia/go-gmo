@@ -31,6 +31,7 @@ func TestDepositRegistration(t *testing.T) {
 
 	cli, _ := NewClient("shopID", "shopPass", false)
 	cli.APIHost = apiHostTest
+	cli.SetHTTPClient(http.DefaultClient)
 	req := &DepositRegistrationRequest{
 		DepositID: "depositID",
 		BankID:    "bankID",
