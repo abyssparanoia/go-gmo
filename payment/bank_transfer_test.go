@@ -30,8 +30,7 @@ func TestEntryGANBTran(t *testing.T) {
 	}
 	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
-	cli.APIHost = apiHostTest
+	cli := newTestClient()
 	req := &EntryTranGANBRequest{
 		OrderID: "orderID",
 		Amount:  4214144,
@@ -59,8 +58,7 @@ func TestExecGANBTran(t *testing.T) {
 	}
 	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
-	cli.APIHost = apiHostTest
+	cli := newTestClient()
 	req := &ExecTranGANBRequest{
 		AccessID:   "accessID",
 		AccessPass: "accessPass",
