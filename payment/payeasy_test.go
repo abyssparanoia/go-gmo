@@ -30,8 +30,7 @@ func TestPayEasyEntryTran(t *testing.T) {
 	}
 	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
-	cli.APIHost = apiHostTest
+	cli := newTestClient()
 	req := &PayEasyEntryTranRequest{
 		OrderID: "orderID",
 		Amount:  4214144,
@@ -59,8 +58,7 @@ func TestPayEasyExecTran(t *testing.T) {
 	}
 	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
-	cli.APIHost = apiHostTest
+	cli := newTestClient()
 
 	req := &PayEasyExecTranRequest{
 		AccessID:     "accessID",

@@ -30,8 +30,7 @@ func TestPayPayEntryTran(t *testing.T) {
 	}
 	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
-	cli.APIHost = apiHostTest
+	cli := newTestClient()
 	req := &PayPayEntryTranRequest{
 		OrderID: "orderID",
 		Amount:  4214144,
@@ -60,8 +59,7 @@ func TestPayPayExecTran(t *testing.T) {
 	}
 	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
-	cli.APIHost = apiHostTest
+	cli := newTestClient()
 
 	req := &PayPayExecTranRequest{
 		AccessID:   "accessID",
@@ -91,8 +89,7 @@ func TestPayPaySales(t *testing.T) {
 	}
 	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
-	cli.APIHost = apiHostTest
+	cli := newTestClient()
 
 	req := &PayPaySalesRequest{
 		AccessID:   "accessID",
@@ -122,8 +119,7 @@ func TestPayPayCancelReturn(t *testing.T) {
 	}
 	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
-	cli.APIHost = apiHostTest
+	cli := newTestClient()
 
 	req := &PayPayCancelReturnRequest{
 		AccessID:     "accessID",

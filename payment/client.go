@@ -1,8 +1,10 @@
 package payment
 
 import (
+	"crypto/tls"
 	"fmt"
 	"io"
+	"net"
 	"net/http"
 	"net/url"
 	"strings"
@@ -39,7 +41,23 @@ func NewClient(
 
 	return &Client{
 		HTTPClient: &http.Client{
-			Timeout: time.Second * 30,
+			Timeout: 5 * time.Second, // limitation of the request time
+			Transport: &http.Transport{
+				DialContext: (&net.Dialer{
+					Timeout: time.Second, // limitation of the dial time
+				}).DialContext,
+				TLSClientConfig: &tls.Config{
+					MinVersion: tls.VersionTLS12,
+					// #nosec G402
+					CipherSuites: []uint16{tls.TLS_RSA_WITH_AES_128_GCM_SHA256},
+				},
+				TLSHandshakeTimeout:   10 * time.Second, // limitation of the TLS handshake time
+				ResponseHeaderTimeout: 10 * time.Second, // limitation of the response header time
+				IdleConnTimeout:       10 * time.Second, // limitation of the idle connection time
+				MaxIdleConns:          100,              // limitation of the max idle connections
+				MaxConnsPerHost:       100,              // limitation of the max connections per host
+				MaxIdleConnsPerHost:   100,              // limitation of the max idle connections per host
+			},
 		},
 		SiteID:   siteID,
 		SitePass: sitePass,

@@ -29,8 +29,7 @@ func TestClient_ConvenienceStoreEntryTran(t *testing.T) {
 	}
 	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
-	cli.APIHost = apiHostTest
+	cli := newTestClient()
 	req := &ConvenienceStoreEntryTranRequest{
 		OrderID: "orderID",
 		Amount:  4214144,
@@ -58,8 +57,7 @@ func TestClient_ConvenienceStoreExecTran(t *testing.T) {
 	}
 	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
-	cli.APIHost = apiHostTest
+	cli := newTestClient()
 
 	req := &ConvenienceStoreExecTranRequest{
 		AccessID:     "accessID",
@@ -92,8 +90,7 @@ func TestClient_ConvenienceStoreCancel(t *testing.T) {
 	}
 	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
-	cli.APIHost = apiHostTest
+	cli := newTestClient()
 	req := &ConvenienceStoreCancelRequest{
 		AccessID:   "accessID",
 		AccessPass: "accessPass",

@@ -30,8 +30,7 @@ func TestPostpayEntryTran(t *testing.T) {
 	}
 	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
-	cli.APIHost = apiHostTest
+	cli := newTestClient()
 	req := &PostpayEntryTranRequest{
 		OrderID: "orderID",
 		Amount:  4214144,
@@ -60,8 +59,7 @@ func TestPostpayExecTran(t *testing.T) {
 	}
 	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
-	cli.APIHost = apiHostTest
+	cli := newTestClient()
 	req := &PostpayExecTranRequest{
 		AccessID:            "accessID",
 		AccessPass:          "accessPass",
@@ -104,8 +102,7 @@ func TestPostpayShippedTran(t *testing.T) {
 	}
 	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
-	cli.APIHost = apiHostTest
+	cli := newTestClient()
 	req := &PostpayShippedTranRequest{
 		AccessID:      "accessID",
 		AccessPass:    "accessPass",

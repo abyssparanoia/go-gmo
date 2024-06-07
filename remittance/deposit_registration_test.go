@@ -10,9 +10,9 @@ import (
 	"gopkg.in/go-playground/assert.v1"
 )
 
-func TestAccountRegistration(t *testing.T) {
+func TestDepositRegistration(t *testing.T) {
 
-	expected := &AccountRegistrationResponse{
+	expected := &DepositRegistrationResponse{
 		BankID: "bankID",
 		Method: "1",
 	}
@@ -32,16 +32,13 @@ func TestAccountRegistration(t *testing.T) {
 	cli, _ := NewClient("shopID", "shopPass", false)
 	cli.APIHost = apiHostTest
 	cli.SetHTTPClient(http.DefaultClient)
-	req := &AccountRegistrationRequest{
-		Method:        BankAccountRegistrationMethodRegister,
-		BankID:        "bankID",
-		BankCode:      "0001",
-		BranchCode:    "312",
-		AccountType:   "1",
-		AccountNumber: "1234567",
-		AccountName:   "タナカタロウ",
+	req := &DepositRegistrationRequest{
+		DepositID: "depositID",
+		BankID:    "bankID",
+		Method:    DepositRegistrationMethodRegister,
+		Amount:    "1000",
 	}
-	result, err := cli.AccountRegistration(req)
+	result, err := cli.DepositRegistration(req)
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, result)
 }

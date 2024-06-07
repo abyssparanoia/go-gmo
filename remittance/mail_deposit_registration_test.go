@@ -33,6 +33,7 @@ func TestMailDepositRegistration(t *testing.T) {
 
 	cli, _ := NewClient("shopID", "shopPass", false)
 	cli.APIHost = apiHostTest
+	cli.SetHTTPClient(http.DefaultClient)
 	req := &MailDepositRegistrationRequest{
 		Method:                 "1",
 		DepositID:              "depositID",
