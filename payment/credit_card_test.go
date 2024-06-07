@@ -29,8 +29,7 @@ func TestSaveCard(t *testing.T) {
 	}
 	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
-	cli.APIHost = apiHostTest
+	cli := newTestClient()
 	req := &SaveCardRequest{
 		MemberID:     "memberID",
 		SeqMode:      "1",
@@ -61,8 +60,7 @@ func TestTradedCard(t *testing.T) {
 	}
 	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
-	cli.APIHost = apiHostTest
+	cli := newTestClient()
 	req := &TradedCardRequest{
 		OrderID:  "orderID",
 		MemberID: "memberID",
@@ -90,8 +88,7 @@ func TestDeleteCard(t *testing.T) {
 	}
 	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
-	cli.APIHost = apiHostTest
+	cli := newTestClient()
 	req := &DeleteCardRequest{
 		MemberID: "memberID",
 		CardSeq:  "0001",
@@ -128,8 +125,7 @@ func TestSearchCard(t *testing.T) {
 	}
 	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
-	cli.APIHost = apiHostTest
+	cli := newTestClient()
 	req := &SearchCardRequest{
 		MemberID: "memberID",
 	}
