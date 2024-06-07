@@ -30,8 +30,7 @@ func TestEntryTran(t *testing.T) {
 	}
 	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
-	cli.APIHost = apiHostTest
+	cli := newTestClient()
 	req := &EntryTranRequest{
 		OrderID:  "orderID",
 		JobCD:    JobCDAuth,
@@ -63,8 +62,7 @@ func TestExecTran(t *testing.T) {
 	}
 	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
-	cli.APIHost = apiHostTest
+	cli := newTestClient()
 	req := &ExecTranRequest{
 		AccessID:   "accessID",
 		AccessPass: "accessPass",
@@ -97,8 +95,7 @@ func TestExecTranWithToken(t *testing.T) {
 	}
 	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
-	cli.APIHost = apiHostTest
+	cli := newTestClient()
 	req := &ExecTranRequestWithToken{
 		AccessID:   "accessID",
 		AccessPass: "accessPass",
@@ -130,8 +127,7 @@ func TestAlterTran(t *testing.T) {
 	}
 	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
-	cli.APIHost = apiHostTest
+	cli := newTestClient()
 	req := &AlterTranRequest{
 		AccessID:   "accessID",
 		AccessPass: "accessPass",
@@ -162,8 +158,7 @@ func TestChangeAlterTran(t *testing.T) {
 	}
 	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-	cli, _ := NewClient("siteID", "sitePass", "shopID", "shopPass", false)
-	cli.APIHost = apiHostTest
+	cli := newTestClient()
 	req := &ChangeTranRequest{
 		AccessID:   "accessID",
 		AccessPass: "accessPass",
