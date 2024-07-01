@@ -113,3 +113,32 @@ func TestPostpayShippedTran(t *testing.T) {
 	result, _ := cli.PostpayShippedTran(req)
 	assert.Equal(t, expected, result)
 }
+
+func TestPostpayCancelTran(t *testing.T) {
+
+	expected := &PostpayCancelTranResponse{
+		OrderID: "orderID",
+	}
+
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		form := url.Values{}
+		_ = parser.Encoder().Encode(expected, form)
+		w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
+		w.Write([]byte(form.Encode()))
+	}))
+	defer ts.Close()
+	defaultProxy := http.DefaultTransport.(*http.Transport).Proxy
+	http.DefaultTransport.(*http.Transport).Proxy = func(req *http.Request) (*url.URL, error) {
+		return url.Parse(ts.URL)
+	}
+	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
+
+	cli := newTestClient()
+	req := &PostpayCancelTranRequest{
+		AccessID:   "accessID",
+		AccessPass: "accessPass",
+		OrderID:    "orderID",
+	}
+	result, _ := cli.PostpayCancelTran(req)
+	assert.Equal(t, expected, result)
+}
