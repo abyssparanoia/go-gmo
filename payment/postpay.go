@@ -158,3 +158,34 @@ func (cli *Client) PostpayShippedTran(
 	}
 	return res, nil
 }
+
+type PostpayCancelTranRequest struct {
+	AccessID   string `schema:"AccessID" validate:"required"`
+	AccessPass string `schema:"AccessPass" validate:"required"`
+	OrderID    string `schema:"OrderID" validate:"required"`
+}
+
+func (r *PostpayCancelTranRequest) Validate() error {
+	return validate.Struct(r)
+}
+
+type PostpayCancelTranResponse struct {
+	OrderID string           `schema:"OrderID,omitempty"`
+	Status  TradeMultiStatus `schema:"Status,omitempty"`
+	ErrCode string           `schema:"ErrCode,omitempty"`
+	ErrInfo string           `schema:"ErrInfo,omitempty"`
+}
+
+func (cli *Client) PostpayCancelTran(
+	req *PostpayCancelTranRequest,
+) (*PostpayCancelTranResponse, error) {
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
+	res := &PostpayCancelTranResponse{}
+	_, err := cli.do(postpayCancelTranPath, req, res)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
