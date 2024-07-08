@@ -39,7 +39,7 @@ func NewClient(
 			Timeout: 5 * time.Second, // limitation of the request time
 			Transport: &http.Transport{
 				DialContext: (&net.Dialer{
-					Timeout: time.Second, // limitation of the dial time
+					Timeout: 5 * time.Second, // limitation of the dial time
 				}).DialContext,
 				TLSClientConfig: &tls.Config{
 					MinVersion: tls.VersionTLS12,
