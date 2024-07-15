@@ -9,8 +9,6 @@ import (
 	"testing"
 
 	"gopkg.in/go-playground/assert.v1"
-
-	"github.com/bxcodec/faker"
 )
 
 func TestGetTransferStatus(
@@ -86,7 +84,8 @@ func TestGetTransferStatus(
 			}
 			defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-			cli, _ := NewClient(APIHostTypeTest)
+			cli := newTestClient(APIHostTypeTest)
+			cli.SetHTTPClient(http.DefaultClient)
 			result, err := cli.GetTransferStatus(context.TODO(), tc.request)
 			assert.Equal(t, nil, err)
 			assert.Equal(t, expected, result)
@@ -146,7 +145,7 @@ func TestTransferRequest(
 			}
 			defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-			cli, _ := NewClient(APIHostTypeTest)
+			cli := newTestClient(APIHostTypeTest)
 			result, err := cli.TransferRequest(context.TODO(), tc.request)
 			assert.Equal(t, nil, err)
 			assert.Equal(t, expected, result)
@@ -186,7 +185,7 @@ func TestGetRequestResult(
 			}
 			defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-			cli, _ := NewClient(APIHostTypeTest)
+			cli := newTestClient(APIHostTypeTest)
 			result, err := cli.GetRequestResult(context.TODO(), tc.request)
 			assert.Equal(t, nil, err)
 			assert.Equal(t, expected, result)
@@ -267,7 +266,7 @@ func TestBulkTransferStatus(
 			}
 			defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-			cli, _ := NewClient(APIHostTypeTest)
+			cli := newTestClient(APIHostTypeTest)
 			result, err := cli.GetBulkTransferStatus(context.TODO(), tc.request)
 			assert.Equal(t, nil, err)
 			assert.Equal(t, expected, result)
@@ -327,7 +326,7 @@ func TestBulkTransferRequest(
 			}
 			defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-			cli, _ := NewClient(APIHostTypeTest)
+			cli := newTestClient(APIHostTypeTest)
 			result, err := cli.BulkTransferRequest(context.TODO(), tc.request)
 			assert.Equal(t, nil, err)
 			assert.Equal(t, expected, result)
@@ -367,18 +366,10 @@ func TestGetBulkTransferRequestResult(
 			}
 			defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
 
-			cli, _ := NewClient(APIHostTypeTest)
+			cli := newTestClient(APIHostTypeTest)
 			result, err := cli.GetBulkTransferRequestResult(context.TODO(), tc.request)
 			assert.Equal(t, nil, err)
 			assert.Equal(t, expected, result)
 		})
 	}
-}
-
-func fakeData[T any]() *T {
-	ret := new(T)
-	if err := faker.FakeData(ret); err != nil {
-		panic(err)
-	}
-	return ret
 }

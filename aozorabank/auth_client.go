@@ -2,6 +2,7 @@ package aozorabank
 
 import (
 	"bytes"
+	"crypto/tls"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
@@ -53,6 +54,12 @@ func NewAuthClient(
 	return &AuthClient{
 		cli: &http.Client{
 			Timeout: time.Second * 30,
+			Transport: &http.Transport{
+				TLSClientConfig: &tls.Config{
+					MinVersion:   tls.VersionTLS12,
+					CipherSuites: []uint16{tls.TLS_RSA_WITH_AES_128_GCM_SHA256},
+				},
+			},
 		},
 		clientID:     clientID,
 		clientSecret: clientSecret,
@@ -60,6 +67,9 @@ func NewAuthClient(
 	}, nil
 }
 
+func (c *AuthClient) SetHTTPClient(httpClient *http.Client) {
+	c.cli = httpClient
+}
 func (c *AuthClient) doPost(
 	path string,
 	clientSecretType ClientSecretType,

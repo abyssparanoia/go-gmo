@@ -14,7 +14,7 @@ import (
 func Test_AuthClient_doPost(t *testing.T) {
 	clientID := "client_id"
 	clientSecret := "client_secret"
-	client, _ := NewAuthClient(
+	client := newTestAuthClient(
 		clientID,
 		clientSecret,
 		APIHostTypeTest,
@@ -86,7 +86,7 @@ func Test_AuthClient_doGet(t *testing.T) {
 	clientID := "client_id"
 	clientSecret := "client_secret"
 	accessToken := "access_token"
-	client, _ := NewAuthClient(
+	client := newTestAuthClient(
 		clientID,
 		clientSecret,
 		APIHostTypeTest,
@@ -159,7 +159,7 @@ func Test_unmarshalError(t *testing.T) {
 
 	clientID := "client_id"
 	clientSecret := "client_secret"
-	client, _ := NewAuthClient(
+	client := newTestAuthClient(
 		clientID,
 		clientSecret,
 		APIHostTypeTest,

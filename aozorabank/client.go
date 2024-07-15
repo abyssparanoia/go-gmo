@@ -2,6 +2,7 @@ package aozorabank
 
 import (
 	"bytes"
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -40,6 +41,12 @@ func NewClient(
 	return &Client{
 		cli: &http.Client{
 			Timeout: time.Second * 30,
+			Transport: &http.Transport{
+				TLSClientConfig: &tls.Config{
+					MinVersion:   tls.VersionTLS12,
+					CipherSuites: []uint16{tls.TLS_RSA_WITH_AES_128_GCM_SHA256},
+				},
+			},
 		},
 		apiHost: apiHost,
 	}, nil
