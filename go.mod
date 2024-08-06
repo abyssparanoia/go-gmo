@@ -14,7 +14,7 @@ require (
 	github.com/stretchr/testify v1.9.0
 	github.com/tomtwinkle/garbledreplacer v0.2.0
 	golang.org/x/crypto v0.25.0
-	golang.org/x/text v0.16.0
+	golang.org/x/text v0.17.0
 	gopkg.in/go-playground/assert.v1 v1.2.1
 )
 
