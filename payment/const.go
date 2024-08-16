@@ -90,6 +90,8 @@ const (
 	TradeMultiStatusReqSuccess TradeMultiStatus = "REQSUCCESS"
 	// TradeMultiStatusAuthProcess ... auth process
 	TradeMultiStatusAuthProcess TradeMultiStatus = "AUTHPROCESS"
+	// TradeMultiStatusAuthenticated ... authenticated
+	TradeMultiStatusAuthenticated TradeMultiStatus = "AUTHENTICATED"
 	// TradeMultiStatusAuth ... auth
 	TradeMultiStatusAuth TradeMultiStatus = "AUTH"
 	// TradeMultiStatusTrading ... proccessing
