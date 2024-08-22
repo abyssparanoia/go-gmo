@@ -15,7 +15,6 @@ require (
 	github.com/tomtwinkle/garbledreplacer v0.2.0
 	golang.org/x/crypto v0.26.0
 	golang.org/x/text v0.17.0
-	gopkg.in/go-playground/assert.v2 v2.2.0
 )
 
 require (
