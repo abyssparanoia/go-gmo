@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/abyssparanoia/go-gmo/internal/pkg/parser"
-	"gopkg.in/go-playground/assert.v1"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestClient_ConvenienceStoreEntryTran(t *testing.T) {
