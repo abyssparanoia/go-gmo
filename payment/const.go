@@ -33,6 +33,7 @@ const (
 	postpayEntryTranPath          = "payment/EntryTranPostpay.idPass"
 	postpayExecTranPath           = "payment/ExecTranPostpay.idPass"
 	postpayShippedTranPath        = "payment/PostpayShipping.idPass"
+	postpayChangeTranPath         = "payment/PostpayChange.idPass"
 	postpayCancelTranPath         = "payment/PostpayCancel.idPass"
 	linkPlusGetUrlPaymentPath     = "payment/GetLinkplusUrlPayment.json"
 )

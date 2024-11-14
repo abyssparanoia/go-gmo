@@ -1,6 +1,7 @@
 package payment
 
 import (
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -111,6 +112,50 @@ func TestPostpayShippedTran(t *testing.T) {
 		SlipNo:        "1234567890",
 	}
 	result, _ := cli.PostpayShippedTran(req)
+	assert.Equal(t, expected, result)
+}
+
+func TestPostpayChangeTran(t *testing.T) {
+	expected := &PostpayChangeTranResponse{
+		OrderID: "orderID",
+	}
+
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		form := url.Values{}
+		_ = parser.Encoder().Encode(expected, form)
+		w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
+		w.Write([]byte(form.Encode()))
+	}))
+	defer ts.Close()
+	defaultProxy := http.DefaultTransport.(*http.Transport).Proxy
+	http.DefaultTransport.(*http.Transport).Proxy = func(req *http.Request) (*url.URL, error) {
+		return url.Parse(ts.URL)
+	}
+	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
+
+	cli := newTestClient()
+	req := &PostpayChangeTranRequest{
+		AccessID:            "accessID",
+		AccessPass:          "accessPass",
+		OrderID:             "orderID",
+		Amount:              1000,
+		CustomerOrderDate:   "20201224",
+		CustomerName:        "決済太郎",
+		CustomerNameKana:    "ケッサイタロウ",
+		CustomerZipCode:     "1000000",
+		CustomerAddress:     "東京都",
+		CustomerTel1:        "09011111111",
+		CustomerEmail1:      "sample1@test.com",
+		CustomerPaymentType: PostpayCustomerPaymentTypeInvoiceSentSeparately,
+		CustomerID:          "testid",
+		DetailName:          "商品名",
+		DetailPrice:         1000,
+		DetailQuantity:      1,
+		DetailBrand:         "ブランド",
+		DetailCategory:      "カテゴリ",
+	}
+	result, err := cli.PostpayChangeTran(req)
+	fmt.Println(err)
 	assert.Equal(t, expected, result)
 }
 
