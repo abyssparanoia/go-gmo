@@ -13,7 +13,7 @@ require (
 	github.com/pkg/sftp v1.13.7
 	github.com/stretchr/testify v1.10.0
 	github.com/tomtwinkle/garbledreplacer v0.2.0
-	golang.org/x/crypto v0.30.0
+	golang.org/x/crypto v0.31.0
 	golang.org/x/text v0.21.0
 )
 
