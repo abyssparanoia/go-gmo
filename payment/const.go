@@ -10,6 +10,7 @@ const (
 	execTranPath                  = "payment/ExecTran.idPass"
 	alterTranPath                 = "payment/AlterTran.idPass"
 	changeTranPath                = "payment/ChangeTran.idPass"
+	secureTran2Path               = "payment/SecureTran2.idPass"
 	saveMemberPath                = "payment/SaveMember.idPass"
 	updateMemberPath              = "payment/UpdateMember.idPass"
 	deleteMemberPath              = "payment/DeleteMember.idPass"
@@ -263,4 +264,17 @@ const (
 	LinkPlusLangJP LinkPlusLang = "ja"
 	LinkPlusLangEN LinkPlusLang = "en"
 	LinkPlusLangZH LinkPlusLang = "zh"
+)
+
+type SecureTran2CallbackType string
+
+const (
+	SecureTran2CallbackTypePost SecureTran2CallbackType = "1"
+	SecureTran2CallbackTypeGet  SecureTran2CallbackType = "3"
+)
+
+type TDFlag int
+
+const (
+	TDFlagEnabled TDFlag = 2
 )
