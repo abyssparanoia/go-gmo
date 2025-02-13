@@ -168,3 +168,31 @@ func TestChangeAlterTran(t *testing.T) {
 	result, _ := cli.ChangeTran(req)
 	assert.Equal(t, expected, result)
 }
+
+func TestSecureTran2(t *testing.T) {
+
+	expected := &SecureTran2Response{
+		OrderID: "orderID",
+	}
+
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		form := url.Values{}
+		_ = parser.Encoder().Encode(expected, form)
+		w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
+		w.Write([]byte(form.Encode()))
+	}))
+	defer ts.Close()
+	defaultProxy := http.DefaultTransport.(*http.Transport).Proxy
+	http.DefaultTransport.(*http.Transport).Proxy = func(req *http.Request) (*url.URL, error) {
+		return url.Parse(ts.URL)
+	}
+	defer func() { http.DefaultTransport.(*http.Transport).Proxy = defaultProxy }()
+
+	cli := newTestClient()
+	req := &SecureTran2Request{
+		AccessID:   "accessID",
+		AccessPass: "accessPass",
+	}
+	result, _ := cli.SecureTran2(req)
+	assert.Equal(t, expected, result)
+}
