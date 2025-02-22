@@ -12,6 +12,7 @@ import (
 
 	"github.com/abyssparanoia/go-gmo/internal/pkg/parser"
 	"github.com/abyssparanoia/go-gmo/internal/pkg/shiftjis_transformer"
+	"moul.io/http2curl"
 )
 
 // Client ... gmo pg payment API client
@@ -22,6 +23,7 @@ type Client struct {
 	ShopID     string
 	ShopPass   string
 	APIHost    string
+	Debug      bool
 }
 
 // NewClient ... new client
@@ -71,6 +73,10 @@ func (c *Client) SetHTTPClient(httpClient *http.Client) {
 	c.HTTPClient = httpClient
 }
 
+func (c *Client) SetDebug(debug bool) {
+	c.Debug = debug
+}
+
 type baseRequestBody struct {
 	SiteID   string `schema:"SiteID,omitempty"`
 	SitePass string `schema:"SitePass,omitempty"`
@@ -116,6 +122,16 @@ func (c *Client) do(
 	}
 
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+	curl, err := http2curl.GetCurlCommand(req)
+	if err != nil {
+		return nil, err
+	}
+
+	if c.Debug {
+		fmt.Println(curl.String())
+	}
+
 	resp, err := c.HTTPClient.Do(req)
 	if err != nil {
 		return nil, err
@@ -127,14 +143,28 @@ func (c *Client) do(
 		return nil, err
 	}
 
+	if c.Debug {
+		fmt.Println("response.body", string(bodyBytes))
+	}
+
 	bodyBytes, err = shiftjis_transformer.DecodeToUTF8FromShiftJIS(bodyBytes)
 	if err != nil {
 		return nil, err
 	}
 
-	q, err := url.ParseQuery(string(bodyBytes))
+	bodyString := string(bodyBytes)
+
+	q, err := url.ParseQuery(bodyString)
 	if err != nil {
 		return nil, err
+	}
+
+	// NOTE:
+	// レスポンスにURLが含まれている場合、&などのパラメータが抜け落ちてしまう可能性が高いので
+	//　個別にparseして、URLを追加する
+	splitedBody := strings.Split(bodyString, "RedirectUrl=")
+	if len(splitedBody) > 1 {
+		q.Set("RedirectUrl", splitedBody[1])
 	}
 
 	err = parser.Decoder().Decode(respBody, q)

@@ -116,8 +116,9 @@ type ExecTranWith3DSecureRequest struct {
 	ClientField3 string `schema:"ClientField3,omitempty"`
 
 	// parameters for 3D Secure
-	RetURL       string                  `schema:"RetURL,omitempty" validate:"required"`
-	CallbackType SecureTran2CallbackType `schema:"CallbackType,omitempty"`
+	RetURL               string                  `schema:"RetUrl,omitempty" validate:"required"`
+	CallbackType         SecureTran2CallbackType `schema:"CallbackType,omitempty"`
+	TDS2ChallengeIndType TDS2ChallengeIndType    `schema:"Tds2ChallengeIndType,omitempty"`
 }
 
 func (r *ExecTranWith3DSecureRequest) Validate() error {
@@ -126,17 +127,6 @@ func (r *ExecTranWith3DSecureRequest) Validate() error {
 
 type ExecTranWith3DSecureResponse struct {
 	ACS         string `schema:"ACS"`
-	OrderID     string `schema:"OrderID"`
-	Forward     string `schema:"forward"`
-	Method      string `schema:"Method"`
-	PayTimes    string `schema:"PayTimes"`
-	Approve     string `schema:"Approve"`
-	TranID      string `schema:"TranID"`
-	TranDate    string `schema:"TranDate"`
-	CheckString string `schema:"CheckString"`
-	ACSUrl      string `schema:"ACSUrl"`
-	PaReq       string `schema:"PaReq"`
-	MD          string `schema:"MD"`
 	RedirectURL string `schema:"RedirectURL"`
 	ErrCode     string `schema:"ErrCode,omitempty"`
 	ErrInfo     string `schema:"ErrInfo,omitempty"`

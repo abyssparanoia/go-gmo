@@ -15,6 +15,7 @@ require (
 	github.com/tomtwinkle/garbledreplacer v0.2.0
 	golang.org/x/crypto v0.33.0
 	golang.org/x/text v0.22.0
+	moul.io/http2curl v1.0.0
 )
 
 require (
@@ -25,6 +26,7 @@ require (
 	github.com/kr/fs v0.1.0 // indirect
 	github.com/leodido/go-urn v1.4.0 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
+	github.com/smartystreets/goconvey v1.8.1 // indirect
 	golang.org/x/net v0.34.0 // indirect
 	golang.org/x/sys v0.30.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
