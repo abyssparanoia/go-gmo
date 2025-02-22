@@ -278,3 +278,10 @@ type TDFlag int
 const (
 	TDFlagEnabled TDFlag = 2
 )
+
+type TDS2ChallengeIndType string
+
+const (
+	TDS2ChallengeIndTypeRequired    TDS2ChallengeIndType = "1"
+	TDS2ChallengeIndTypeNotRequired TDS2ChallengeIndType = "2"
+)
