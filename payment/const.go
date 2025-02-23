@@ -11,6 +11,7 @@ const (
 	alterTranPath                 = "payment/AlterTran.idPass"
 	changeTranPath                = "payment/ChangeTran.idPass"
 	secureTran2Path               = "payment/SecureTran2.idPass"
+	tds2ResultPath                = "payment/Tds2Result.idPass"
 	saveMemberPath                = "payment/SaveMember.idPass"
 	updateMemberPath              = "payment/UpdateMember.idPass"
 	deleteMemberPath              = "payment/DeleteMember.idPass"
@@ -284,4 +285,43 @@ type TDS2ChallengeIndType string
 const (
 	TDS2ChallengeIndTypeRequired    TDS2ChallengeIndType = "1"
 	TDS2ChallengeIndTypeNotRequired TDS2ChallengeIndType = "2"
+)
+
+type TDS2TransResult string
+
+const (
+	TDS2TransResultY TDS2TransResult = "Y" // 認証／カード番号確認に成功
+	TDS2TransResultA TDS2TransResult = "A" // 処理の試行が実施された
+	TDS2TransResultN TDS2TransResult = "N" // 未認証／カード番号未確認。取引拒否
+	TDS2TransResultU TDS2TransResult = "U" // 認証／カード番号確認を実行できなかった
+	TDS2TransResultR TDS2TransResult = "R" // 認証 / カード番号確認が拒否された
+)
+
+type TDS2TransResultReason string
+
+const (
+	TDS2TransResultReasonCardAuthenticationFailed             TDS2TransResultReason = "01" // カード認証に失敗した
+	TDS2TransResultReasonUnknownDevice                        TDS2TransResultReason = "02" // 不明なデバイス
+	TDS2TransResultReasonUnsupportedDevice                    TDS2TransResultReason = "03" // サポートされていないデバイス
+	TDS2TransResultReasonAuthenticationFrequencyExceeded      TDS2TransResultReason = "04" // 認証頻度の上限を超えた
+	TDS2TransResultReasonExpiredCard                          TDS2TransResultReason = "05" // 有効期限切れのカード
+	TDS2TransResultReasonInvalidCardNumber                    TDS2TransResultReason = "06" // 無効なカード番号
+	TDS2TransResultReasonInvalidTransaction                   TDS2TransResultReason = "07" // 無効な取引
+	TDS2TransResultReasonInvalidRecord                        TDS2TransResultReason = "08" // 無効なレコード
+	TDS2TransResultReasonTechnicalProblem                     TDS2TransResultReason = "09" // 技術的な問題
+	TDS2TransResultReasonStolenCard                           TDS2TransResultReason = "10" // 盗難カード
+	TDS2TransResultReasonFraudSuspicion                       TDS2TransResultReason = "11" // 不正の疑い
+	TDS2TransResultReasonCardMemberNotPermitted               TDS2TransResultReason = "12" // カード会員に取引が許可されていない
+	TDS2TransResultReasonCardMemberNotRegistered              TDS2TransResultReason = "13" // カード会員がサービスに登録されていない
+	TDS2TransResultReasonACSExpired                           TDS2TransResultReason = "14" // ACSの最大チャレンジを超える
+	TDS2TransResultReasonLowTrust                             TDS2TransResultReason = "15" // 信頼度が低い
+	TDS2TransResultReasonMediumTrust                          TDS2TransResultReason = "16" // 信頼度が中程度
+	TDS2TransResultReasonHighTrust                            TDS2TransResultReason = "17" // 信頼度が高い
+	TDS2TransResultReasonVeryHighTrust                        TDS2TransResultReason = "18" // 信頼度が非常に高い
+	TDS2TransResultReasonACSMaxChallengeExceeded              TDS2TransResultReason = "19" // ACSの最大チャレンジを超える
+	TDS2TransResultReasonNonSettlementTransactionNotSupported TDS2TransResultReason = "20" // 非決済取引はサポートされていません
+	TDS2TransResultReason3RITransactionNotSupported           TDS2TransResultReason = "21" // 3RIトランザクションはサポートされていません
+	TDS2TransResultReasonACSTechnicalProblem                  TDS2TransResultReason = "22" // ACSの技術的な問題
+	TDS2TransResultReasonAuthenticationNotPerformed           TDS2TransResultReason = "26" // 認証は試行されましたが、カード会員によって実行されませんでした
+	TDS2TransResultReasonOther                                TDS2TransResultReason = "80" // その他
 )
