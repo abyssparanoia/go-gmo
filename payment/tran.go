@@ -260,6 +260,36 @@ func (cli *Client) ChangeTran(
 	return res, nil
 }
 
+type TDS2ResultRequest struct {
+	AccessID   string `schema:"AccessID" validate:"required"`
+	AccessPass string `schema:"AccessPass" validate:"required"`
+}
+
+type TDS2ResultResponse struct {
+	Tds2TransResult       TDS2TransResult       `schema:"Tds2TransResult"`
+	Tds2TransResultReason TDS2TransResultReason `schema:"Tds2TransResultReason"`
+	ErrCode               string                `schema:"ErrCode,omitempty"`
+	ErrInfo               string                `schema:"ErrInfo,omitempty"`
+}
+
+func (r *TDS2ResultRequest) Validate() error {
+	return validate.Struct(r)
+}
+
+func (cli *Client) TDS2Result(
+	req *TDS2ResultRequest,
+) (*TDS2ResultResponse, error) {
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
+	res := &TDS2ResultResponse{}
+	_, err := cli.do(tds2ResultPath, req, res)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+
 type SecureTran2Request struct {
 	AccessID   string `schema:"AccessID" validate:"required"`
 	AccessPass string `schema:"AccessPass" validate:"required"`
