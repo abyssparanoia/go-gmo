@@ -18,6 +18,7 @@ require (
 	golang.org/x/crypto v0.36.0
 	golang.org/x/text v0.23.0
 	moul.io/http2curl v1.0.0
+	moul.io/http2curl/v2 v2.3.0
 )
 
 require (
