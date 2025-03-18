@@ -101,19 +101,11 @@ type ExecTranResponse struct {
 }
 
 type ExecTranWith3DSecureRequest struct {
-	AccessID     string `schema:"AccessID" validate:"required"`
-	AccessPass   string `schema:"AccessPass" validate:"required"`
-	OrderID      string `schema:"OrderID" validate:"required,lte=27"`
-	Method       string `schema:"Method,omitempty"`
-	PayTimes     int    `schema:"PayTimes"`
-	MemberID     string `schema:"MemberID" validate:"required"`
-	SeqMode      string `schema:"SeqMode" validate:"required,len=1"`
-	CardSeq      int    `schema:"CardSeq" validate:"lte=9999"`
-	CardPass     string `schema:"CardPass"`
-	SecurityCode string `schema:"SecurityCode"`
-	ClientField1 string `schema:"ClientField1,omitempty"`
-	ClientField2 string `schema:"ClientField2,omitempty"`
-	ClientField3 string `schema:"ClientField3,omitempty"`
+	AccessID   string `schema:"AccessID" validate:"required"`
+	AccessPass string `schema:"AccessPass" validate:"required"`
+	OrderID    string `schema:"OrderID" validate:"required,lte=27"`
+	TokenType  string `schema:"TokenType,omitempty"`
+	Token      string `schema:"Token" validate:"required"`
 
 	// parameters for 3D Secure
 	RetURL               string                  `schema:"RetUrl,omitempty" validate:"required"`
