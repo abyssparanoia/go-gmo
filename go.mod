@@ -16,7 +16,7 @@ require (
 	github.com/stretchr/testify v1.10.0
 	github.com/tomtwinkle/garbledreplacer v0.2.0
 	golang.org/x/crypto v0.39.0
-	golang.org/x/text v0.26.0
+	golang.org/x/text v0.28.0
 	moul.io/http2curl v1.0.0
 	moul.io/http2curl/v2 v2.3.0
 )
