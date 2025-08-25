@@ -15,8 +15,8 @@ require (
 	github.com/pkg/sftp v1.13.9
 	github.com/stretchr/testify v1.10.0
 	github.com/tomtwinkle/garbledreplacer v0.2.0
-	golang.org/x/crypto v0.39.0
-	golang.org/x/text v0.26.0
+	golang.org/x/crypto v0.41.0
+	golang.org/x/text v0.28.0
 	moul.io/http2curl v1.0.0
 	moul.io/http2curl/v2 v2.3.0
 )
@@ -30,7 +30,7 @@ require (
 	github.com/leodido/go-urn v1.4.0 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/smartystreets/goconvey v1.8.1 // indirect
-	golang.org/x/net v0.34.0 // indirect
-	golang.org/x/sys v0.33.0 // indirect
+	golang.org/x/net v0.42.0 // indirect
+	golang.org/x/sys v0.35.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
