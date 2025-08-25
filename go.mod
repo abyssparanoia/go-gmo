@@ -17,7 +17,7 @@ require (
 	github.com/tomtwinkle/garbledreplacer v0.2.0
 	golang.org/x/crypto v0.41.0
 	golang.org/x/text v0.28.0
-	moul.io/http2curl v1.0.0
+	moul.io/http2curl/v2 v2.3.0
 	moul.io/http2curl/v2 v2.3.0
 )
 
