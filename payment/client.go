@@ -1,7 +1,10 @@
 package payment
 
 import (
+	"bytes"
 	"crypto/tls"
+	"encoding/base64"
+	"encoding/json"
 	"fmt"
 	"io"
 	"net"
@@ -17,14 +20,15 @@ import (
 
 // Client ... gmo pg payment API client
 type Client struct {
-	HTTPClient *http.Client
-	SiteID     string
-	SitePass   string
-	ShopID     string
-	ShopPass   string
-	APIHost    string
-	SandBox    bool
-	Debug      bool
+	HTTPClient  *http.Client
+	SiteID      string
+	SitePass    string
+	ShopID      string
+	ShopPass    string
+	APIHost     string
+	OpenAPIHost string
+	SandBox     bool
+	Debug       bool
 }
 
 // NewClient ... new client
@@ -40,6 +44,13 @@ func NewClient(
 		apiHost = apiHostSandbox
 	} else {
 		apiHost = apiHostProduction
+	}
+
+	var openAPIHost string
+	if sandBox {
+		openAPIHost = apiHostOpenAPISandbox
+	} else {
+		openAPIHost = apiHostOpenAPIProduction
 	}
 
 	return &Client{
@@ -62,12 +73,13 @@ func NewClient(
 				MaxIdleConnsPerHost:   100,              // limitation of the max idle connections per host
 			},
 		},
-		SiteID:   siteID,
-		SitePass: sitePass,
-		ShopID:   shopID,
-		ShopPass: shopPass,
-		APIHost:  apiHost,
-		SandBox:  sandBox,
+		SiteID:      siteID,
+		SitePass:    sitePass,
+		ShopID:      shopID,
+		ShopPass:    shopPass,
+		APIHost:     apiHost,
+		OpenAPIHost: openAPIHost,
+		SandBox:     sandBox,
 	}, nil
 }
 
@@ -180,4 +192,67 @@ func (c *Client) do(
 	}
 
 	return resp, nil
+}
+
+func (c *Client) doOpenAPI(
+	path string,
+	jsonReq interface{},
+	respBody interface{},
+	errRespBody interface{},
+) (*http.Response, error) {
+	jsonReqBytes, err := json.Marshal(jsonReq)
+	if err != nil {
+		return nil, fmt.Errorf("failed to marshal json request: %w", err)
+	}
+
+	httpReq, err := http.NewRequest(
+		http.MethodPost,
+		fmt.Sprintf("%s/%s", c.OpenAPIHost, path),
+		bytes.NewBuffer(jsonReqBytes),
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create http request: %w", err)
+	}
+
+	httpReq.Header.Set("Content-Type", "application/json;charset=UTF-8")
+
+	authotizationToken := base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%s:%s", c.ShopID, c.ShopPass)))
+	httpReq.Header.Set("Authorization", fmt.Sprintf("Basic %s", authotizationToken))
+
+	if c.Debug {
+		curl, err := http2curl.GetCurlCommand(httpReq)
+		if err != nil {
+			return nil, fmt.Errorf("failed to get curl command: %w", err)
+		}
+		fmt.Println(curl.String())
+	}
+
+	httpRes, err := c.HTTPClient.Do(httpReq)
+	if err != nil {
+		return nil, fmt.Errorf("failed to do http request: %w", err)
+	}
+
+	bodyBytes, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read response body: %w", err)
+	}
+
+	if httpRes.StatusCode >= 300 {
+		err = json.Unmarshal(bodyBytes, errRespBody)
+		if err != nil {
+			return nil, fmt.Errorf("failed to unmarshal error response body: %w", err)
+		}
+		return httpRes, nil
+	}
+
+	if httpRes.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("failed to do http request: %w", err)
+	}
+
+	err = json.Unmarshal(bodyBytes, respBody)
+	if err != nil {
+		return nil, fmt.Errorf("failed to unmarshal response body: %w", err)
+	}
+
+	return httpRes, nil
 }
