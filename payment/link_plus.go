@@ -206,10 +206,13 @@ func (cli *Client) GetLinkPlusURL(req *GetLinkPlusURLRequest) (*GetLinkPlusURLRe
 		return nil, err
 	}
 
-	smsTelno := req.SMSTelno
-	// for sandbox, add 0000 to the end of the sms telno
-	if cli.SandBox {
-		smsTelno = fmt.Sprintf("%s%s", smsTelno, "0000")
+	var smsTelno string
+	if req.SMSTelno != "" {
+		smsTelno = req.SMSTelno
+		// for sandbox, add 0000 to the end of the sms telno
+		if cli.SandBox {
+			smsTelno = fmt.Sprintf("%s%s", smsTelno, "0000")
+		}
 	}
 
 	jsonReq := &getLinkPlusURLRequestJSON{
@@ -315,7 +318,7 @@ func (cli *Client) GetLinkPlusURL(req *GetLinkPlusURLRequest) (*GetLinkPlusURLRe
 		return nil, err
 	}
 
-	// まず配列としてエラーレスポンスを試す
+	// first, try to unmarshal as an array of error responses
 	var errorResponses []getLinkPlusURLErrorResponseJSON
 	if err := json.Unmarshal(bodyBytes, &errorResponses); err == nil && len(errorResponses) > 0 {
 		// エラーレスポンスの場合、全てのエラー情報を結合
