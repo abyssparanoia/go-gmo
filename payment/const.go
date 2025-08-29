@@ -38,6 +38,12 @@ const (
 	postpayChangeTranPath         = "payment/PostpayChange.idPass"
 	postpayCancelTranPath         = "payment/PostpayCancel.idPass"
 	linkPlusGetUrlPaymentPath     = "payment/GetLinkplusUrlPayment.json"
+
+	// for openapi type
+	apiHostOpenAPISandbox    = "https://stg.openapi.mul-pay.jp"
+	apiHostOpenAPIProduction = "https://openapi.mul-pay.jp"
+	apiHostOpenAPITest       = "http://stg.openapi.mul-pay.jp"
+	inquiryOrderPath         = "order/inquiry"
 )
 
 // ResultEntryBankAccountStatus ... entry bank account status

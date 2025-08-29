@@ -5,7 +5,7 @@ import "github.com/abyssparanoia/go-gmo/internal/pkg/validate"
 // SearchTradeMultiRequest ... search trade multi requst
 type SearchTradeMultiRequest struct {
 	OrderID string  `schema:"OrderID" validate:"required"`
-	PayType PayType `schema:"PayType" validate:"required"`
+	PayType PayType `schema:"PayType,omitempty"`
 }
 
 // Validate ... validate
