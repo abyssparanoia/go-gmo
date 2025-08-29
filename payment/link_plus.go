@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strings"
 
 	"github.com/abyssparanoia/go-gmo/internal/pkg/validate"
 )
@@ -20,7 +21,7 @@ type GetLinkPlusURLRequest struct {
 	SendMailName            string
 	TemplateNo              string
 	GuideSmsSendFlag        int
-	SMSTelno                int
+	SMSTelno                string
 	AuthenticationQuestion1 string
 	AuthenticationAnswer1   string
 	AuthenticationQuestion2 string
@@ -118,7 +119,7 @@ type getLinkPlusURLRequestJSONGetURLParam struct {
 	CustomerName            string `json:"CustomerName,omitempty"`
 	TemplateNo              string `json:"TemplateNo,omitempty"`
 	GuideSmsSendFlag        int    `json:"GuideSmsSendFlag,omitempty"`
-	SMSTelno                int    `json:"SMSTelno,omitempty"`
+	SMSTelno                string `json:"SMSTelno,omitempty"`
 	AuthenticationQuestion1 string `json:"AuthenticationQuestion1,omitempty"`
 	AuthenticationAnswer1   string `json:"AuthenticationAnswer1,omitempty"`
 	AuthenticationQuestion2 string `json:"AuthenticationQuestion2,omitempty"`
@@ -194,9 +195,21 @@ type getLinkPlusURLResponseJSONWarnList struct {
 	WarnInfo string `json:"warnInfo"`
 }
 
+// エラーレスポンス用の構造体
+type getLinkPlusURLErrorResponseJSON struct {
+	ErrCode string `json:"errCode"`
+	ErrInfo string `json:"errInfo"`
+}
+
 func (cli *Client) GetLinkPlusURL(req *GetLinkPlusURLRequest) (*GetLinkPlusURLResponse, error) {
 	if err := req.Validate(); err != nil {
 		return nil, err
+	}
+
+	smsTelno := req.SMSTelno
+	// for sandbox, add 0000 to the end of the sms telno
+	if cli.SandBox {
+		smsTelno = fmt.Sprintf("%s%s", smsTelno, "0000")
 	}
 
 	jsonReq := &getLinkPlusURLRequestJSON{
@@ -213,7 +226,7 @@ func (cli *Client) GetLinkPlusURL(req *GetLinkPlusURLRequest) (*GetLinkPlusURLRe
 			CustomerName:            req.CustomerName,
 			TemplateNo:              req.TemplateNo,
 			GuideSmsSendFlag:        req.GuideSmsSendFlag,
-			SMSTelno:                req.SMSTelno,
+			SMSTelno:                smsTelno,
 			AuthenticationQuestion1: req.AuthenticationQuestion1,
 			AuthenticationAnswer1:   req.AuthenticationAnswer1,
 			AuthenticationQuestion2: req.AuthenticationQuestion2,
@@ -302,6 +315,23 @@ func (cli *Client) GetLinkPlusURL(req *GetLinkPlusURLRequest) (*GetLinkPlusURLRe
 		return nil, err
 	}
 
+	// まず配列としてエラーレスポンスを試す
+	var errorResponses []getLinkPlusURLErrorResponseJSON
+	if err := json.Unmarshal(bodyBytes, &errorResponses); err == nil && len(errorResponses) > 0 {
+		// エラーレスポンスの場合、全てのエラー情報を結合
+		var errInfos []string
+		for _, err := range errorResponses {
+			errInfos = append(errInfos, err.ErrInfo)
+		}
+
+		// 最初のエラーコードと全てのエラー情報を返す
+		return &GetLinkPlusURLResponse{
+			ErrCode: errorResponses[0].ErrCode,
+			ErrInfo: strings.Join(errInfos, "; "),
+		}, fmt.Errorf("failed to get link plus url: %s", strings.Join(errInfos, "; "))
+	}
+
+	// 正常レスポンスとして処理
 	jsonRes := &getLinkPlusURLResponseJSON{}
 	if err := json.Unmarshal(bodyBytes, jsonRes); err != nil {
 		return nil, err

@@ -23,6 +23,7 @@ type Client struct {
 	ShopID     string
 	ShopPass   string
 	APIHost    string
+	SandBox    bool
 	Debug      bool
 }
 
@@ -66,6 +67,7 @@ func NewClient(
 		ShopID:   shopID,
 		ShopPass: shopPass,
 		APIHost:  apiHost,
+		SandBox:  sandBox,
 	}, nil
 }
 
