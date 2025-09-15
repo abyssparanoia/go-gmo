@@ -6,6 +6,7 @@ toolchain go1.25.1
 
 require (
 	github.com/bxcodec/faker v2.0.1+incompatible
+	github.com/caarlos0/env/v11 v11.3.1
 	github.com/caarlos0/env/v6 v6.10.1
 	github.com/cenkalti/backoff v2.2.1+incompatible
 	github.com/go-playground/validator/v10 v10.27.0
