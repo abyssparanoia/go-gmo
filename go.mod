@@ -12,7 +12,7 @@ require (
 	github.com/go-playground/validator/v10 v10.27.0
 	github.com/gocarina/gocsv v0.0.0-20240520201108-78e41c74b4b1
 	github.com/gorilla/schema v1.4.1
-	github.com/imdario/mergo v0.3.16
+	github.com/imdario/mergo v1.0.2
 	github.com/pkg/sftp v1.13.10
 	github.com/stretchr/testify v1.11.1
 	github.com/tomtwinkle/garbledreplacer v0.2.0
