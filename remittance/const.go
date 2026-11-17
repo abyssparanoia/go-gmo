@@ -6,6 +6,7 @@ const (
 	apiHostTest                 = "http://remittance.gmopg.jp"
 	mailDepositRegistrationPath = "api/shop/MailDepositRegistration.json"
 	accountRegistrationPath     = "api/AccountRegistration.json"
+	accountSearchPath           = "api/AccountSearch.json"
 	depositRegistrationPath     = "api/DepositRegistration.json"
 	realDepositRegistrationPath = "api/RealDepositRegistration.json"
 	depositSearchPath           = "api/DepositSearch.json"
@@ -31,6 +32,13 @@ const (
 	BankAccountRegistrationMethodRegister BankAccountRegistrationMethod = "1"
 	BankAccountRegistrationMethodUpdate   BankAccountRegistrationMethod = "2"
 	BankAccountRegistrationMethodDelete   BankAccountRegistrationMethod = "3"
+)
+
+type BankAccountDeleteFlag string
+
+const (
+	BankAccountDeleteFlagActive  BankAccountDeleteFlag = "0"
+	BankAccountDeleteFlagDeleted BankAccountDeleteFlag = "1"
 )
 
 type DepositRegistrationMethod string
